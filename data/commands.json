@@ -1,0 +1,37 @@
+{
+    "commands": [
+        "Log me in",
+        "Play ‘Here Comes the Sun’ by the Beatles",
+        "Play music",
+        "Pause music",
+        "Restart song",
+        "Stop Music",
+        "Play classical piano music",
+        "Next song",
+        "Increase music volume",
+        "Decrease music volume",
+        "Set system volume to 5",
+        "Set system volume to 4",
+        "Show clock",
+        "Hide clock",
+        "Display clock",
+        "What time is it?",
+        "Start 3-minute timer and name it ‘Cement’",
+        "Pause the timer",
+        "Hide the timer",
+        "Start a stopwatch",
+        "Hide the stopwatch",
+        "Show the stopwatch",
+        "Stop the stopwatch",
+        "Reset the stopwatch",
+        "Hide the stopwatch",
+        "Send a text message to Dr. Matt Wood saying, ‘The patient is ready for you in OR 1.”",
+        "Send a text message to Dr. Matt Wood saying, “We need another nurse in OR 6.”",
+        "Start a Zoom call with Dr. Matt Wood",
+        "End Zoom call",
+        "Open preference cards app",
+        "Enlarge the preference cards app",
+        "Minimize the preference cards app"
+    ]
+}
+
