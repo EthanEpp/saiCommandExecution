@@ -55,8 +55,7 @@ Utility functions for handling audio data. This includes functions for recording
 
 Manages the embeddings for text data to facilitate command recognition. It uses the `sentence_transformers` library to create and compare text embeddings.
 
-`requirements.txt`
-
+`requirements.txt`\
 Lists all the dependencies required to run the project, but key ones to note and understand are:
 
 ```plaintext
