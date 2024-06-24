@@ -51,7 +51,7 @@ Utility functions for handling audio data. This includes functions for recording
 Manages the embeddings for text data to facilitate command recognition. It uses the `sentence_transformers` library to create and compare text embeddings.
 
 ### `requirements.txt`
-Lists all the dependencies required to run the project:
+Lists all the dependencies required to run the project, but key ones to note and understand are:
 ```plaintext
 numpy==2.0.0
 openai_whisper==20231117
@@ -62,20 +62,6 @@ sentence_transformers==3.0.1
 torch==2.3.1
 transformers==4.41.2
 ```
-
-## Dependencies
-
-Ensure you have the following dependencies installed:
-
-- `numpy==2.0.0`
-- `openai_whisper==20231117`
-- `PyAudio==0.2.14`
-- `pydub==0.25.1`
-- `scipy==1.13.1`
-- `sentence_transformers==3.0.1`
-- `torch==2.3.1`
-- `transformers==4.41.2`
-
-You can install these dependencies using the provided `requirements.txt` file.
+You can install all dependencies using the provided `requirements.txt` file.
 
 
