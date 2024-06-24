@@ -7,7 +7,7 @@ This repository contains a speech command system that processes audio inputs, tr
 - [Usage](#usage)
 - [File Descriptions](#file-descriptions)
 - [Dependencies](#dependencies)
-- [CustomGPT] (#customgpt)
+- [CustomGPT](#customgpt)
 
 ## Installation
 
