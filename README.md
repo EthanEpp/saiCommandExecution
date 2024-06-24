@@ -32,24 +32,31 @@ This will initialize the system, start listening for 5 seconds for a command, th
 ## File Descriptions
 
 `main.py`
+
 This is the entry point of the application. It initializes the necessary components and starts the main loop for listening and processing audio inputs.
 
 `whisper_test.py`
+
 Contains test cases for validating the functionality of the Whisper model used for speech-to-text conversion.
 
 `speech_to_text.py`
+
 Handles the conversion of speech to text using the Whisper model from OpenAI. This module includes functions to capture audio and process it into text format.
 
 `command_processor.py`
+
 Processes the transcribed text to identify and execute corresponding commands. It contains the logic for parsing commands and triggering appropriate actions.
 
 `audio_utils.py`
+
 Utility functions for handling audio data. This includes functions for recording audio, normalizing audio signals, and converting between different audio formats.
 
 `embeddings.py`
+
 Manages the embeddings for text data to facilitate command recognition. It uses the `sentence_transformers` library to create and compare text embeddings.
 
 `requirements.txt`
+
 Lists all the dependencies required to run the project, but key ones to note and understand are:
 
 ```plaintext
