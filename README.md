@@ -8,7 +8,7 @@ This repository contains a speech command system that processes audio inputs, tr
 - [File Descriptions](#file-descriptions)
 - [Dependencies](#dependencies)
 - [Contributing](#contributing)
-- [License](#license)
+- [CustomGPT] (#)
 
 ## Installation
 
@@ -65,3 +65,6 @@ transformers==4.41.2
 You can install all dependencies using the provided `requirements.txt` file.
 
 
+## CustomGPT
+
+For questions or assistance regarding this codebase, I have created a custom GPT instance that has been trained to assist with any inquiries about the speech command system and has access to the codebase. Note that this should only be used for reference and may not automatically be up to date with the current version of the code. Last customGPT knowledge update: June 24, 2024

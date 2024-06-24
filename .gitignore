@@ -67,3 +67,7 @@ instance/
 # Sphinx documentation
 docs/_build/
 build/doctrees
+
+# Stuff for custom gpt
+file_paths.txt
+list_files.py
