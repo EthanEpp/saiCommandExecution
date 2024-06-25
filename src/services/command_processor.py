@@ -3,7 +3,7 @@ from scipy.spatial.distance import cosine
 import numpy as np
 
 class CommandProcessor:
-    def __init__(self, commands, threshold=0.5, embedder=None):
+    def __init__(self, commands, threshold=0.8, embedder=None):
         self.embedder = embedder if embedder else SentenceEmbedder()
         self.commands = commands
         self.command_embeddings = [self.embedder.encode([cmd]).squeeze() for cmd in commands]
