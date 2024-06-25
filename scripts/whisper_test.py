@@ -7,7 +7,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 
 from transformers import pipeline
-from utils.audio_utils import convert_folder_to_wav
+from src.utils.audio_utils import convert_folder_to_wav
 
 def transcribe_audio_with_whisper(audio_path):
     whisper = pipeline("automatic-speech-recognition", model="openai/whisper-small")

@@ -1,37 +1,9 @@
-certifi==2024.6.2
-charset-normalizer==3.3.2
-filelock==3.15.4
-fsspec==2024.6.0
-huggingface-hub==0.23.4
-idna==3.7
-Jinja2==3.1.4
-joblib @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_8ff7uji0v2/croot/joblib_1718217225309/work
-llvmlite==0.43.0
-MarkupSafe==2.1.5
-more-itertools==10.3.0
-mpmath==1.3.0
-networkx==3.3
-numba==0.60.0
-numpy==1.26.4
-openai-whisper==20231117
-packaging==24.1
-pillow==10.3.0
+numpy==2.0.0
+openai_whisper==20231117
 PyAudio==0.2.14
-pybind11==2.12.0
 pydub==0.25.1
-PyYAML==6.0.1
-regex==2024.5.15
-requests==2.32.3
-safetensors==0.4.3
-scikit-learn @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_6f_fxtrklc/croot/scikit-learn_1714164747354/work
-scipy @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_b9t0odioph/croot/scipy_1717521487325/work/dist/scipy-1.13.1-cp310-cp310-macosx_11_0_arm64.whl#sha256=8741f7b22165ee615e9ecfd6d218381ea80d42f8be4f94e9e6c96e67edb6f43c
-sentence-transformers==3.0.1
-sympy==1.12.1
-threadpoolctl @ file:///Users/ktietz/demo/mc3/conda-bld/threadpoolctl_1629802263681/work
-tiktoken==0.7.0
-tokenizers==0.19.1
+pytest==8.2.2
+scipy==1.14.0
+sentence_transformers==3.0.1
 torch==2.3.1
-tqdm==4.66.4
 transformers==4.41.2
-typing_extensions==4.12.2
-urllib3==2.2.2
