@@ -1,3 +1,4 @@
+
 from sentence_transformers import SentenceTransformer
 
 class SentenceEmbedder:
@@ -18,3 +19,6 @@ class SentenceEmbedder:
         # The encode method of SentenceTransformer handles everything
         embeddings = self.model.encode(sentences)
         return embeddings
+    
+    def get_embedding_dim(self):
+        return self.model.get_sentence_embedding_dimension()
