@@ -13,6 +13,7 @@ This repository contains a speech command system that processes audio inputs, tr
 - [Tests](#tests)
 - [Continuous Integration](#continuous-integration)
 - [CustomGPT](#customgpt)
+- [Contact](#contact)
 
 ## Installation
 
@@ -104,3 +105,7 @@ The project uses GitHub Actions for continuous integration. The configuration fi
 ## CustomGPT
 
 For questions or assistance regarding this codebase, [click here](https://chatgpt.com/g/g-ZEvSUqsh0-speech-commands-expert) to access a customGPT instance that has been trained to assist with any inquiries about the speech command system and has access to the codebase. Note that this should only be used for reference and may not automatically be up to date with the current version of the code. Last customGPT knowledge update: June 24, 2024
+
+## Contact
+
+For any questions or suggestions, please contact Ethan Epp at [eepp@softacuity.com].
