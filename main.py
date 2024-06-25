@@ -21,7 +21,7 @@ def load_commands():
 
 def main():
     commands = load_commands()
-    processor = CommandProcessor(commands)
+    processor = CommandProcessor(commands = commands, threshold=0.6)
     stt = SpeechToText()
     stt.start_microphone_stream()
 
