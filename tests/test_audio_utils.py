@@ -3,6 +3,8 @@ import os
 from pydub import AudioSegment
 from src.utils.audio_utils import convert_to_wav, convert_folder_to_wav
 
+TARGET_SAMPLE_RATE = 16000
+
 @pytest.fixture
 def setup_test_files(tmp_path):
     # Create some test audio files in the temporary directory
@@ -22,20 +24,28 @@ def test_convert_to_wav(setup_test_files):
     for source_path in setup_test_files:
         if source_path.suffix != ".wav":
             target_path = str(source_path).replace(source_path.suffix, ".wav")
-            result_path = convert_to_wav(source_path)
+            result_path = convert_to_wav(source_path, target_sample_rate=TARGET_SAMPLE_RATE)
             assert result_path == target_path
             assert os.path.exists(result_path)
+            
+            # Check the sample rate of the converted file
+            converted_audio = AudioSegment.from_file(result_path)
+            assert converted_audio.frame_rate == TARGET_SAMPLE_RATE
 
 def test_convert_folder_to_wav(setup_test_files, tmp_path):
     source_folder = tmp_path
     target_folder = tmp_path / "wav_files"
     
-    convert_folder_to_wav(source_folder, target_folder)
+    convert_folder_to_wav(source_folder, target_folder, target_sample_rate=TARGET_SAMPLE_RATE)
     
     for source_path in setup_test_files:
         if source_path.suffix != ".wav":
             target_path = target_folder / (source_path.stem + ".wav")
             assert os.path.exists(target_path)
+            
+            # Check the sample rate of the converted file
+            converted_audio = AudioSegment.from_file(target_path)
+            assert converted_audio.frame_rate == TARGET_SAMPLE_RATE
 
 if __name__ == "__main__":
     pytest.main()
