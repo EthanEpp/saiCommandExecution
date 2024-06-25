@@ -1,12 +1,15 @@
 # Speech Command System
 
-This repository contains a speech command system that processes audio inputs, transcribes them into text, and executes corresponding commands. The system leverages various libraries for audio processing, speech-to-text conversion, and command execution.
+This repository contains a speech command system that processes audio inputs, transcribes them into text, and executes corresponding commands. The system utilizers whisber and a distilled SBERT paraphrase model.
 
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
-- [File Descriptions](#file-descriptions)
 - [Dependencies](#dependencies)
+- [Modules](#modules)
+- [Scripts](#scripts)
+- [Tests](#tests)
+- [Continuous Integration](#continuous-integration)
 - [CustomGPT](#customgpt)
 
 ## Installation
@@ -29,41 +32,71 @@ python main.py
 
 This will initialize the system, start listening for 5 seconds for a command, then output the transcribed audio and the mapped command.
 
-## File Descriptions
 
-`main.py`\
-This is the entry point of the application. It initializes the necessary components and starts the main loop for listening and processing audio inputs.
+## Dependencies
 
-`whisper_test.py`\
-Contains test cases for validating the functionality of the Whisper model used for speech-to-text conversion.
+- `numpy==2.0.0`
+- `openai_whisper==20231117`
+- `PyAudio==0.2.14`
+- `pydub==0.25.1`
+- `pytest==8.2.2`
+- `scipy==1.14.0`
+- `sentence_transformers==3.0.1`
+- `torch==2.3.1`
+- `transformers==4.41.2`
 
-`speech_to_text.py`\
-Handles the conversion of speech to text using the Whisper model from OpenAI. This module includes functions to capture audio and process it into text format.
 
-`command_processor.py`\
-Processes the transcribed text to identify and execute corresponding commands. It contains the logic for parsing commands and triggering appropriate actions.
+## Modules
 
-`audio_utils.py`\
-Utility functions for handling audio data. This includes functions for recording audio, normalizing audio signals, and converting between different audio formats.
+### Speech-to-Text (`src/models/speech_to_text.py`)
 
-`embeddings.py`\
-Manages the embeddings for text data to facilitate command recognition. It uses the `sentence_transformers` library to create and compare text embeddings.
+This module converts spoken language into text using the Whisper model from OpenAI.
 
-`requirements.txt`\
-Lists all the dependencies required to run the project, but key ones to note and understand are:
+### Embeddings (`src/models/embeddings.py`)
 
-```plaintext
-numpy==2.0.0
-openai_whisper==20231117
-PyAudio==0.2.14
-pydub==0.25.1
-scipy==1.13.1
-sentence_transformers==3.0.1
-torch==2.3.1
-transformers==4.41.2
-```
-You can install all dependencies using the provided `requirements.txt` file.
+This module generates embeddings for text inputs to facilitate natural language understanding using a paraphrase SBERT.
 
+### Command Processor (`src/services/command_processor.py`)
+
+This module processes the commands derived from speech inputs and determines their corrosponding command action.
+
+### Audio Utilities (`src/utils/audio_utils.py`)
+
+This module contains utility functions for handling audio files such as converting them to wav.
+
+## Scripts
+
+### Convert Audio (`scripts/convert_audio.py`)
+
+This script converts audio files to wav.
+
+### Whisper Test (`scripts/whisper_test.py`)
+
+This script is used for testing whisper to make sure the model and dependencies are loaded correctly.
+
+
+
+## Tests
+
+The repository includes unit and integration tests to ensure the functionality of the modules.
+
+### Unit Tests
+
+- `tests/test_embeddings_unit.py`: Tests for the embeddings module.
+- `tests/test_speech_to_text_unit.py`: Tests for the speech-to-text module.
+- `tests/test_command_processor_unit.py`: Tests for the command processor module.
+- `tests/test_audio_utils.py`: Tests for the audio utilities module.
+
+### Integration Tests
+
+- `tests/test_embeddings_integration.py`: Integration tests for the embeddings module.
+- `tests/test_speech_to_text_integration.py`: Integration tests for the speech-to-text module.
+- `tests/test_command_processor_integration.py`: Integration tests for the command processor module.
+
+
+## Continuous Integration
+
+The project uses GitHub Actions for continuous integration. The configuration file is located at `.github/workflows/ci.yml`.
 
 ## CustomGPT
 
