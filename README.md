@@ -97,7 +97,7 @@ The repository includes unit and integration tests to ensure the functionality o
 
 ## Continuous Integration
 
-The project uses GitHub Actions for continuous integration. The configuration file is located at `.github/workflows/ci.yml`.
+The project uses GitHub Actions for continuous integration. The configuration file is located at [`.github/workflows/ci.yml`](https://github.com/EthanEpp/saiCommandExecution/blob/main/.github/workflows/ci.yml).
 
 ## CustomGPT
 
