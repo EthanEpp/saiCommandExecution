@@ -17,8 +17,14 @@ def read_wav_file(file_path):
     with wave.open(file_path, 'rb') as wf:
         return wf.readframes(wf.getnframes())
 
-def test_process_prerecorded_audio_with_mock(speech_to_text):
+@patch('pyaudio.PyAudio')
+def test_process_prerecorded_audio_with_mock(mock_pyaudio, speech_to_text):
     """Integration test to process prerecorded audio and verify transcription using a mocked model."""
+    # Mock the PyAudio instance and stream
+    mock_instance = mock_pyaudio.return_value
+    mock_stream = MagicMock()
+    mock_instance.open.return_value = mock_stream
+
     # Path to the prerecorded audio file
     audio_file_path = "tests/data/wav/New Recording.wav"
 
@@ -30,12 +36,11 @@ def test_process_prerecorded_audio_with_mock(speech_to_text):
     speech_to_text.model.transcribe = MagicMock(return_value={'text': 'expected transcription text'})
 
     # Mock the behavior of the stream to return the prerecorded audio data
-    speech_to_text.stream = MagicMock()
-    speech_to_text.stream.read = MagicMock(side_effect=[audio_data_bytes[i:i+1024] for i in range(0, len(audio_data_bytes), 1024)])
+    mock_stream.read = MagicMock(side_effect=[audio_data_bytes[i:i+1024] for i in range(0, len(audio_data_bytes), 1024)])
 
     # Start and stop the stream to set up the audio interface
     speech_to_text.start_microphone_stream()
-    speech_to_text.stream = speech_to_text.stream
+    speech_to_text.stream = mock_stream
 
     # Process the audio stream and check the result
     result = speech_to_text.process_audio_stream(seconds=5)
