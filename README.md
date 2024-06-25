@@ -1,6 +1,6 @@
 # Speech Command System
 
-This repository contains a speech command system that processes audio inputs, transcribes them into text, and executes corresponding commands. The system leverages various libraries for audio processing, speech-to-text conversion, and command execution.
+This repository contains a speech command system that processes audio inputs, transcribes them into text, and executes corresponding commands. The system utilizers whisber and a distilled SBERT paraphrase model.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -54,25 +54,25 @@ This module converts spoken language into text using the Whisper model from Open
 
 ### Embeddings (`src/models/embeddings.py`)
 
-This module generates embeddings for text inputs to facilitate natural language understanding.
+This module generates embeddings for text inputs to facilitate natural language understanding using a paraphrase SBERT.
 
 ### Command Processor (`src/services/command_processor.py`)
 
-This module processes the commands derived from speech inputs and executes the corresponding actions.
+This module processes the commands derived from speech inputs and determines their corrosponding command action.
 
 ### Audio Utilities (`src/utils/audio_utils.py`)
 
-This module contains utility functions for handling audio files.
+This module contains utility functions for handling audio files such as converting them to wav.
 
 ## Scripts
 
 ### Convert Audio (`scripts/convert_audio.py`)
 
-This script converts audio files from one format to another.
+This script converts audio files to wav.
 
 ### Whisper Test (`scripts/whisper_test.py`)
 
-This script is used for testing the Whisper model's performance on various audio inputs.
+This script is used for testing whisper to make sure the model and dependencies are loaded correctly.
 
 
 
