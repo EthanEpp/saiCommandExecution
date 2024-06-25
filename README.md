@@ -1,3 +1,5 @@
+[![CI](https://github.com/EthanEpp/saiCommandExecution/actions/workflows/ci.yml/badge.svg)](https://github.com/EthanEpp/saiCommandExecution/actions/workflows/ci.yml)
+
 # Speech Command System
 
 This repository contains a speech command system that processes audio inputs, transcribes them into text, and executes corresponding commands. The system utilizers whisber and a distilled SBERT paraphrase model.
