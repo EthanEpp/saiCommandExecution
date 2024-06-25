@@ -69,11 +69,12 @@ This module contains utility functions for handling audio files such as converti
 ### Convert Audio (`scripts/convert_audio.py`)
 
 This script converts audio files to wav.
+Example usage in home directory: `python scripts/convert_audio.py input_dir output_dir`
 
 ### Whisper Test (`scripts/whisper_test.py`)
 
 This script is used for testing whisper to make sure the model and dependencies are loaded correctly.
-
+Example usage in home directory: `python scripts/whisper_test.py audio_files`
 
 
 ## Tests

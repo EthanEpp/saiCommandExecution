@@ -24,6 +24,7 @@ def transcribe_folder(source_folder):
             transcription = transcribe_audio_with_whisper(audio_path)
             print(f"File: {filename}\nTranscription: {transcription}\n")
 
+# Example usage: python scripts/whisper_test.py audio_files
 if __name__ == "__main__":
     import sys
     if len(sys.argv) > 1:
