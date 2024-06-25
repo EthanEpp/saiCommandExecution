@@ -5,8 +5,11 @@ This repository contains a speech command system that processes audio inputs, tr
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
-- [File Descriptions](#file-descriptions)
 - [Dependencies](#dependencies)
+- [Modules](#modules)
+- [Scripts](#scripts)
+- [Tests](#tests)
+- [Continuous Integration](#continuous-integration)
 - [CustomGPT](#customgpt)
 
 ## Installation
@@ -28,6 +31,20 @@ python main.py
 ```
 
 This will initialize the system, start listening for 5 seconds for a command, then output the transcribed audio and the mapped command.
+
+
+## Dependencies
+
+- `numpy==2.0.0`
+- `openai_whisper==20231117`
+- `PyAudio==0.2.14`
+- `pydub==0.25.1`
+- `pytest==8.2.2`
+- `scipy==1.14.0`
+- `sentence_transformers==3.0.1`
+- `torch==2.3.1`
+- `transformers==4.41.2`
+
 
 ## Modules
 
