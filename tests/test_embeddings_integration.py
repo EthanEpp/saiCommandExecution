@@ -21,7 +21,7 @@ def test_find_closest_command(command_processor):
 
     result = command_processor.find_closest_command(user_input)
     
-    assert result == expected_command
+    assert result[0] == expected_command
 
 def test_command_not_recognized(command_processor):
     user_input = "open the window"
@@ -29,4 +29,4 @@ def test_command_not_recognized(command_processor):
 
     result = command_processor.find_closest_command(user_input)
     
-    assert result == expected_response
+    assert result[0] == expected_response

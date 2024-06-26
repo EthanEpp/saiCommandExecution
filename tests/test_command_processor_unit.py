@@ -38,24 +38,24 @@ def test_find_closest_command(setup_processor):
     input_command = "Switch on the light"
     expected_command = "Turn on the light"
     result = processor.find_closest_command(input_command)
-    assert result == expected_command
+    assert result[0] == expected_command
 
 def test_command_not_recognized(setup_processor):
     processor = setup_processor
     input_command = "Start the car engine"
     result = processor.find_closest_command(input_command)
-    assert result == "Command not recognized"
+    assert result[0] == "Command not recognized"
 
 def test_threshold_behavior(setup_processor):
     processor = setup_processor
     processor.threshold = 0.9  # Set a high threshold
     input_command = "Start the car engine"
     result = processor.find_closest_command(input_command)
-    assert result == "Command not recognized"
+    assert result[0] == "Command not recognized"
 
 def test_exact_match(setup_processor):
     processor = setup_processor
     input_command = "Turn on the light"
     expected_command = "Turn on the light"
     result = processor.find_closest_command(input_command)
-    assert result == expected_command
+    assert result[0] == expected_command
