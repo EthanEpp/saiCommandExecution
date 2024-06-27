@@ -5,7 +5,7 @@ import json
 def load_commands():
     with open('data/commands.json', 'r') as file:
         data = json.load(file)
-        return data['commands']
+    return data.get('commands', [])
 
 
 def main_text_only():

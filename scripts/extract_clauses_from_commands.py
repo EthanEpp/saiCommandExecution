@@ -26,6 +26,7 @@ def load_commands(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)
     return data.get('commands', [])
+
 def process_commands(commands, clause_extractor, entity_extractor):
     """
     Processes a list of commands to extract and log clauses and entities.
