@@ -1,15 +1,21 @@
-# tests/test_command_processor_integration.py
 import pytest
+from unittest.mock import Mock
 from src.services.command_processor import CommandProcessor
 from src.models.embeddings import SentenceEmbedder
+from src.models.entity_extractor import SpacyEntityExtractor
+from src.models.clause_extractor import ClauseExtractor
 
 @pytest.fixture
 def setup_command_processor():
     embedder = SentenceEmbedder()
     
-    commands = ["Turn on the lights", "Turn off the lights", "Set the thermostat to 22 degrees"]
+    commands = [
+        {"command": "Turn on the lights", "requires_extraction": False},
+        {"command": "Turn off the lights", "requires_extraction": False},
+        {"command": "Set the thermostat to 22 degrees", "requires_extraction": True}
+    ]
     
-    processor = CommandProcessor(commands)
+    processor = CommandProcessor(commands, embedder=embedder)
     return processor
 
 def test_find_closest_command(setup_command_processor):
@@ -29,7 +35,6 @@ def test_find_closest_command(setup_command_processor):
     user_input = "Play some music"
     expected_output = "Command not recognized"
     assert processor.find_closest_command(user_input)[0] == expected_output
-
 
 def test_similar_phrases(setup_command_processor):
     processor = setup_command_processor
@@ -75,9 +80,28 @@ def test_varying_thresholds(setup_command_processor):
     user_input = "There is no substance in this statement"
     result = processor.find_closest_command(user_input)[0]
     # Ensure that any command is selected, as the threshold is 0.0
-    assert result in processor.commands
+    assert result in [cmd['command'] for cmd in processor.commands]
 
     processor.threshold = 1.0
     user_input = "Turn on the lights"
     expected_output = "Command not recognized"
     assert processor.find_closest_command(user_input)[0] == expected_output
+
+def test_command_with_extraction(setup_command_processor):
+    processor = setup_command_processor
+    
+    processor.entity_extractor = Mock(spec=SpacyEntityExtractor)
+    processor.clause_extractor = Mock(spec=ClauseExtractor)
+    processor.entity_extractor.extract_entities.return_value = ["22 degrees"]
+    processor.clause_extractor.extract_clauses.return_value = ["Set thermostat"]
+
+    user_input = "Set the thermostat to 22 degrees"
+    expected_output = "Set the thermostat to 22 degrees"
+    result = processor.find_closest_command(user_input)
+    
+    assert result[0] == expected_output
+    assert result[1] == ["22 degrees"]
+    assert result[2] == ["Set thermostat"]
+    
+    processor.entity_extractor.extract_entities.assert_called_once_with(user_input)
+    processor.clause_extractor.extract_clauses.assert_called_once_with(user_input)

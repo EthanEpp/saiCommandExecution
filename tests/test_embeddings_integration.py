@@ -1,14 +1,13 @@
-# tests/test_integration.py
 import pytest
 from src.services.command_processor import CommandProcessor
 
 @pytest.fixture
 def commands():
     return [
-        "turn on the light",
-        "turn off the light",
-        "set the thermostat to 22 degrees",
-        "play some music"
+        {"command": "turn on the light", "requires_extraction": False},
+        {"command": "turn off the light", "requires_extraction": False},
+        {"command": "set the thermostat to 22 degrees", "requires_extraction": True},
+        {"command": "play some music", "requires_extraction": False}
     ]
 
 @pytest.fixture
@@ -22,6 +21,18 @@ def test_find_closest_command(command_processor):
     result = command_processor.find_closest_command(user_input)
     
     assert result[0] == expected_command
+    assert result[1] is None  # No entities expected
+    assert result[2] is None  # No clauses expected
+
+def test_find_command_with_extraction(command_processor):
+    user_input = "set thermostat to 22 degrees"
+    expected_command = "set the thermostat to 22 degrees"
+
+    result = command_processor.find_closest_command(user_input)
+    
+    assert result[0] == expected_command
+    assert result[1] is not None  # Entities expected
+    assert result[2] is not None  # Clauses expected
 
 def test_command_not_recognized(command_processor):
     user_input = "open the window"
@@ -30,3 +41,5 @@ def test_command_not_recognized(command_processor):
     result = command_processor.find_closest_command(user_input)
     
     assert result[0] == expected_response
+    assert result[1] is None  # No entities expected
+    assert result[2] is None  # No clauses expected
