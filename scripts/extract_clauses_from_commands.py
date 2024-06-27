@@ -21,7 +21,7 @@ def load_commands(file_path):
     file_path (str): The path to the JSON file containing commands.
     
     Returns:
-    list of str: A list of commands.
+    list of dict: A list of command dictionaries.
     """
     with open(file_path, 'r') as file:
         data = json.load(file)
@@ -32,23 +32,29 @@ def process_commands(commands, clause_extractor, entity_extractor):
     Processes a list of commands to extract and log clauses and entities.
     
     Args:
-    commands (list of str): The list of commands to process.
+    commands (list of dict): The list of command dictionaries to process.
     clause_extractor (ClauseExtractor): The clause extractor instance.
     entity_extractor (SpacyEntityExtractor): The entity extractor instance.
     """
-    for command in commands:
-        clauses = clause_extractor.extract_clauses(command)
-        entities = entity_extractor.extract_entities(command)
+    for command_data in commands:
+        command = command_data["command"]
+        requires_extraction = command_data.get("requires_extraction", False)
         
         print(f"Command: {command}")
         
-        # Display extracted clauses
-        for clause, dep_label in clauses:
-            print(f"  Extracted clause: {clause} (Dependency label: {dep_label})")
-        
-        # Display extracted entities
-        for entity, entity_label in entities:
-            print(f"  Extracted entity: {entity} (Entity label: {entity_label})")
+        if requires_extraction:
+            clauses = clause_extractor.extract_clauses(command)
+            entities = entity_extractor.extract_entities(command)
+            
+            # Display extracted clauses
+            for clause, dep_label in clauses:
+                print(f"  Extracted clause: {clause} (Dependency label: {dep_label})")
+            
+            # Display extracted entities
+            for entity, entity_label in entities:
+                print(f"  Extracted entity: {entity} (Entity label: {entity_label})")
+        else:
+            print("  No extraction required for this command.")
 
 def main():
     # Load commands from the JSON file

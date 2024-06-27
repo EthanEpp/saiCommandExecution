@@ -4,6 +4,7 @@ import numpy as np
 from src.models.entity_extractor import SpacyEntityExtractor
 from src.models.clause_extractor import ClauseExtractor
 
+
 class CommandProcessor:
     def __init__(self, commands, threshold=0.8, embedder=None, entity_extractor=None, clause_extractor=None):
         self.embedder = embedder if embedder else SentenceEmbedder()
@@ -21,10 +22,31 @@ class CommandProcessor:
 
         if max_similarity > self.threshold:
             if best_match["requires_extraction"]:
-                entities = self.entity_extractor.extract_entities(user_input)
-                clauses = self.clause_extractor.extract_clauses(user_input)
-                return best_match["command"], entities, clauses
+                extractions = self.perform_extractions(user_input, best_match["extractions"])
+                return best_match["command"], extractions
             else:
-                return best_match["command"], None, None
+                return best_match["command"], None
         else:
-            return "Command not recognized", None, None
+            return "Command not recognized", None
+
+    def perform_extractions(self, user_input, extraction_types):
+        results = {
+            "entities": self.entity_extractor.extract_entities(user_input),
+            "dependencies": self.clause_extractor.extract_clauses(user_input)
+        }
+        
+        filtered_results = {"entities": {}, "dependencies": {}}
+        
+        for extraction in extraction_types:
+            if extraction["type"] == "entity":
+                filtered_results["entities"][extraction["label"]] = [
+                    ent for ent in results["entities"] if ent[1] == extraction["label"]
+                ]
+            elif extraction["type"] == "dependency":
+                filtered_results["dependencies"][extraction["label"]] = [
+                    dep for dep in results["dependencies"] if dep[1] == extraction["label"]
+                ]
+        
+        return filtered_results
+
+

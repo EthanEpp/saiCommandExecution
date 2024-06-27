@@ -5,8 +5,18 @@ class SpacyEntityExtractor:
         self.nlp = spacy.load(model_name)
 
     def extract_entities(self, text):
+        """
+        Extracts all entities from the given text.
+        
+        Args:
+        text (str): The input text from which to extract entities.
+
+        Returns:
+        list of tuples: A list of tuples where each tuple contains an entity and its corresponding label.
+        """
         doc = self.nlp(text)
         return [(ent.text, ent.label_) for ent in doc.ents]
+
 
 # Entity types in Spacy
 # PERSON - People, including fictional.
