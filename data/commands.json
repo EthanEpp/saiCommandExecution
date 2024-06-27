@@ -84,7 +84,10 @@
         {"command": "Tourniquet up", "requires_extraction": false},
         {"command": "Show clock", "requires_extraction": false},
         {"command": "Tourniquet down", "requires_extraction": false},
-        {"command": "Log me out", "requires_extraction": false}
+        {"command": "Log me out", "requires_extraction": false},
+        {"command": "Search for Santa Barbara weather", "requires_extraction": true},
+        {"command": "Search for Euro to USD", "requires_extraction": true}
+
     ]
 }
 
