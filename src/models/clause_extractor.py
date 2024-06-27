@@ -18,7 +18,8 @@ class ClauseExtractor:
         clauses = []
         for sent in doc.sents:
             for token in sent:
-                if token.dep_ in ("ccomp", "conj", "xcomp", "acl", "advcl", "relcl"):  # Complement clauses
+                # if token.dep_ in ("ccomp", "conj", "xcomp", "acl", "advcl", "relcl"):  # Complement clauses
+                if token.dep_ in ("ccomp", "conj", "xcomp", "advcl", "relcl", "pobj", "dobj"):  # Complement clauses
                     clause = " ".join([child.text for child in token.subtree])
                     clauses.append((clause, token.dep_))
         return clauses
