@@ -13,10 +13,17 @@ def main_text_only():
     processor = CommandProcessor(commands)
 
     # Example user input
-    user_speech = "Send a text message to Dr. Matt Wood saying the patient is ready for you in OR 1 "  # Assume this is output from Whisper
-    closest_command = processor.find_closest_command(user_speech)
-    print("Interpreted command:", closest_command)
-
+    # user_speech = "Send a text message to Dr. Matt Wood saying the patient is ready for you in OR 1"  # Assume this is output from Whisper
+    user_speech = "Can you search for the weather in Santa Barbara today"  # Assume this is output from Whisper
+    # user_speech = "Can you search for the yen to USD conversion"  # Assume this is output from Whisper
+    # user_speech = "Can you start a seven and a half minute timer"  # Assume this is output from Whisper
+    # user_speech = "Begin a 10 minute timer and name it Blood Transfusion"  # Assume this is output from Whisper
+    command = processor.find_closest_command(user_speech)
+    print("Interpreted command:", command.command_type)
+    print("Original input:", command.original_input)
+    print("Preprocessed input:", command.preprocessed_input)
+    print("Entities:", command.entities)
+    print("Clauses:", command.clauses)
 
 
 def main():

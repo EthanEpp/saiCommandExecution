@@ -21,7 +21,7 @@ def load_commands(file_path):
     file_path (str): The path to the JSON file containing commands.
     
     Returns:
-    list of str: A list of commands.
+    list of dict: A list of command dictionaries.
     """
     with open(file_path, 'r') as file:
         data = json.load(file)
@@ -30,13 +30,14 @@ def load_commands(file_path):
 def process_commands(commands, clause_extractor, entity_extractor):
     """
     Processes a list of commands to extract and log clauses and entities.
-    
+    a
     Args:
-    commands (list of str): The list of commands to process.
+    commands (list of dict): The list of command dictionaries to process.
     clause_extractor (ClauseExtractor): The clause extractor instance.
     entity_extractor (SpacyEntityExtractor): The entity extractor instance.
     """
-    for command in commands:
+    for command_dict in commands:
+        command = command_dict.get('command', '')
         clauses = clause_extractor.extract_clauses(command)
         entities = entity_extractor.extract_entities(command)
         
