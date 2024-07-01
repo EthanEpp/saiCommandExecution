@@ -2,6 +2,7 @@ import whisper
 import pyaudio
 import numpy as np
 import torch
+from src.utils.timing import measure_time
 
 class SpeechToText:
     def __init__(self, model_size="base"):
@@ -23,7 +24,8 @@ class SpeechToText:
             self.stream.stop_stream()
             self.stream.close()
             self.audio_interface.terminate()
-
+            
+    @measure_time
     def process_audio_stream(self, seconds=5):
         frames = []
         for _ in range(0, int(16000 / 1024 * seconds)):

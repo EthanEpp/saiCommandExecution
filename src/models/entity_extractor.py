@@ -1,9 +1,11 @@
 import spacy
+from src.utils.timing import measure_time
 
 class SpacyEntityExtractor:
     def __init__(self, model_name='en_core_web_sm'):
         self.nlp = spacy.load(model_name)
 
+    # @measure_time
     def extract_entities(self, text):
         doc = self.nlp(text)
         return [(ent.text, ent.label_) for ent in doc.ents]

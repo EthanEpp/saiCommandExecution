@@ -38,16 +38,21 @@ def main():
         user_speech = stt.process_audio_stream(seconds=5)  # Adjust duration as needed
         print("Heard:", user_speech)
         if user_speech:
-            closest_command = processor.find_closest_command(user_speech)
-            print("Interpreted command:", closest_command)
+            command = processor.find_closest_command(user_speech)
+            print("Interpreted command:", command.command_type)
+            print("Original input:", command.original_input)
+            print("Preprocessed input:", command.preprocessed_input)
+            print("Entities:", command.entities)
+            print("Clauses:", command.clauses)
+
     except KeyboardInterrupt:
         print("Stopping...")
     finally:
         stt.stop_microphone_stream()
 
 if __name__ == "__main__":
-    main_text_only()
-    # main()
+    # main_text_only()
+    main()
 
 
 # # Example usage
