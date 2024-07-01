@@ -32,7 +32,3 @@ jobs:
     - name: Run tests
       run: |
         pytest
-
-    - name: Update requirements.txt
-      run: |
-        pip freeze > requirements.txt
