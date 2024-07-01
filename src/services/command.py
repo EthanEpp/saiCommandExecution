@@ -9,3 +9,4 @@ class Command:
     def __repr__(self):
         return (f"Command(command_type={self.command_type}, original_input={self.original_input}, "
                 f"preprocessed_input={self.preprocessed_input}, entities={self.entities}, clauses={self.clauses})")
+
