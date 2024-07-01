@@ -36,14 +36,3 @@ jobs:
     - name: Update requirements.txt
       run: |
         pip freeze > requirements.txt
-
-    - name: Commit changes
-      if: success()  # Only commit if tests pass
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add requirements.txt
-        git commit -m "Update requirements.txt"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
