@@ -32,7 +32,7 @@ class CommandProcessor:
             elif label == "TIME":
                 preprocessed_text = preprocessed_text.replace(entity, "X length")
             elif label == "DATE":
-                preprocessed_text = preprocessed_text.replace(entity, "X date")
+                preprocessed_text = preprocessed_text.replace(entity, "X length")
             elif label == "CARDINAL":
                 preprocessed_text = preprocessed_text.replace(entity, "X")
 
