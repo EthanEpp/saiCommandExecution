@@ -24,7 +24,7 @@
         {"command": "Stop the stopwatch", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Reset the stopwatch", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Hide the stopwatch", "requires_extraction": false, "entities": [],"clauses": []},
-        {"command": "Send a text message to Dr. John Doe saying this is a ccomp clause.", "requires_extraction": true, "entities": ["PERSON"],"clauses": ["conj", "ccomp"]},
+        {"command": "Send a text message to Dr. John Doe saying this is a ccomp clause.", "requires_extraction": true, "entities": ["PERSON"],"clauses": ["conj", "ccomp", "parataxis"]},
         {"command": "Start a Zoom call with Dr. John Doe", "requires_extraction": true, "entities": ["PERSON"],"clauses": []},
         {"command": "End Zoom call", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Open preference cards app", "requires_extraction": false, "entities": [],"clauses": []},
@@ -37,9 +37,9 @@
         {"command": "Hide temperature", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Show the room schedule", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Close the schedule", "requires_extraction": false, "entities": [],"clauses": []},
-        {"command": "Open Up to Date app and search for torn rotator cuff", "requires_extraction": true, "entities": [],"clauses": ["conj", "pobj"]},
+        {"command": "Open Up to Date app and search for torn rotator cuff", "requires_extraction": true, "entities": [],"clauses": ["conj", "pobj", "parataxis"]},
         {"command": "Close the web browser", "requires_extraction": false, "entities": [],"clauses": []},
-        {"command": "Open web browser and search for Santa Barbara weather", "requires_extraction": true, "entities": [],"clauses": ["conj","pobj"]},
+        {"command": "Open web browser and search for Santa Barbara weather", "requires_extraction": true, "entities": [],"clauses": ["conj","pobj", "parataxis"]},
         {"command": "Enlarge the browser window", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Minimize the browser window", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Close the browser", "requires_extraction": false, "entities": [],"clauses": []},
@@ -71,7 +71,7 @@
         {"command": "Tourniquet down", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Log me out", "requires_extraction": false, "entities": [],"clauses": []},
         {"command": "Search for Euro to USD conversion", "requires_extraction": true, "entities": [],"clauses": []},
-        {"command": "Send a text message to Dr. Matt Wood saying the Patient is ready for you in OR 1.", "requires_extraction": true, "entities": ["PERSON"],"clauses": ["conj", "ccomp"]}
+        {"command": "Send a text message to Dr. Matt Wood saying the Patient is ready for you in OR 1.", "requires_extraction": true, "entities": ["PERSON"],"clauses": ["conj", "ccomp", "parataxis"]}
     ]
 }
 

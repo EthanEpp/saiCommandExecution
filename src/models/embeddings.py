@@ -4,8 +4,8 @@ from sentence_transformers import SentenceTransformer
 class SentenceEmbedder:
     def __init__(self):
         # Load the MiniLM model specifically designed for paraphrasing tasks
-        # self.model = SentenceTransformer('sentence-transformers/paraphrase-mpnet-base-v2')
-        self.model = SentenceTransformer('sentence-transformers/paraphrase-MiniLM-L6-v2')
+        self.model = SentenceTransformer('sentence-transformers/paraphrase-mpnet-base-v2')
+        # self.model = SentenceTransformer('sentence-transformers/paraphrase-MiniLM-L6-v2')
 
     def encode(self, sentences):
         """
