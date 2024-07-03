@@ -1,4 +1,4 @@
-name: Update Requirements and Run Tests
+name: Run Tests
 
 on: [push]
 
