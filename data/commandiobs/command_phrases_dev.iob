@@ -1,0 +1,273 @@
+BOS open the system settings EOS	O O O B-app_name I-app_name open_app
+BOS can you open the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS can you please open the system settings app EOS	O O O O O O B-app_name I-app_name O open_app
+BOS can you bring up the system settings for me EOS	O O O O O O B-app_name I-app_name O O open_app
+BOS please open the system settings EOS	O O O O B-app_name I-app_name open_app
+BOS open system settings EOS	O B-app_name I-app_name open_app
+BOS open the system settings EOS	O O O B-app_name I-app_name open_app
+BOS can you open the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS can you please open the system settings app EOS	O O O O O O B-app_name I-app_name O open_app
+BOS can you bring up the system settings for me EOS	O O O O O O B-app_name I-app_name O O open_app
+BOS please open the system settings EOS	O O O O B-app_name I-app_name open_app
+BOS open system settings EOS	O O B-app_name I-app_name open_app
+BOS bring up the system settings EOS	O O O O B-app_name I-app_name open_app
+BOS please bring up the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS would you open the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS could you open the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS i need the system settings opened EOS	O O O O B-app_name I-app_name O open_app
+BOS show me the system settings EOS	O O O O B-app_name I-app_name open_app
+BOS could you show the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS can you display the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS display the system settings for me EOS	O O O B-app_name I-app_name O O open_app
+BOS open up the system settings EOS	O O O O B-app_name I-app_name open_app
+BOS open the system settings please EOS	O O O B-app_name I-app_name O open_app
+BOS please show me the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS access the system settings EOS	O O O B-app_name I-app_name open_app
+BOS could you access the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS show the system settings app EOS	O O O B-app_name I-app_name O open_app
+BOS show the system settings please EOS	O O O B-app_name I-app_name O open_app
+BOS i need to see the system settings EOS	O O O O O O B-app_name I-app_name open_app
+BOS open the system settings for me EOS	O O O B-app_name I-app_name O O open_app
+BOS open the system settings window EOS	O O O B-app_name I-app_name O open_app
+BOS can you get the system settings open EOS	O O O O O B-app_name I-app_name O open_app
+BOS please open up the system settings EOS	O O O O O B-app_name I-app_name open_app
+
+
+BOS show music player EOS	O O B-app_name I-app_name open_app
+BOS show the music player EOS	O O O B-app_name I-app_name open_app
+BOS show clock EOS	O O B-app_name open_app
+BOS show timer EOS	O O B-app_name open_app
+BOS show stopwatch EOS	O O B-app_name open_app
+BOS open spotify EOS	O O B-app_name open_app
+BOS open web browser EOS	O O B-app_name I-app_name open_app
+BOS open the dicom viewer EOS	O O O B-app_name I-app_name open_app
+BOS show temperature EOS	O O B-app_name open_app
+BOS show humidity EOS	O O B-app_name open_app
+BOS show smoke level EOS	O O B-app_name I-app_name open_app
+BOS open the preferences cards app EOS	O O O B-app_name I-app_name O open_app
+
+
+BOS show music player EOS	O O B-app_name I-app_name open_app
+BOS show the music player EOS	O O O B-app_name I-app_name open_app
+BOS show clock EOS	O O B-app_name open_app
+BOS show timer EOS	O O B-app_name open_app
+BOS show stopwatch EOS	O O B-app_name open_app
+BOS open spotify EOS	O O B-app_name open_app
+BOS open web browser EOS	O O B-app_name I-app_name open_app
+BOS open the dicom viewer EOS	O O O B-app_name I-app_name open_app
+BOS show temperature EOS	O O B-app_name open_app
+BOS show humidity EOS	O O B-app_name open_app
+BOS show smoke level EOS	O O B-app_name I-app_name open_app
+BOS open the preferences cards app EOS	O O O B-app_name I-app_name O open_app
+BOS please show the music player EOS	O O O B-app_name I-app_name open_app
+BOS could you show the clock EOS	O O O O B-app_name open_app
+BOS can you show the timer EOS	O O O O B-app_name open_app
+BOS bring up the stopwatch EOS	O O O O B-app_name open_app
+BOS would you open spotify EOS	O O O B-app_name open_app
+BOS open the web browser EOS	O O O B-app_name I-app_name open_app
+BOS please open the dicom viewer EOS	O O O B-app_name I-app_name open_app
+BOS display the temperature EOS	O O O B-app_name open_app
+BOS show me the humidity EOS	O O O O B-app_name open_app
+BOS can you display the smoke level EOS	O O O O B-app_name I-app_name open_app
+BOS bring up the preferences cards app EOS	O O O B-app_name I-app_name O open_app
+BOS please open music player EOS	O O B-app_name I-app_name open_app
+BOS open the music player app EOS	O O O B-app_name I-app_name open_app
+BOS show the time EOS	O O O B-app_name open_app
+BOS display the timer EOS	O O O B-app_name open_app
+BOS can you open the stopwatch EOS	O O O O B-app_name open_app
+BOS please open spotify app EOS	O O B-app_name open_app
+BOS bring up the web browser EOS	O O O B-app_name I-app_name open_app
+BOS display the dicom viewer EOS	O O O B-app_name I-app_name open_app
+BOS show the current temperature EOS	O O O B-app_name open_app
+BOS please show me the humidity EOS	O O O O B-app_name open_app
+BOS can you show the smoke level EOS	O O O O B-app_name I-app_name open_app
+BOS open the settings app EOS	O O O B-app_name I-app_name open_app
+
+
+
+BOS log me in EOS	O O O O log_in
+BOS can you log me in EOS	O O O O O O log_in
+BOS please log me in EOS	O O O O O log_in
+BOS could you log me in EOS	O O O O O O log_in
+BOS log me in please EOS	O O O O O log_in
+BOS log me into my account EOS	O O O O O O log_in
+BOS can you log me into my account EOS	O O O O O O O O log_in
+BOS please log me into my account EOS	O O O O O O O log_in
+BOS can you log me in now EOS	O O O O O O O log_in
+BOS log me in to the system EOS	O O O O O O O log_in
+BOS i need to be logged in EOS	O O O O O O O log_in
+BOS could you please log me in EOS	O O O O O O O log_in
+BOS log me in right away EOS	O O O O O O log_in
+BOS log me in to my profile EOS	O O O O O O O log_in
+BOS can you log me in to my profile EOS	O O O O O O O O O log_in
+BOS please log me in to my profile EOS	O O O O O O O O log_in
+BOS log me in to my user account EOS	O O O O O O O O log_in
+BOS can you log me in to my user account EOS	O O O O O O O O O O log_in
+BOS please log me in to my user account EOS	O O O O O O O O O log_in
+BOS i need you to log me in EOS	O O O O O O O O log_in
+
+
+BOS sign me in EOS	O O O O log_in
+BOS can you sign me in EOS	O O O O O O log_in
+BOS please sign me in EOS	O O O O O log_in
+BOS could you sign me in EOS	O O O O O O log_in
+BOS sign me in please EOS	O O O O O log_in
+BOS sign me into my account EOS	O O O O O O log_in
+BOS can you sign me into my account EOS	O O O O O O O O log_in
+BOS please sign me into my account EOS	O O O O O O O log_in
+BOS can you sign me in now EOS	O O O O O O O log_in
+BOS sign me in to the system EOS	O O O O O O O log_in
+BOS i need to be signed in EOS	O O O O O O O log_in
+BOS could you please sign me in EOS	O O O O O O O log_in
+BOS sign me in right away EOS	O O O O O O log_in
+BOS sign me in to my profile EOS	O O O O O O O log_in
+BOS can you sign me in to my profile EOS	O O O O O O O O O log_in
+BOS please sign me in to my profile EOS	O O O O O O O O log_in
+BOS sign me in to my user account EOS	O O O O O O O O log_in
+BOS can you sign me in to my user account EOS	O O O O O O O O O O log_in
+BOS please sign me in to my user account EOS	O O O O O O O O O log_in
+BOS i need you to sign me in EOS	O O O O O O O O log_in
+
+
+BOS log me out EOS	O O O O log_out
+
+BOS log me out EOS	O O O O log_out
+BOS can you log me out EOS	O O O O O O log_out
+BOS please log me out EOS	O O O O O log_out
+BOS could you log me out EOS	O O O O O O log_out
+BOS log me out please EOS	O O O O O log_out
+BOS log me out of my account EOS	O O O O O O O log_out
+BOS can you log me out of my account EOS	O O O O O O O O O log_out
+BOS please log me out of my account EOS	O O O O O O O O log_out
+BOS can you log me out now EOS	O O O O O O O log_out
+BOS log me out of the system EOS	O O O O O O O log_out
+BOS i need to be logged out EOS	O O O O O O O log_out
+BOS could you please log me out EOS	O O O O O O O log_out
+BOS log me out right away EOS	O O O O O O log_out
+BOS log me out of my profile EOS	O O O O O O O log_out
+BOS can you log me out of my profile EOS	O O O O O O O O O log_out
+BOS please log me out of my profile EOS	O O O O O O O O log_out
+BOS log me out of my user account EOS	O O O O O O O O log_out
+BOS can you log me out of my user account EOS	O O O O O O O O O O log_out
+BOS please log me out of my user account EOS	O O O O O O O O O log_out
+BOS i need you to log me out EOS	O O O O O O O O log_out
+
+BOS sign me out EOS	O O O O log_out
+BOS can you sign me out EOS	O O O O O O log_out
+BOS please sign me out EOS	O O O O O log_out
+BOS could you sign me out EOS	O O O O O O log_out
+BOS sign me out please EOS	O O O O O log_out
+BOS sign me out of my account EOS	O O O O O O O log_out
+BOS can you sign me out of my account EOS	O O O O O O O O O log_out
+BOS please sign me out of my account EOS	O O O O O O O O log_out
+BOS can you sign me out now EOS	O O O O O O O log_out
+BOS sign me out of the system EOS	O O O O O O O log_out
+BOS i need of be signed out EOS	O O O O O O O log_out
+BOS could you please sign me out EOS	O O O O O O O log_out
+BOS sign me out right away EOS	O O O O O O log_out
+BOS sign me out of my profile EOS	O O O O O O O log_out
+BOS can you sign me out of my profile EOS	O O O O O O O O O log_out
+BOS please sign me out of my profile EOS	O O O O O O O O log_out
+BOS sign me out of my user account EOS	O O O O O O O O log_out
+BOS can you sign me out of my user account EOS	O O O O O O O O O O log_out
+BOS please sign me out of my user account EOS	O O O O O O O O O log_out
+BOS i need you of sign me out EOS	O O O O O O O O log_out
+
+
+
+BOS hide music player EOS	O O B-app_name I-app_name hide_app
+BOS could you please hide music player EOS	O O O O O B-app_name I-app_name hide_app
+BOS hide the music player please EOS	O O O B-app_name I-app_name O hide_app
+BOS hide clock EOS	O O B-app_name hide_app
+BOS hide the clock EOS	O O O B-app_name hide_app
+BOS hide the timer app EOS	O O O B-app_name O hide_app
+BOS hide stopwatch EOS	O O B-app_name hide_app
+BOS hide the temperature monitor EOS	O O O B-app_name I-app_name hide_app
+BOS please hide the humidity viewer EOS	O O O O B-app_name I-app_name hide_app
+BOS hide the smoke level monitor EOS	O O O B-app_name I-app_name I-app_name hide_app
+BOS can you close the schedule for me EOS	O O O O O B-app_name O O hide_app
+
+
+BOS play the song bohemian rhapsody EOS	O O O O B-song_name I-song_name play_song
+BOS can you play doin' it right by daft punk EOS	O O O O B-song_name I-song_name I-song_name O I-artist_name I-artist_name play_song
+BOS play the song starboy EOS	O O O O B-song_name play_song
+BOS play redbone by childish gambino please EOS	O O B-song_name O B-artist_name I-artist_name O play_song
+BOS please play the song hotel california EOS	O O O O O B-song_name I-song_name play_song
+BOS play the song shape of you by ed sheeran EOS	O O O O B-song_name I-song_name I-song_name O B-artist_name I-artist_name play_song
+BOS play despacito EOS	O O B-song_name play_song
+BOS can you play the song thriller by michael jackson EOS	O O O O O O B-song_name O B-artist_name I-artist_name play_song
+BOS play the song rolling in the deep please EOS	O O O O B-song_name I-song_name I-song_name I-song_name O play_song
+BOS play someone like you EOS	O O B-song_name I-song_name I-song_name play_song
+BOS could you please play the song yesterday EOS	O O O O O O O B-song_name play_song
+BOS play the song uptown funk EOS	O O O O B-song_name I-song_name play_song
+BOS play chandelier EOS	O O B-song_name play_song
+BOS play the song happy please EOS	O O O O B-song_name O play_song
+BOS play the song firework EOS	O O O O B-song_name play_song
+BOS play thinking out loud EOS	O O B-song_name I-song_name I-song_name play_song
+BOS i would like you to play the song roar by katy perry please EOS	O O O O O O O O O B-song_name O B-artist_name I-artist_name O play_song
+BOS play the song blinding lights EOS	O O O O B-song_name I-song_name play_song
+BOS play hello EOS	O O B-song_name play_song
+BOS could you play the song sweet child o' mine EOS	O O O O O O B-song_name I-song_name I-song_name I-song_name play_song
+BOS please play the song bad guy EOS	O O O O O B-song_name I-song_name play_song
+BOS can you play the song get lucky EOS	O O O O O O B-song_name I-song_name play_song
+
+
+
+BOS play music from my workout playlist EOS	O O O O B-source_user B-playlist_name O play_from_playlist
+BOS play my surgery playlist EOS	O O B-source_user B-playlist_name O O play_from_playlist
+BOS play the playlist songs to dance to EOS	O O O O B-playlist_name I-playlist_name I-playlist_name I-playlist_name play_from_playlist
+BOS play music by the beatles EOS	O O O B-artist_name I-artist_name play_artist
+BOS play the dark side of the moon album EOS	O O B-album_name I-album_name I-album_name I-album_name I-album_name I-album_name play_album
+BOS play the album Scorpion by Drake EOS	O O O O B-album_name O B-artist_name play_album
+BOS play some jazz EOS	O O O B-genre_name play_genre
+BOS start music EOS	O O O start_music
+BOS stop music EOS	O O O stop_music
+BOS next song EOS	O O O next_song
+BOS skip this song EOS	O O O O next_song
+BOS play previous song EOS	O O O O previous_song
+BOS restart song EOS	O O O restart_song
+BOS increase volume EOS	O O O increase_volume
+BOS decrease volume EOS	O O O decrease_volume
+BOS set volume to 5 EOS	O O O O B-volume_number set_volume
+BOS set system volume to 7 EOS	O O O O O B-volume_number set_volume
+BOS set system volume to twelve EOS	O O O O O B-volume set_volume
+BOS increase system volume EOS	O O O O increase_volume
+BOS decrease system volume EOS	O O O O decrease_volume
+
+BOS set a timer for 12 minutes EOS	O O O O O B-timer_length I-timer_length set_timer
+BOS set a timer for fifteen minutes EOS	O O O O O B-timer_length I-timer_length set_timer
+BOS set a timer for one hour EOS	O O O O O B-timer_length I-timer_length set_timer
+BOS name timer workout EOS	O O O B-timer_name name_timer
+BOS name timer covid test EOS	O O O B-timer_name I-timer_name name_timer
+BOS stop timer EOS	O O O stop_timer
+BOS clear timer EOS	O O O clear_timer
+BOS restart timer EOS	O O O restart_timer
+BOS reset timer EOS	O O O reset_timer
+BOS start stopwatch EOS	O O O start_stopwatch
+BOS stop stopwatch EOS	O O O stop_stopwatch
+BOS reset stopwatch EOS	O O O reset_stopwatch
+BOS clear stopwatch EOS	O O O clear_stopwatch
+BOS tourniquet up EOS	O O O tourniquet_up
+BOS tourniquet down EOS	O O O tourniquet_down
+BOS send a text message to john EOS	O O O O O O B-contact_name send_text_to
+BOS delete content from a text message love you EOS	O O O O O O O B-text_content I-text_content delete_text_content
+BOS delete the part of my text that says what time is dinner EOS	O O O O O O O O O B-text_content I-text_content I-text_content I-text_content delete_text_content
+BOS cancel text message EOS	O O O O cancel_text
+BOS send a text message to ethan epp saying happy birthday i hope it is a good one EOS	O O O O O B-contact_name I-contact_name O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text_to_with_message
+BOS send text message EOS	O O O O send_text
+BOS start a call with mary EOS	O O O O B-contact_name start_zoom_call
+
+BOS search up coffe mug recall in google EOS	O O O B-search_query I-search_query I-search_query O O google_search
+BOS look up the fast and furious three trailer on youtube EOS	O O O O B-search_query I-search_query I-search_query I-search_query I-search_query O O youtuber_search
+BOS enlarge window EOS	O O O enlarge_window
+
+BOS what is the room temperature EOS	O O O O O O room_temp
+BOS what is the room humidity level EOS	O O O O O O O room_humidity
+BOS what is the level of smoke in the room EOS	O O O O O O O O O room_smoke
+BOS show the room schedule EOS	O O O B-source_user O show_schedule
+BOS show my schedule EOS	O O B-source_user O show_schedule
+BOS show dr smith's schedule EOS	O O B-source_user I-source_user O O show_schedule
+BOS show the first patient scheduled EOS	O O O B-source_user I-source_user O show_schedule
+BOS show the last patient scheduled EOS	O O O B-source_user I-source_user O show_schedule
+BOS when is my next patient EOS	O O O B-source_user O show_schedule
+BOS minimize window EOS	O O O minimize_window

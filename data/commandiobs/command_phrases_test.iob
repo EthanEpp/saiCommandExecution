@@ -1,0 +1,66 @@
+BOS please show me the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS access the system settings EOS	O O O B-app_name I-app_name open_app
+BOS could you access the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS show the system settings app EOS	O O O B-app_name I-app_name O open_app
+BOS show the system settings please EOS	O O O B-app_name I-app_name O open_app
+BOS i need to see the system settings EOS	O O O O O O B-app_name I-app_name open_app
+BOS open the system settings for me EOS	O O O B-app_name I-app_name O O open_app
+BOS open the system settings window EOS	O O O B-app_name I-app_name O open_app
+BOS can you get the system settings open EOS	O O O O O B-app_name I-app_name O open_app
+BOS please open up the system settings EOS	O O O O O B-app_name I-app_name open_app
+
+BOS show temperature EOS	O O B-app_name open_app
+BOS show humidity EOS	O O B-app_name open_app
+BOS show smoke level EOS	O O B-app_name I-app_name open_app
+BOS open the preferences cards app EOS	O O O B-app_name I-app_name O open_app
+
+BOS please open spotify app EOS	O O B-app_name open_app
+BOS bring up the web browser EOS	O O O B-app_name I-app_name open_app
+BOS display the dicom viewer EOS	O O O B-app_name I-app_name open_app
+BOS show the current temperature EOS	O O O B-app_name open_app
+BOS please show me the humidity EOS	O O O O B-app_name open_app
+BOS can you show the smoke level EOS	O O O O B-app_name I-app_name open_app
+BOS open the settings app EOS	O O O B-app_name I-app_name open_app
+
+BOS can you log me in to my profile EOS	O O O O O O O O O log_in
+BOS please log me in to my profile EOS	O O O O O O O O log_in
+BOS log me in to my user account EOS	O O O O O O O O log_in
+BOS can you log me in to my user account EOS	O O O O O O O O O O log_in
+BOS please log me in to my user account EOS	O O O O O O O O O log_in
+BOS i need you to log me in EOS	O O O O O O O O log_in
+
+BOS sign me in to my user account EOS	O O O O O O O O log_in
+BOS can you sign me in to my user account EOS	O O O O O O O O O O log_in
+BOS please sign me in to my user account EOS	O O O O O O O O O log_in
+BOS i need you to sign me in EOS	O O O O O O O O log_in
+
+BOS please log me out of my profile EOS	O O O O O O O O log_out
+BOS log me out of my user account EOS	O O O O O O O O log_out
+BOS can you log me out of my user account EOS	O O O O O O O O O O log_out
+BOS please log me out of my user account EOS	O O O O O O O O O log_out
+BOS i need you to log me out EOS	O O O O O O O O log_out
+
+BOS sign me out of my user account EOS	O O O O O O O O log_out
+BOS can you sign me out of my user account EOS	O O O O O O O O O O log_out
+BOS please sign me out of my user account EOS	O O O O O O O O O log_out
+BOS i need you of sign me out EOS	O O O O O O O O log_out
+
+BOS hide the temperature monitor EOS	O O O B-app_name I-app_name hide_app
+BOS please hide the humidity viewer EOS	O O O O B-app_name I-app_name hide_app
+BOS hide the smoke level monitor EOS	O O O B-app_name I-app_name I-app_name hide_app
+BOS can you close the schedule for me EOS	O O O O O B-app_name O O hide_app
+
+BOS hide the timer app EOS	O O O B-app_name O hide_app
+BOS hide stopwatch EOS	O O B-app_name hide_app
+BOS hide the temperature monitor EOS	O O O B-app_name I-app_name hide_app
+BOS please hide the humidity viewer EOS	O O O O B-app_name I-app_name hide_app
+
+BOS play the song happy please EOS	O O O O B-song_name O play_song
+BOS play the song firework EOS	O O O O B-song_name play_song
+BOS play thinking out loud EOS	O O B-song_name I-song_name I-song_name play_song
+BOS i would like you to play the song roar by katy perry please EOS	O O O O O O O O O B-song_name O B-artist_name I-artist_name O play_song
+BOS play the song blinding lights EOS	O O O O B-song_name I-song_name play_song
+BOS play hello EOS	O O B-song_name play_song
+BOS could you play the song sweet child o' mine EOS	O O O O O O B-song_name I-song_name I-song_name I-song_name play_song
+BOS please play the song bad guy EOS	O O O O O B-song_name I-song_name play_song
+BOS can you play the song get lucky EOS	O O O O O O B-song_name I-song_name play_song
