@@ -3,11 +3,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 from torch.autograd import Variable
-
+import pickle
 
 ENV_BERT_ID_CLS=False # use cls token for id classification
 ENV_EMBEDDING_SIZE=1024 # dimention of embbeding, bertbase=768,bertlarge&elmo=1024
-ENV_BERT_ADDR=bert_large
+ENV_BERT_ADDR='./bert-large-uncased/'
 ENV_SEED=1331
 ENV_CNN_FILTERS=128
 ENV_CNN_KERNELS=4
@@ -22,6 +22,11 @@ def generate_square_subsequent_mask(sz: int) :
 def generate_square_diagonal_mask(sz: int) :
     """Generates a matrix which there are zeros on diag and other indexes are -inf."""
     return torch.triu(torch.ones(sz,sz)-float('inf'), diagonal=1)+torch.tril(torch.ones(sz,sz)-float('inf'), diagonal=-1)
+
+def load_mapping(filename):
+    with open(filename, 'rb') as f:
+        return pickle.load(f)
+
 
 # positional embedding used in transformers
 class PositionalEncoding(nn.Module):
@@ -140,7 +145,7 @@ class Decoder(nn.Module):
         self.layer_norm = nn.LayerNorm(ENV_HIDDEN_SIZE)
 
 
-    def forward(self, input,encoder_outputs,encoder_maskings,bert_subtoken_maskings=None,infer=False):
+    def forward(self, input,encoder_outputs,encoder_maskings,tag2index,bert_subtoken_maskings=None,infer=False):
         # encoder outputs: BATCH,LENGTH,Dims (16,60,1024)
         batch_size = encoder_outputs.shape[0]
         length = encoder_outputs.size(1) #for every token in batches
@@ -199,16 +204,24 @@ class Decoder(nn.Module):
 class CNet(nn.Module):
     def __init__(self, model_path=None):
         super(CNet, self).__init__()
+        if model_path:
+            self.word2index = load_mapping(f'models/ctran{model_path}-word2index.pkl')
+            self.index2word = load_mapping(f'models/ctran{model_path}-index2word.pkl')
+            self.tag2index = load_mapping(f'models/ctran{model_path}-tag2index.pkl')
+            self.index2tag = load_mapping(f'models/ctran{model_path}-index2tag.pkl')
+            self.intent2index = load_mapping(f'models/ctran{model_path}-intent2index.pkl')
+            self.index2intent = load_mapping(f'models/ctran{model_path}-index2intent.pkl')
+
         self.bert_layer = BertLayer()
-        self.encoder = Encoder()
+        self.encoder = Encoder(len(self.word2index))
         self.middle = Middle()
-        self.decoder = Decoder(len(tag2index), len(intent2index))
+        self.decoder = Decoder(len(self.tag2index), len(self.intent2index))
 
         if model_path:
             self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl').state_dict())
             self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl').state_dict())
             self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl').state_dict())
-            self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl').state_dict())
+
 
         if torch.cuda.is_available():
             self.bert_layer = self.bert_layer.cuda()
@@ -227,6 +240,6 @@ class CNet(nn.Module):
         middle_output = self.middle(encoder_output, encoder_maskings)
         
         # Pass the middle output and other inputs through the decoder
-        slot_scores, intent_score = self.decoder(input, middle_output, encoder_maskings, bert_subtoken_maskings, infer)
+        slot_scores, intent_score = self.decoder(input, middle_output, encoder_maskings, self.tag2index,bert_subtoken_maskings, infer)
         
         return slot_scores, intent_score

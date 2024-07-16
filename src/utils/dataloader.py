@@ -2,9 +2,7 @@
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
-import torch.optim as optim
 import torch.nn.functional as F
-import random
 import numpy as np
 import pickle
 from tqdm import tqdm
@@ -18,7 +16,7 @@ import os
 #this function converts tokens to ids and then to a tensor
 def prepare_sequence(seq, to_ix):
     idxs = list(map(lambda w: to_ix[w] if w in to_ix.keys() else to_ix["<UNK>"], seq))
-    tensor = Variable(torch.LongTensor(idxs)).cuda() if USE_CUDA else Variable(torch.LongTensor(idxs))
+    tensor = Variable(torch.LongTensor(idxs)).cuda() if torch.cuda.is_available() else Variable(torch.LongTensor(idxs))
     return tensor
 # this function turns class text to id
 def prepare_intent(intent, to_ix):
@@ -46,6 +44,8 @@ def remove_punc(mlist):
             newtokens.pop(0)
         temp_train_tokens.append(" ".join(newtokens))
     return temp_train_tokens
+
+
 # this function returns the main tokens so that we can apply tagging on them. see original paper.
 def get_subtoken_mask(current_tokens,bert_tokenizer):
     temp_mask = []
@@ -129,37 +129,42 @@ def add_paddings(seq_in,seq_out):
             temp = temp[:LENGTH]
         sout.append(temp)
     return sin,sout
+
 sin,sout=add_paddings(seq_in,seq_out)
 sin_test,sout_test=add_paddings(seq_in_test,seq_out_test)
 
-# making dictionary (token:id), initial value
-word2index = {'<PAD>': 0, '<UNK>':1,'<BOS>':2,'<EOS>':3,'<NUM>':4}
-# add rest of token list to dictionary
-for token in vocab:
-    if token not in word2index.keys():
-        word2index[token]=len(word2index)
-#make id to token list ( reverse )
-index2word = {v:k for k,v in word2index.items()}
+def create_mappings(vocab, slot_tag, intent_tag):
+    # making dictionary (token:id), initial value
+    word2index = {'<PAD>': 0, '<UNK>':1,'<BOS>':2,'<EOS>':3,'<NUM>':4}
+    # add rest of token list to dictionary
+    for token in vocab:
+        if token not in word2index.keys():
+            word2index[token]=len(word2index)
+    #make id to token list ( reverse )
+    index2word = {v:k for k,v in word2index.items()}
 
-# initial tag2index dictionary
-tag2index = {'<PAD>' : 0,'<BOS>':2,'<UNK>':1,'<EOS>':3}
-# add rest of tag tokens to list
-for tag in slot_tag:
-    if tag not in tag2index.keys():
-        tag2index[tag] = len(tag2index)
-# making index to tag
-index2tag = {v:k for k,v in tag2index.items()}
+    # initial tag2index dictionary
+    tag2index = {'<PAD>' : 0,'<BOS>':2,'<UNK>':1,'<EOS>':3}
+    # add rest of tag tokens to list
+    for tag in slot_tag:
+        if tag not in tag2index.keys():
+            tag2index[tag] = len(tag2index)
+    # making index to tag
+    index2tag = {v:k for k,v in tag2index.items()}
 
-#initialize intent to index
-intent2index={'UNKNOWN':0}
-for ii in intent_tag:
-    if ii not in intent2index.keys():
-        intent2index[ii] = len(intent2index)
-index2intent = {v:k for k,v in intent2index.items()}
+    #initialize intent to index
+    intent2index={'UNKNOWN':0}
+    for ii in intent_tag:
+        if ii not in intent2index.keys():
+            intent2index[ii] = len(intent2index)
+    index2intent = {v:k for k,v in intent2index.items()}
+    return word2index, index2word, tag2index, index2tag, intent2index, index2intent
+
+word2index, index2word, tag2index, index2tag, intent2index, index2intent = create_mappings(vocab, slot_tag, intent_tag)
 
 #defining datasets.
 def remove_values_from_list(the_list, val):
-   return [value for value in the_list if value != val]
+    return [value for value in the_list if value != val]
 
 class NLUDataset(Dataset):
     def __init__(self, sin,sout,intent,input_ids,attention_mask,token_type_ids,subtoken_mask):
@@ -196,3 +201,58 @@ def mask_important_tags(predictions,tags,masks):
         #result_tags.pop()
         #result_preds.pop()
     return result_preds,result_tags
+
+
+def removepads(toks, clip=False):
+    global clipindex
+    result = toks.copy()
+    for i, t in enumerate(toks):
+        if t == "<PAD>":
+            result.remove(t)
+        elif t == "<EOS>":
+            result.remove(t)
+            if not clip:
+                clipindex = i
+    if clip:
+        result = result[:clipindex]
+    return result
+
+def tag_sentence(sentence):
+    # Convert to lowercase and replace punctuation with spaces
+    sentence = re.sub(r'[^\w\s]', ' ', sentence.lower())
+
+    # Splitting the sentence into tokens
+    tokens = re.split(r'(\s+)', sentence)
+
+    # Initialize variables
+    output_tokens = []
+    output_labels = []
+
+    # Iterate over each token
+    for token in tokens:
+        if token.strip():  # Avoiding empty tokens
+            output_labels.append('O')
+            output_tokens.append(token.strip())
+
+    formatted_sentence = ' '.join(output_tokens)
+    formatted_labels = ' '.join(output_labels)
+
+    return f"BOS {formatted_sentence} EOS\t O {formatted_labels} open_app"
+
+def tokenize_sample(sample):
+    sample = tag_sentence(sample)
+    # added tokenizer and tokens for
+    bert_tokenizer = torch.hub.load(ENV_BERT_ADDR, 'tokenizer', ENV_BERT_ADDR, verbose=False, source="local")
+    sample = [sample]
+    print("example input:" + sample[0])
+    # converts string to array of tokens + array of tags + target intent [array with x=3 and y dynamic]
+    sample_tokens = remove_punc(sample)
+    sample_subtoken_mask = get_subtoken_mask(sample_tokens, bert_tokenizer)
+    sample_toks = bert_tokenizer.batch_encode_plus(sample_tokens, max_length=LENGTH, add_special_tokens=True, return_tensors='pt',
+                                                   return_attention_mask=True, padding='max_length', truncation=True)
+    sample = [[re.sub(" +", " ", t.split("\t")[0]).split(" "), t.split("\t")[1].split(" ")[:-1], t.split("\t")[1].split(" ")[-1]] for t in sample]
+    # removes BOS, EOS from array of tokens and tags
+    sample = [[t[0][1:-1], t[1][1:], t[2]] for t in sample]
+    return sample, sample_subtoken_mask, sample_toks
+
+import time
