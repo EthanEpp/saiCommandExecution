@@ -98,7 +98,7 @@ class Encoder(nn.Module):
 
 #Middle
 class Middle(nn.Module):
-    def __init__(self ,p_dropout=0.5):
+    def __init__(self ,p_dropout=0.5, length = 60):
         super(Middle, self).__init__()
         self.activation = nn.ReLU()
         self.p_dropout = p_dropout
@@ -108,8 +108,8 @@ class Middle(nn.Module):
         self.pos_encoder = PositionalEncoding(ENV_HIDDEN_SIZE, dropout=0.1)
         encoder_layers = nn.TransformerEncoderLayer(ENV_HIDDEN_SIZE, nhead=2,batch_first=True, dim_feedforward=2048 ,activation="relu", dropout=0.1)
         self.transformer_encoder = nn.TransformerEncoder(encoder_layers, nlayers,enable_nested_tensor=False)
-        self.transformer_mask = generate_square_subsequent_mask(LENGTH).cuda()
-
+        self.transformer_mask = generate_square_subsequent_mask(length).cuda()
+        print("MIDDLE", length)
     def forward(self, fromencoder,input_masking,training=True):
         src = fromencoder * math.sqrt(ENV_HIDDEN_SIZE)
         src = self.pos_encoder(src)
@@ -119,7 +119,7 @@ class Middle(nn.Module):
 #start of the decoder
 class Decoder(nn.Module):
 
-    def __init__(self,slot_size,intent_size,dropout_p=0.5):
+    def __init__(self,slot_size,intent_size,dropout_p=0.5, LENGTH=60):
         super(Decoder, self).__init__()
         self.slot_size = slot_size
         self.intent_size = intent_size
@@ -143,7 +143,7 @@ class Decoder(nn.Module):
                                                     ,num_heads=8,dropout=0.1
                                                     ,batch_first=True)
         self.layer_norm = nn.LayerNorm(ENV_HIDDEN_SIZE)
-
+        print("DECODER", LENGTH)
 
     def forward(self, input,encoder_outputs,encoder_maskings,tag2index,bert_subtoken_maskings=None,infer=False):
         # encoder outputs: BATCH,LENGTH,Dims (16,60,1024)
@@ -202,25 +202,27 @@ class Decoder(nn.Module):
     
 # CNet class
 class CNet(nn.Module):
-    def __init__(self, model_path=None):
+    def __init__(self, model_path=None, padded_length=60):
         super(CNet, self).__init__()
+        self.length = padded_length
         if model_path:
-            self.word2index = load_mapping(f'models/ctran{model_path}-word2index.pkl')
-            self.index2word = load_mapping(f'models/ctran{model_path}-index2word.pkl')
-            self.tag2index = load_mapping(f'models/ctran{model_path}-tag2index.pkl')
-            self.index2tag = load_mapping(f'models/ctran{model_path}-index2tag.pkl')
-            self.intent2index = load_mapping(f'models/ctran{model_path}-intent2index.pkl')
-            self.index2intent = load_mapping(f'models/ctran{model_path}-index2intent.pkl')
+            self.word2index = load_mapping(f'{model_path}-word2index.pkl')
+            self.index2word = load_mapping(f'{model_path}-index2word.pkl')
+            self.tag2index = load_mapping(f'{model_path}-tag2index.pkl')
+            self.index2tag = load_mapping(f'{model_path}-index2tag.pkl')
+            self.intent2index = load_mapping(f'{model_path}-intent2index.pkl')
+            self.index2intent = load_mapping(f'{model_path}-index2intent.pkl')
 
         self.bert_layer = BertLayer()
         self.encoder = Encoder(len(self.word2index))
-        self.middle = Middle()
-        self.decoder = Decoder(len(self.tag2index), len(self.intent2index))
+        self.middle = Middle(length = padded_length)
+        self.decoder = Decoder(len(self.tag2index), len(self.intent2index), LENGTH=padded_length)
 
         if model_path:
             self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl').state_dict())
             self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl').state_dict())
             self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl').state_dict())
+            self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl').state_dict())
 
 
         if torch.cuda.is_available():

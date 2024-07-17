@@ -4,6 +4,7 @@ import sys
 import os
 from torch.autograd import Variable
 
+import time
 
 # Add the parent directory to the Python path so it can find the utils module
 current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -14,7 +15,7 @@ from src.models.cnet import CNet
 from src.utils.dataloader import tokenize_sample
 
 
-def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, word2index, index2tag, index2intent, use_cuda=True):
+def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, use_cuda=True):
     """
     Predicts the intent and tags for a given sample using a pretrained model.
 
@@ -33,9 +34,14 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, wo
     """
     # Ensure the model is in evaluation mode
     model.eval()
+    word2index = model.word2index
+    index2tag = model.index2tag
+    index2intent = model.index2intent
 
     with torch.no_grad():
+        timings = {}
 
+        start_time = time.time()
         # Move tensors to GPU if CUDA is available
         if use_cuda and torch.cuda.is_available():
             bert_tokens = sample_toks['input_ids'][0].unsqueeze(0).cuda()
@@ -47,11 +53,16 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, wo
             bert_mask = sample_toks['attention_mask'][0].unsqueeze(0)
             bert_toktype = sample_toks['token_type_ids'][0].unsqueeze(0)
             subtoken_mask = sample_subtoken_mask[0].unsqueeze(0)
+        timings['bert_input_prep'] = time.time() - start_time
 
+        start_time = time.time()
         start_decode = Variable(torch.LongTensor([[word2index['<BOS>']]*1])).cuda().transpose(1,0) if use_cuda else Variable(torch.LongTensor([[word2index['<BOS>']]*1])).transpose(1,0)
+        timings['sequence_prep'] = time.time() - start_time
 
+        start_time = time.time()
         bert_info = (bert_tokens, bert_mask, bert_toktype)
         tag_score, intent_score = model(bert_info, start_decode, bert_mask == 0, subtoken_mask, infer=True)
+        timings['model_processing'] = time.time() - start_time
 
         # Process tag predictions
         tag_predictions = torch.argmax(tag_score, -1).squeeze().cpu().numpy()
@@ -63,11 +74,12 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, wo
 
         result = {
             "intent": predicted_intent,
-            "tags": filtered_tags
+            "tags": filtered_tags,
+            "timings": timings
         }
         return result
 
-def run_inference(input_text):
-    sample, sample_subtoken_mask, sample_toks = tokenize_sample(input_text)
-    results = predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, word2index, index2tag, index2intent)
+def run_inference(input_text, model):
+    sample, sample_subtoken_mask, sample_toks = tokenize_sample(input_text, ENV_BERT_ADDR, model.length)
+    results = predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model)
     return results

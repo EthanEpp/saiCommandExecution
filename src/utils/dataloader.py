@@ -47,7 +47,7 @@ def remove_punc(mlist):
 
 
 # this function returns the main tokens so that we can apply tagging on them. see original paper.
-def get_subtoken_mask(current_tokens,bert_tokenizer):
+def get_subtoken_mask(current_tokens,bert_tokenizer, length=60):
     temp_mask = []
     for i in current_tokens:
         temp_row_mask = []
@@ -55,7 +55,7 @@ def get_subtoken_mask(current_tokens,bert_tokenizer):
         temp = bert_tokenizer.tokenize(i)
         for j in temp:
             temp_row_mask.append(j[:2]!="##")
-        while len(temp_row_mask)<LENGTH:
+        while len(temp_row_mask)<length:
             temp_row_mask.append(False)
         temp_mask.append(temp_row_mask)
         if sum(temp_row_mask)!=len(i.split(" ")):
@@ -67,9 +67,9 @@ def get_subtoken_mask(current_tokens,bert_tokenizer):
 
 flatten = lambda l: [number_to_tag(item) for sublist in l for item in sublist]
 
-def tokenize_dataset(dataset_address):
+def tokenize_dataset(dataset_address, bert_addr, length=60):
     # added tokenizer and tokens for
-    bert_tokenizer = torch.hub.load(ENV_BERT_ADDR, 'tokenizer', ENV_BERT_ADDR,verbose=False,source="local")#38toks snips,52Atis
+    bert_tokenizer = torch.hub.load(bert_addr, 'tokenizer', bert_addr, verbose=False,source="local")#38toks snips,52Atis
     ##open database and read line by line
     dataset = open(dataset_address,"r").readlines()
     print("example input:"+dataset[100])
@@ -79,7 +79,7 @@ def tokenize_dataset(dataset_address):
     #converts string to array of tokens + array of tags + target intent [array with x=3 and y dynamic]
     dataset_tokens = remove_punc(dataset)
     dataset_subtoken_mask = get_subtoken_mask(dataset_tokens,bert_tokenizer)
-    dataset_toks = bert_tokenizer.batch_encode_plus(dataset_tokens,max_length=LENGTH,add_special_tokens=True,return_tensors='pt'
+    dataset_toks = bert_tokenizer.batch_encode_plus(dataset_tokens,max_length=length,add_special_tokens=True,return_tensors='pt'
                                                   ,return_attention_mask=True , padding='max_length',truncation=True)
     dataset = [[re.sub(" +"," ",t.split("\t")[0]).split(" "),t.split("\t")[1].split(" ")[:-1],t.split("\t")[1].split(" ")[-1]] for t in dataset]
     #removes BOS, EOS from array of tokens and tags
@@ -87,8 +87,8 @@ def tokenize_dataset(dataset_address):
     return dataset, dataset_subtoken_mask,dataset_toks
 
 ##
-train,train_subtoken_mask,train_toks = tokenize_dataset(ENV_DATASET_TRAIN)
-test, test_subtoken_mask, test_toks = tokenize_dataset(ENV_DATASET_TEST)
+train,train_subtoken_mask,train_toks = tokenize_dataset(ENV_DATASET_TRAIN, ENV_BERT_ADDR)
+test, test_subtoken_mask, test_toks = tokenize_dataset(ENV_DATASET_TEST, ENV_BERT_ADDR)
 ##
 
 
@@ -239,20 +239,21 @@ def tag_sentence(sentence):
 
     return f"BOS {formatted_sentence} EOS\t O {formatted_labels} open_app"
 
-def tokenize_sample(sample):
+
+def tokenize_sample(sample, bert_addr, length=60):
+    # length = length
     sample = tag_sentence(sample)
     # added tokenizer and tokens for
-    bert_tokenizer = torch.hub.load(ENV_BERT_ADDR, 'tokenizer', ENV_BERT_ADDR, verbose=False, source="local")
+    bert_tokenizer = torch.hub.load(bert_addr, 'tokenizer', bert_addr, verbose=False, source="local")
     sample = [sample]
     print("example input:" + sample[0])
     # converts string to array of tokens + array of tags + target intent [array with x=3 and y dynamic]
     sample_tokens = remove_punc(sample)
-    sample_subtoken_mask = get_subtoken_mask(sample_tokens, bert_tokenizer)
-    sample_toks = bert_tokenizer.batch_encode_plus(sample_tokens, max_length=LENGTH, add_special_tokens=True, return_tensors='pt',
+    sample_subtoken_mask = get_subtoken_mask(sample_tokens, bert_tokenizer, length)
+    sample_toks = bert_tokenizer.batch_encode_plus(sample_tokens, max_length=length, add_special_tokens=True, return_tensors='pt',
                                                    return_attention_mask=True, padding='max_length', truncation=True)
     sample = [[re.sub(" +", " ", t.split("\t")[0]).split(" "), t.split("\t")[1].split(" ")[:-1], t.split("\t")[1].split(" ")[-1]] for t in sample]
     # removes BOS, EOS from array of tokens and tags
     sample = [[t[0][1:-1], t[1][1:], t[2]] for t in sample]
     return sample, sample_subtoken_mask, sample_toks
 
-import time
