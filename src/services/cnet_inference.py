@@ -79,7 +79,8 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, us
         }
         return result
 
-def run_inference(input_text, model):
-    sample, sample_subtoken_mask, sample_toks = tokenize_sample(input_text, ENV_BERT_ADDR, model.length)
+def run_inference(input_text, bert_addr ,model):
+    sample, sample_subtoken_mask, sample_toks = tokenize_sample(input_text, bert_addr, model.length)
     results = predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model)
     return results
+
