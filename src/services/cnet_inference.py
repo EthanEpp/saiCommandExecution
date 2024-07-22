@@ -6,10 +6,10 @@ from torch.autograd import Variable
 
 import time
 
-# Add the parent directory to the Python path so it can find the utils module
-current_dir = os.path.dirname(os.path.realpath(__file__))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
+# # Add the parent directory to the Python path so it can find the utils module
+# current_dir = os.path.dirname(os.path.realpath(__file__))
+# parent_dir = os.path.dirname(current_dir)
+# sys.path.append(parent_dir)
 
 from src.models.cnet import CNet
 from src.utils.dataloader import tokenize_sample

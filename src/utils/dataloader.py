@@ -87,27 +87,27 @@ def tokenize_dataset(dataset_address, bert_addr, length=60):
     return dataset, dataset_subtoken_mask,dataset_toks
 
 ##
-train,train_subtoken_mask,train_toks = tokenize_dataset(ENV_DATASET_TRAIN, ENV_BERT_ADDR)
-test, test_subtoken_mask, test_toks = tokenize_dataset(ENV_DATASET_TEST, ENV_BERT_ADDR)
+# train,train_subtoken_mask,train_toks = tokenize_dataset(ENV_DATASET_TRAIN, ENV_BERT_ADDR)
+# test, test_subtoken_mask, test_toks = tokenize_dataset(ENV_DATASET_TEST, ENV_BERT_ADDR)
 ##
 
 
 ##
-#convert above array to separate lists
-seq_in,seq_out, intent = list(zip(*train))
-seq_in_test,seq_out_test, intent_test = list(zip(*test.copy()))
-# Create Sets of unique tokens
-vocab = set(flatten(seq_in))
-slot_tag = set(flatten(seq_out))
-intent_tag = set(intent)
+# #convert above array to separate lists
+# seq_in,seq_out, intent = list(zip(*train))
+# seq_in_test,seq_out_test, intent_test = list(zip(*test.copy()))
+# # Create Sets of unique tokens
+# vocab = set(flatten(seq_in))
+# slot_tag = set(flatten(seq_out))
+# intent_tag = set(intent)
 ##
 
 
 # adds paddings
-sin=[] #padded input tokens
-sout=[] # padded output translated tags
-sin_test=[] #padded input tokens
-sout_test=[] # padded output translated tags
+# sin=[] #padded input tokens
+# sout=[] # padded output translated tags
+# sin_test=[] #padded input tokens
+# sout_test=[] # padded output translated tags
 ## adds padding inside input tokens
 def add_paddings(seq_in,seq_out):
     sin=[]
@@ -130,8 +130,8 @@ def add_paddings(seq_in,seq_out):
         sout.append(temp)
     return sin,sout
 
-sin,sout=add_paddings(seq_in,seq_out)
-sin_test,sout_test=add_paddings(seq_in_test,seq_out_test)
+# sin,sout=add_paddings(seq_in,seq_out)
+# sin_test,sout_test=add_paddings(seq_in_test,seq_out_test)
 
 def create_mappings(vocab, slot_tag, intent_tag):
     # making dictionary (token:id), initial value
@@ -160,7 +160,7 @@ def create_mappings(vocab, slot_tag, intent_tag):
     index2intent = {v:k for k,v in intent2index.items()}
     return word2index, index2word, tag2index, index2tag, intent2index, index2intent
 
-word2index, index2word, tag2index, index2tag, intent2index, index2intent = create_mappings(vocab, slot_tag, intent_tag)
+# word2index, index2word, tag2index, index2tag, intent2index, index2intent = create_mappings(vocab, slot_tag, intent_tag)
 
 #defining datasets.
 def remove_values_from_list(the_list, val):
@@ -182,10 +182,10 @@ class NLUDataset(Dataset):
         sample = self.sin[idx],self.sout[idx],self.intent[idx],self.input_ids[idx],self.attention_mask[idx],self.token_type_ids[idx],self.subtoken_mask[idx],self.x_mask[idx]
         return sample
 #making single list
-train_data=NLUDataset(sin,sout,intent,train_toks['input_ids'],train_toks['attention_mask'],train_toks['token_type_ids'],train_subtoken_mask)
-test_data=NLUDataset(sin_test,sout_test,intent_test,test_toks['input_ids'],test_toks['attention_mask'],test_toks['token_type_ids'],test_subtoken_mask)
-train_data = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True)
-test_data = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=False)
+# train_data=NLUDataset(sin,sout,intent,train_toks['input_ids'],train_toks['attention_mask'],train_toks['token_type_ids'],train_subtoken_mask)
+# test_data=NLUDataset(sin_test,sout_test,intent_test,test_toks['input_ids'],test_toks['attention_mask'],test_toks['token_type_ids'],test_subtoken_mask)
+# train_data = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True)
+# test_data = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=False)
 
 # we put all tags inside of the batch in a flat array for F1 measure.
 # we use masking so that we only non PAD tokens are counted in f1 measurement

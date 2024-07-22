@@ -7,7 +7,7 @@ import pickle
 
 ENV_BERT_ID_CLS=False # use cls token for id classification
 ENV_EMBEDDING_SIZE=1024 # dimention of embbeding, bertbase=768,bertlarge&elmo=1024
-ENV_BERT_ADDR='./bert-large-uncased/'
+ENV_BERT_ADDR='/content/drive/MyDrive/SoftAcuity Models/speechCommands/CTran-main/bert-large-uncased'
 ENV_SEED=1331
 ENV_CNN_FILTERS=128
 ENV_CNN_KERNELS=4
@@ -217,7 +217,6 @@ class CNet(nn.Module):
         self.encoder = Encoder(len(self.word2index))
         self.middle = Middle(length = padded_length)
         self.decoder = Decoder(len(self.tag2index), len(self.intent2index), LENGTH=padded_length)
-
         if model_path:
             self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl').state_dict())
             self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl').state_dict())
