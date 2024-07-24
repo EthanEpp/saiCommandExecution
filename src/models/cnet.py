@@ -53,9 +53,9 @@ class PositionalEncoding(nn.Module):
 
 #start of the shared encoder
 class BertLayer(nn.Module):
-    def __init__(self):
+    def __init__(self, bert_addr):
         super(BertLayer, self).__init__()
-        self.bert_model = torch.hub.load(ENV_BERT_ADDR, 'model', ENV_BERT_ADDR,source="local")
+        self.bert_model = torch.hub.load(bert_addr, 'model', bert_addr,source="local")
 
     def forward(self, bert_info=None):
         (bert_tokens, bert_mask, bert_tok_typeid) = bert_info
@@ -109,13 +109,13 @@ class Middle(nn.Module):
         encoder_layers = nn.TransformerEncoderLayer(ENV_HIDDEN_SIZE, nhead=2,batch_first=True, dim_feedforward=2048 ,activation="relu", dropout=0.1)
         self.transformer_encoder = nn.TransformerEncoder(encoder_layers, nlayers,enable_nested_tensor=False)
         self.transformer_mask = generate_square_subsequent_mask(length).cuda()
-        print("MIDDLE", length)
+
     def forward(self, fromencoder,input_masking,training=True):
         src = fromencoder * math.sqrt(ENV_HIDDEN_SIZE)
         src = self.pos_encoder(src)
         output = (self.transformer_encoder(src,src_key_padding_mask=input_masking)) # outputs probably
         return output
-    
+
 #start of the decoder
 class Decoder(nn.Module):
 
@@ -143,7 +143,7 @@ class Decoder(nn.Module):
                                                     ,num_heads=8,dropout=0.1
                                                     ,batch_first=True)
         self.layer_norm = nn.LayerNorm(ENV_HIDDEN_SIZE)
-        print("DECODER", LENGTH)
+
 
     def forward(self, input,encoder_outputs,encoder_maskings,tag2index,bert_subtoken_maskings=None,infer=False):
         # encoder outputs: BATCH,LENGTH,Dims (16,60,1024)
@@ -199,24 +199,29 @@ class Decoder(nn.Module):
             slot_scores = softmaxed
 
         return slot_scores.view(input.size(0)*length,-1), intent_score
-    
+
 # CNet class
 class CNet(nn.Module):
-    def __init__(self, model_path=None, padded_length=60):
+    def __init__(self, model_path=None, bert_addr = './bert-large-uncased/', padded_length=60):
         super(CNet, self).__init__()
         self.length = padded_length
+        self.bert_addr = bert_addr
         if model_path:
-            self.word2index = load_mapping(f'{model_path}-word2index.pkl')
-            self.index2word = load_mapping(f'{model_path}-index2word.pkl')
-            self.tag2index = load_mapping(f'{model_path}-tag2index.pkl')
-            self.index2tag = load_mapping(f'{model_path}-index2tag.pkl')
-            self.intent2index = load_mapping(f'{model_path}-intent2index.pkl')
-            self.index2intent = load_mapping(f'{model_path}-index2intent.pkl')
+          self.word2index = load_mapping(f'{model_path}-word2index.pkl')
+          self.index2word = load_mapping(f'{model_path}-index2word.pkl')
+          self.tag2index = load_mapping(f'{model_path}-tag2index.pkl')
+          self.index2tag = load_mapping(f'{model_path}-index2tag.pkl')
+          self.intent2index = load_mapping(f'{model_path}-intent2index.pkl')
+          self.index2intent = load_mapping(f'{model_path}-index2intent.pkl')
+        else:
+          self.word2index, self.index2word, self.tag2index, self.index2tag, self.intent2index, self.index2intent = word2index, index2word, tag2index, index2tag, intent2index, index2intent
+        # print("loaded words")
 
-        self.bert_layer = BertLayer()
+        self.bert_layer = BertLayer(bert_addr)
         self.encoder = Encoder(len(self.word2index))
         self.middle = Middle(length = padded_length)
         self.decoder = Decoder(len(self.tag2index), len(self.intent2index), LENGTH=padded_length)
+
         if model_path:
             self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl').state_dict())
             self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl').state_dict())
@@ -236,11 +241,11 @@ class CNet(nn.Module):
 
         # Pass the BERT last hidden state through the encoder
         encoder_output = self.encoder(bert_last_hidden)
-        
+
         # Pass the encoder output through the middle component
         middle_output = self.middle(encoder_output, encoder_maskings)
-        
+
         # Pass the middle output and other inputs through the decoder
         slot_scores, intent_score = self.decoder(input, middle_output, encoder_maskings, self.tag2index,bert_subtoken_maskings, infer)
-        
+
         return slot_scores, intent_score

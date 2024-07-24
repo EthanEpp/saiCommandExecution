@@ -1,5 +1,7 @@
 from src.models.speech_to_text import SpeechToText
+from src.services.cnet_inference import run_inference
 from src.services.command_processor import CommandProcessor
+from src.models import cnet
 import json
 
 def load_commands():
@@ -10,25 +12,28 @@ def load_commands():
 
 def main_text_only():
     commands = load_commands()
-    processor = CommandProcessor(commands)
+    # processor = CommandProcessor(commands)
 
-    # Example user input
-    # user_speech = "Send a text message to Dr. Matt Wood saying the patient is ready for you in OR 1"  # Assume this is output from Whisper
-    user_speech = "Can you search for the weather in Santa Barbara today"  # Assume this is output from Whisper
-    # user_speech = "Can you search for the yen to USD conversion"  # Assume this is output from Whisper
-    # user_speech = "Can you start a seven and a half minute timer"  # Assume this is output from Whisper
-    # user_speech = "Begin a 10 minute timer and name it Blood Transfusion"  # Assume this is output from Whisper
-    command = processor.find_closest_command(user_speech)
-    print("Interpreted command:", command.command_type)
-    print("Original input:", command.original_input)
-    print("Preprocessed input:", command.preprocessed_input)
-    print("Entities:", command.entities)
-    print("Clauses:", command.clauses)
+    # # Example user input
+    # # user_speech = "Send a text message to Dr. Matt Wood saying the patient is ready for you in OR 1"  # Assume this is output from Whisper
+    # user_speech = "Can you search for the weather in Santa Barbara today"  # Assume this is output from Whisper
+    # # user_speech = "Can you search for the yen to USD conversion"  # Assume this is output from Whisper
+    # # user_speech = "Can you start a seven and a half minute timer"  # Assume this is output from Whisper
+    # # user_speech = "Begin a 10 minute timer and name it Blood Transfusion"  # Assume this is output from Whisper
+    # command = processor.find_closest_command(user_speech)
+    # print("Interpreted command:", command.command_type)
+    # print("Original input:", command.original_input)
+    # print("Preprocessed input:", command.preprocessed_input)
+    # print("Entities:", command.entities)
+    # print("Clauses:", command.clauses)
 
 
 def main():
-    commands = load_commands()
-    processor = CommandProcessor(commands = commands, threshold=0.6)
+    # commands = load_commands()
+    # processor = CommandProcessor(commands = commands, threshold=0.6)
+    model_path="/content/drive/MyDrive/SoftAcuity Models/speechCommands/CTran-main/models/ctranfinal_oop_length_v3"  # file unique id for saving and loading models
+    model = cnet.CNet(model_path=model_path)
+    model = model.cuda()
     stt = SpeechToText()
     stt.start_microphone_stream()
 
@@ -38,7 +43,7 @@ def main():
         user_speech = stt.process_audio_stream(seconds=5)  # Adjust duration as needed
         print("Heard:", user_speech)
         if user_speech:
-            closest_command = processor.find_closest_command(user_speech)
+            closest_command = run_inference(user_speech, '/content/drive/MyDrive/SoftAcuity Models/speechCommands/CTran-main/bert-large-uncased', model)
             print("Interpreted command:", closest_command)
     except KeyboardInterrupt:
         print("Stopping...")
