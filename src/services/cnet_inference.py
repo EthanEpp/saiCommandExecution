@@ -13,8 +13,6 @@ import time
 
 from src.models.cnet import CNet
 from src.utils.dataloader import tokenize_sample
-
-
 def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, use_cuda=True):
     """
     Predicts the intent and tags for a given sample using a pretrained model.
@@ -66,7 +64,15 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, us
 
         # Process tag predictions
         tag_predictions = torch.argmax(tag_score, -1).squeeze().cpu().numpy()
-        filtered_tags = [(sample[0][0][i], index2tag[tag]) for i, tag in enumerate(tag_predictions) if index2tag[tag] != 'O' and i < len(sample[0][0])]
+        filtered_tags = {}
+        for i, tag in enumerate(tag_predictions):
+            tag_label = index2tag[tag]
+            if tag_label != 'O' and i < len(sample[0][0]):
+                word = sample[0][0][i]
+                if tag_label in filtered_tags:
+                    filtered_tags[tag_label].append(word)
+                else:
+                    filtered_tags[tag_label] = [word]
 
         # Process intent prediction
         _, predicted_intent_idx = torch.max(intent_score, -1)
