@@ -246,7 +246,7 @@ def tokenize_sample(sample, bert_addr, length=60):
     # added tokenizer and tokens for
     bert_tokenizer = torch.hub.load(bert_addr, 'tokenizer', bert_addr, verbose=False, source="local")
     sample = [sample]
-    print("example input:" + sample[0])
+    # print("example input:" + sample[0])
     # converts string to array of tokens + array of tags + target intent [array with x=3 and y dynamic]
     sample_tokens = remove_punc(sample)
     sample_subtoken_mask = get_subtoken_mask(sample_tokens, bert_tokenizer, length)

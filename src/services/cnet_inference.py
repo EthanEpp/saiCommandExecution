@@ -3,13 +3,7 @@ import torch
 import sys
 import os
 from torch.autograd import Variable
-
 import time
-
-# # Add the parent directory to the Python path so it can find the utils module
-# current_dir = os.path.dirname(os.path.realpath(__file__))
-# parent_dir = os.path.dirname(current_dir)
-# sys.path.append(parent_dir)
 
 from src.models.cnet import CNet
 from src.utils.dataloader import tokenize_sample
@@ -22,9 +16,6 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, us
     sample_toks (Tensor): Encoded tokens using the BERT tokenizer.
     sample_subtoken_mask (Tensor): Mask indicating which tokens are 'real' vs subtokens.
     model (nn.Module): Pretrained CNet model.
-    word2index (dict): Dictionary mapping words to their indices.
-    index2tag (dict): Dictionary mapping tag indices to tag labels.
-    index2intent (dict): Dictionary mapping intent indices to intent labels.
     use_cuda (bool): Flag to indicate whether to use CUDA (GPU support).
 
     Returns:
@@ -85,7 +76,7 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, us
         }
         return result
 
-def run_inference(input_text, bert_addr ,model):
-    sample, sample_subtoken_mask, sample_toks = tokenize_sample(input_text, bert_addr, model.length)
+def run_inference(input_text, model):
+    sample, sample_subtoken_mask, sample_toks = tokenize_sample(input_text, model.bert_addr, model.length)
     results = predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model)
     return results
