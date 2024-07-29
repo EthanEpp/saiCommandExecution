@@ -6,6 +6,10 @@ import torch
 class SpeechToText:
     def __init__(self, model_size="base"):
         self.model = whisper.load_model(model_size)
+        if torch.cuda.is_available():
+            self.model.cuda()
+        else:
+            print('You are NOT using cuda! Some problems may occur.')
         self.audio_interface = pyaudio.PyAudio()
         self.stream = None
 
