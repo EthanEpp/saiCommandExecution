@@ -38,8 +38,6 @@ class CommandProcessor:
             elif label == "CARDINAL":
                 preprocessed_text = preprocessed_text.replace(entity, "X")
 
-
-
         return preprocessed_text, entities, clauses
 
     def find_closest_command(self, user_input):
