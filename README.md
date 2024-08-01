@@ -102,9 +102,6 @@ The repository includes unit and integration tests to ensure the functionality o
 
 The project uses GitHub Actions for continuous integration. The configuration file is located at [`.github/workflows/ci.yml`](https://github.com/EthanEpp/saiCommandExecution/blob/main/.github/workflows/ci.yml).
 
-## CustomGPT
-
-For questions or assistance regarding this codebase, [click here](https://chatgpt.com/g/g-ZEvSUqsh0-speech-commands-expert) to access a customGPT instance that has been trained to assist with any inquiries about the speech command system and has access to the codebase. Note that this should only be used for reference and may not automatically be up to date with the current version of the code. Last customGPT knowledge update: July 1st, 2024
 
 ## Contact
 
