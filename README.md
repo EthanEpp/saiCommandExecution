@@ -8,6 +8,7 @@ This repository contains a speech command system that processes audio inputs, tr
 - [Installation](#installation)
 - [Usage](#usage)
 - [Dependencies](#dependencies)
+- [Notebooks](#notebooks)
 - [Modules](#modules)
 - [Scripts](#scripts)
 - [Tests](#tests)
@@ -20,7 +21,7 @@ This repository contains a speech command system that processes audio inputs, tr
 To get started with the speech command system, clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/EthanEpp/saiCommandExecution
+git clone https://github.com/EthanEpp/saiCommandExecution/tree/eic-handoff
 cd ./saiCommandExecution
 pip install -r requirements.txt
 ```
@@ -38,16 +39,26 @@ This will initialize the system, start listening for 5 seconds for a command, th
 
 ## Dependencies
 
-- `numpy==2.0.0`
-- `openai_whisper==20231117`
-- `PyAudio==0.2.14`
-- `pydub==0.25.1`
-- `pytest==8.2.2`
-- `scipy==1.14.0`
-- `sentence_transformers==3.0.1`
-- `torch==2.3.1`
-- `transformers==4.41.2`
+- numpy==1.26.4
+- openai_whisper==20231117
+- PyAudio==0.2.14
+- pydub==0.25.1
+- pytest==8.2.2
+- sacremoses==0.1.1
+- scipy==1.13.1
+- scikit_learn==1.4.2
+- sentence_transformers==3.0.1
+- sounddevice==0.4.7
+- spacy==3.7.5
+- torch==2.3.1
+- tqdm==4.66.4
+- transformers==4.41.2
 
+## Notebooks
+
+### Command Pipeline (`notebooks/ctranCommandPipeline.ipynb`)
+
+This notebook is designed to be run in colab, and goes through model loading and inference either through microphone input that is transcribed by whisper or direct text input.
 
 ## Modules
 
@@ -55,17 +66,17 @@ This will initialize the system, start listening for 5 seconds for a command, th
 
 This module converts spoken language into text using the Whisper model from OpenAI.
 
-### Embeddings (`src/models/embeddings.py`)
+### Cnet (`src/models/cnet.py`)
 
-This module generates embeddings for text inputs to facilitate natural language understanding using a paraphrase SBERT.
-
-### Command Processor (`src/services/command_processor.py`)
-
-This module processes the commands derived from speech inputs and determines their corrosponding command action.
+This module contains the architecture for the slot filling and intent detection that maps transcribed speech inputs to their corresponding command and necessary tags.
 
 ### Audio Utilities (`src/utils/audio_utils.py`)
 
 This module contains utility functions for handling audio files such as converting them to wav.
+
+### CNET Inference (`src/services/cnet_inference.py`)
+
+This module contains the inference function for running inference on a model.
 
 ## Scripts
 
@@ -79,6 +90,9 @@ Example usage in home directory: `python scripts/convert_audio.py input_dir outp
 This script is used for testing whisper to make sure the model and dependencies are loaded correctly.
 Example usage in home directory: `python scripts/whisper_test.py audio_files`
 
+### Train New Model (`scripts/train_new_model`)
+
+This script is used for when you would like to train a new CNET model.
 
 ## Tests
 
@@ -86,16 +100,12 @@ The repository includes unit and integration tests to ensure the functionality o
 
 ### Unit Tests
 
-- `tests/test_embeddings_unit.py`: Tests for the embeddings module.
 - `tests/test_speech_to_text_unit.py`: Tests for the speech-to-text module.
-- `tests/test_command_processor_unit.py`: Tests for the command processor module.
 - `tests/test_audio_utils.py`: Tests for the audio utilities module.
 
 ### Integration Tests
 
-- `tests/test_embeddings_integration.py`: Integration tests for the embeddings module.
 - `tests/test_speech_to_text_integration.py`: Integration tests for the speech-to-text module.
-- `tests/test_command_processor_integration.py`: Integration tests for the command processor module.
 
 
 ## Continuous Integration
