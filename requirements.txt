@@ -3,8 +3,12 @@ openai_whisper==20231117
 PyAudio==0.2.14
 pydub==0.25.1
 pytest==8.2.2
+sacremoses==0.1.1
 scipy==1.13.1
+scikit_learn==1.4.2
 sentence_transformers==3.0.1
+sounddevice==0.4.7
 spacy==3.7.5
 torch==2.3.1
+tqdm==4.66.4
 transformers==4.41.2
