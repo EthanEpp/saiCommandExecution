@@ -980,41 +980,28 @@ BOS search on google for local election dates EOS	O O O O O B-search_query I-sea
 BOS can you find best books of 2024 on google EOS	O O O O B-search_query I-search_query I-search_query I-search_query O O google_search
 BOS google how to change a tire EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query google_search
 BOS search up deep sea creatures EOS	O O O B-search_query I-search_query I-search_query google_search
-BOS what s the usd to yen conversion EOS	O O B-contact_name I-contact_name I-contact_name I-contact_name I-contact_name I-contact_name google_search
 BOS find out how many ounces in a pound EOS	O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS tell me the capital of canada EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
 BOS look up age of the universe EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
 BOS search who wrote Hamlet EOS	O O B-search_query I-search_query I-search_query google_search
 BOS find out the speed of light EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
-BOS tell me who won the last world cup right now EOS	O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query O O google_search
 BOS look up average human walking speed EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
 BOS search how many stars in the milky way EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
 BOS check what languages are spoken in south africa EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS find out how to start a business EOS	O O O B-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS tell me who discovered penicillin EOS	O O O B-search_query I-search_query I-search_query google_search
 BOS look up symptoms of dehydration EOS	O O O B-search_query I-search_query I-search_query google_search
 BOS search next olympic games host city EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS check how to make homemade pizza EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS what s the usd to yen conversion EOS	O O B-contact_name I-contact_name I-contact_name I-contact_name I-contact_name I-contact_name google_search
 BOS find out how many ounces in a pound EOS	O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS tell me the capital of canada EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
 BOS look up age of the universe EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
 BOS search who wrote Hamlet EOS	O O B-search_query I-search_query I-search_query google_search
 BOS check current world population EOS	O O B-search_query I-search_query I-search_query google_search
 BOS discover life expectancy in the united states EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS explore causes of the french revolution EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query google_search
 BOS find out the speed of light EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
-BOS tell me who won the last world cup EOS	O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
 BOS look up average human walking speed EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
 BOS search how many stars in the milky way EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
 BOS check what languages are spoken in south africa EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
 BOS discover top grossing movies of all time EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS explore longest river in the world EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS find out how to start a business please EOS	O O O B-search_query I-search_query I-search_query I-search_query I-search_query O google_search
 BOS tell me who discovered penicillin EOS	O O O B-search_query I-search_query I-search_query google_search
 BOS look up symptoms of dehydration EOS	O O O B-search_query I-search_query I-search_query google_search
 BOS search next olympic games host city EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query google_search
-BOS check how to make homemade pizza for me please EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query O O O google_search
 BOS look up the fast and furious three trailer on youtube EOS	O O O O B-search_query I-search_query I-search_query I-search_query I-search_query O O youtube_search
 BOS please look up the fast and furious three trailer on youtube EOS	O O O O O B-search_query I-search_query I-search_query I-search_query I-search_query O O youtube_search
 BOS youtube video of seal spinning in circles EOS	O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
@@ -1768,7 +1755,6 @@ BOS increase tourniquet application period by 85 minutes EOS	O O O O O O B-timer
 BOS lengthen the tourniquet engagement by 90 minutes EOS	O O O O O O B-timer_name I-timer_name extend_tourniquet
 BOS extend the time the tourniquet is up by ninety minutes EOS	O O O O O O O O O B-timer_name I-timer_name extend_tourniquet
 BOS add 100 minutes to the tourniquet duration EOS	O O B-timer_name I-timer_name O O O O extend_tourniquet
-
 BOS turn up the music and start a 20 minute timer for my break then check humidity levels EOS	O O O O O B-multi_command_splitter O O O O O O O O B-multi_command_splitter O O O joint_commands
 BOS please decrease the volume and also set a reminder to call mom EOS	O O O O O B-multi_command_splitter I-multi_command_splitter O O O O O O joint_commands
 BOS patient is in then set a timer for 30 minutes called blood EOS	O O O O B-multi_command_splitter O O O O O O O O joint_commands
@@ -1836,3 +1822,224 @@ BOS lower the volume by twenty and start a timer for 10 minutes for the laundry 
 BOS please boost the volume by fifteen then notify me when the timer for 45 minutes is up EOS	O O O O O O O B-multi_command_splitter O O O O O O O O O O joint_commands
 BOS could you please check the humidity levels then check the temperature and then check the particulate levels EOS	O O O O O O O O B-multi_command_splitter O O O B-multi_command_splitter I-multi_command_splitter O O O O joint_commands
 BOS can you check the particulate levels in the room and then google what are safe particulate levels for an operating room EOS	O O O O O O O O O O B-multi_command_splitter I-multi_command_splitter O O O O O O O O O O joint_commands
+BOS can you turn on the lights in the room EOS	O O O O O O O O O O unknown
+BOS please switch on the lights EOS	O O O O O O unknown
+BOS activate the lights in here EOS	O O O O O O unknown
+BOS turn on the lights for me EOS	O O O O O O O unknown
+BOS schedule a meeting with Dr. Smith for tomorrow EOS	O O O O O B-contact_name I-contact_name O O unknown
+BOS set up an appointment with joe bondi for tomorrow EOS	O O O O O O B-contact_name I-contact_name O O unknown
+BOS please book a meeting with my wife next week EOS	O O O O O O O B-contact_name O O unknown
+BOS organize a meeting with Dr. Smith for tomorrow EOS	O O O O O B-contact_name I-contact_name O O unknown
+BOS what s the battery status of the device EOS	O O O O O O O O O unknown
+BOS check the device s battery level EOS	O O O O O O O unknown
+BOS how much battery does the device have EOS	O O O O O O O O unknown
+BOS tell me the battery status EOS	O O O O O O unknown
+BOS update the patient s record with today s notes EOS	O O O O O O O O O O unknown
+BOS add today s notes to the patient record EOS	O O O O O O O O O unknown
+BOS enter today s details in the patient s file EOS	O O O O O O O O O O unknown
+BOS update the patient record with today s information EOS	O O O O O O O O O unknown
+BOS record the patient s vitals now EOS	O O O O O O O unknown
+BOS take the patient s vitals EOS	O O O O O O unknown
+BOS measure the patient s vital signs EOS	O O O O O O O unknown
+BOS log the patient s vitals EOS	O O O O O O unknown
+BOS navigate to 123 Main Street EOS	O O O O O O unknown
+BOS take me to my house EOS	O O O O O O unknown
+BOS turn off the air conditioner EOS	O O O O O O unknown
+BOS switch off the air conditioner EOS	O O O O O O unknown
+BOS please deactivate the air conditioner EOS	O O O O O O unknown
+BOS adjust the thermostat to 72 degrees EOS	O O O O O O O unknown
+BOS set the thermostat to 72 degrees EOS	O O O O O O O unknown
+BOS turn the thermostat to 72 degrees EOS	O O O O O O O unknown
+BOS list the patient s medications EOS	O O O O O O unknown
+BOS show me the patient s medication list EOS	O O O O O O O O unknown
+BOS what medications is the patient on EOS	O O O O O O O unknown
+BOS provide the patient s medications EOS	O O O O O O unknown
+BOS send an email to Dr. Johnson EOS	O O O O O B-contact_name I-contact_name unknown
+BOS compose an email to michael scott EOS	O O O O O B-contact_name I-contact_name unknown
+BOS email isabelle luu EOS	O O B-contact_name I-contact_name unknown
+BOS write an email to alice EOS	O O O O O B-contact_name unknown
+BOS order more medical supplies EOS	O O O O O unknown
+BOS restock medical supplies EOS	O O O O unknown
+BOS purchase more medical supplies EOS	O O O O O unknown
+BOS reorder medical supplies EOS	O O O O unknown
+BOS check the patient s blood pressure EOS	O O O O O O O unknown
+BOS measure the patient s blood pressure EOS	O O O O O O O unknown
+BOS take a blood pressure reading for the patient EOS	O O O O O O O O O unknown
+BOS get the patient s blood pressure EOS	O O O O O O O unknown
+BOS measure the heart rate of the patient EOS	O O O O O O O O unknown
+BOS take the patient s heart rate EOS	O O O O O O O unknown
+BOS record the patient s heart rate EOS	O O O O O O O unknown
+BOS begin preparations for the surgery EOS	O O O O O O unknown
+BOS start surgery preparations EOS	O O O O unknown
+BOS prep for the surgery EOS	O O O O O unknown
+BOS get ready for the surgery EOS	O O O O O O unknown
+BOS clean the operating room EOS	O O O O O unknown
+BOS sterilize the operating room EOS	O O O O O unknown
+BOS sanitize the operating room EOS	O O O O O unknown
+BOS prepare the operating room for the next surgery EOS	O O O O O O O O O unknown
+BOS activate the emergency protocol EOS	O O O O O unknown
+BOS initiate the emergency protocol EOS	O O O O O unknown
+BOS start the emergency protocol EOS	O O O O O unknown
+BOS trigger the emergency protocol EOS	O O O O O unknown
+BOS sync with the fitness tracker EOS	O O O O O O unknown
+BOS connect to the smart watch EOS	O O O O O O unknown
+BOS pair with the bluetooth speaker EOS	O O O O O O unknown
+BOS synchronize with the fitness tracker EOS	O O O O O O unknown
+BOS provide an update on the patient s status EOS	O O O O O O O O O unknown
+BOS give a status update on the patient EOS	O O O O O O O O unknown
+BOS tell me the patient s current status EOS	O O O O O O O O unknown
+BOS generate a medical report for the patient EOS	O O O O O O O O unknown
+BOS produce a medical report for the patient EOS	O O O O O O O O unknown
+BOS draft a medical report for the patient EOS	O O O O O O O O unknown
+BOS turn on voice control EOS	O O O O O unknown
+BOS activate voice control EOS	O O O O unknown
+BOS enable voice control EOS	O O O O unknown
+BOS start voice control EOS	O O O O unknown
+BOS schedule a follow-up appointment EOS	O O O O O unknown
+BOS set up a follow-up appointment EOS	O O O O O O unknown
+BOS book a follow-up appointment EOS	O O O O O unknown
+BOS organize a follow-up appointment EOS	O O O O O unknown
+BOS assign a nurse to the patient EOS	O O O O O O O unknown
+BOS allocate a nurse to the patient EOS	O O O O O O O unknown
+BOS designate a nurse to the patient EOS	O O O O O O O unknown
+BOS ask for the patient s medical history EOS	O O O O O O O O unknown
+BOS get the patient s medical history EOS	O O O O O O O unknown
+BOS retrieve the patient s medical history EOS	O O O O O O O unknown
+BOS verify the identity of the patient EOS	O O O O O O O unknown
+BOS confirm the patient s identity EOS	O O O O O O unknown
+BOS check the patient s identity EOS	O O O O O O unknown
+BOS validate the patient s identity EOS	O O O O O O unknown
+BOS enable privacy mode EOS	O O O O unknown
+BOS turn on privacy mode EOS	O O O O O unknown
+BOS activate privacy mode EOS	O O O O unknown
+BOS start privacy mode EOS	O O O O unknown
+BOS turn on the operating lights EOS	O O O O O O unknown
+BOS switch on the operating lights EOS	O O O O O O unknown
+BOS turn up the operating lights EOS	O O O O O O unknown
+BOS alert security to the operating room EOS	O O O O O O O unknown
+BOS notify security about the operating room EOS	O O O O O O O unknown
+BOS summon security to the operating room EOS	O O O O O O O unknown
+BOS start the patient transfer process EOS	O O O O O O unknown
+BOS initiate the patient transfer EOS	O O O O O unknown
+BOS begin the patient transfer EOS	O O O O O unknown
+BOS transfer the patient EOS	O O O O unknown
+BOS call the next patient to the examination room EOS	O O O O O O O O O unknown
+BOS bring the next patient in EOS	O O O O O O unknown
+BOS invite the next patient to the exam room EOS	O O O O O O O O O unknown
+BOS fetch the next patient for examination EOS	O O O O O O O unknown
+BOS track the patient s progress EOS	O O O O O O unknown
+BOS monitor the patient s progress EOS	O O O O O O unknown
+BOS keep track of the patient s progress EOS	O O O O O O O O unknown
+BOS follow the patient s progress EOS	O O O O O O unknown
+BOS document the surgery notes EOS	O O O O O unknown
+BOS record the surgery notes EOS	O O O O O unknown
+BOS write down the surgery notes EOS	O O O O O O unknown
+BOS log the surgery notes EOS	O O O O O unknown
+BOS activate the cleaning protocol EOS	O O O O O unknown
+BOS start the cleaning protocol EOS	O O O O O unknown
+BOS initiate the cleaning protocol EOS	O O O O O unknown
+BOS trigger the cleaning protocol EOS	O O O O O unknown
+BOS record the surgery procedure EOS	O O O O O unknown
+BOS log the surgery procedure EOS	O O O O O unknown
+BOS document the surgery procedure EOS	O O O O O unknown
+BOS write down the surgery procedure EOS	O O O O O O unknown
+BOS start a physiotherapy session EOS	O O O O O unknown
+BOS begin a physiotherapy session EOS	O O O O O unknown
+BOS initiate a physiotherapy session EOS	O O O O O unknown
+BOS commence a physiotherapy session EOS	O O O O O unknown
+BOS set up a remote consultation with Dr. Lee EOS	O O O O O O O B-contact_name I-contact_name unknown
+BOS activate patient monitoring EOS	O O O O unknown
+BOS start patient monitoring EOS	O O O O unknown
+BOS enable patient monitoring EOS	O O O O unknown
+BOS turn on patient monitoring EOS	O O O O O unknown
+BOS review the patient s lab results EOS	O O O O O O O unknown
+BOS examine the patient s lab results EOS	O O O O O O O unknown
+BOS check the patient s oxygen levels EOS	O O O O O O O unknown
+BOS measure the patient s oxygen levels EOS	O O O O O O O unknown
+BOS get the patient s oxygen levels EOS	O O O O O O O unknown
+BOS record the patient s oxygen levels EOS	O O O O O O O unknown
+BOS enter the patient into the system EOS	O O O O O O O unknown
+BOS revise the surgery protocols EOS	O O O O O unknown
+BOS modify the surgery protocols EOS	O O O O O unknown
+BOS change the surgery protocols EOS	O O O O O unknown
+BOS how do you make a pizza EOS	O O O O O O O open_ended
+BOS what are good vacation destinations for December if I want to see lots of cool lights EOS	O O O O O O O O O O O O O O O O O open_ended
+BOS why did the economy crash in 2008 EOS	O O O O O O O O open_ended
+BOS can you tell me a story EOS	O O O O O O O open_ended
+BOS list the best albums from every year between 1995 and 2005 EOS	O O O O O O O O O O O O open_ended
+BOS how does the internet work EOS	O O O O O O open_ended
+BOS what are the key differences between classical and quantum physics EOS	O O O O O O O O O O O open_ended
+BOS describe the process of photosynthesis EOS	O O O O O O open_ended
+BOS what are some popular myths and legends EOS	O O O O O O O O open_ended
+BOS how does a car engine function EOS	O O O O O O O open_ended
+BOS explain the history of the Roman Empire EOS	O O O O O O O O open_ended
+BOS what are the fundamental principles of democracy EOS	O O O O O O O O open_ended
+BOS how do airplanes stay in the air EOS	O O O O O O O O open_ended
+BOS what are the main causes of climate change EOS	O O O O O O O O O open_ended
+BOS could you describe the journey of a drop of water through the water cycle EOS	O O O O O O O O O O O O O O O open_ended
+BOS how does blockchain technology work EOS	O O O O O O open_ended
+BOS what are the different types of renewable energy sources EOS	O O O O O O O O O O open_ended
+BOS could you explain the significance of the theory of relativity EOS	O O O O O O O O O O O open_ended
+BOS how does the human brain process information EOS	O O O O O O O O open_ended
+BOS what are some important cultural practices around the world EOS	O O O O O O O O O O open_ended
+BOS how do you play chess EOS	O O O O O O open_ended
+BOS what are the stages of human development from birth to adulthood EOS	O O O O O O O O O O O O open_ended
+BOS how does the electoral process work in the United States EOS	O O O O O O O O O O O open_ended
+BOS what are the benefits and challenges of space exploration EOS	O O O O O O O O O O open_ended
+BOS describe the evolution of the English language EOS	O O O O O O O O open_ended
+BOS could you explain how vaccines work EOS	O O O O O O O open_ended
+BOS what are the principles of modern architecture EOS	O O O O O O O O open_ended
+BOS how has the role of women in society changed over time EOS	O O O O O O O O O O O O open_ended
+BOS could you tell me about some famous works of art and their significance EOS	O O O O O O O O O O O O O O open_ended
+BOS how do different cultures celebrate the New Year EOS	O O O O O O O O O open_ended
+BOS what are the basic components of a computer EOS	O O O O O O O O O open_ended
+BOS describe the process of making wine EOS	O O O O O O O open_ended
+BOS what are the major religions of the world EOS	O O O O O O O O O open_ended
+BOS how do plants adapt to their environment EOS	O O O O O O O O open_ended
+BOS what are the effects of globalization EOS	O O O O O O O open_ended
+BOS how does the financial market operate EOS	O O O O O O O open_ended
+BOS what are the characteristics of a healthy diet EOS	O O O O O O O O O open_ended
+BOS could you describe the process of making a film EOS	O O O O O O O O O O open_ended
+BOS how do different species of animals communicate EOS	O O O O O O O O open_ended
+BOS what are the key elements of a successful business strategy EOS	O O O O O O O O O O O open_ended
+BOS how does the immune system protect the body EOS	O O O O O O O O O open_ended
+BOS what are the historical causes and impacts of World War II EOS	O O O O O O O O O O O O open_ended
+BOS how do different ecosystems function EOS	O O O O O O open_ended
+BOS what are some effective techniques for learning a new language EOS	O O O O O O O O O O O open_ended
+BOS how has technology changed the way we communicate EOS	O O O O O O O O O open_ended
+BOS could you tell me about the benefits of meditation and mindfulness EOS	O O O O O O O O O O O O open_ended
+BOS how do authors develop their writing style EOS	O O O O O O O O open_ended
+BOS what are the ethical considerations in artificial intelligence EOS	O O O O O O O O O open_ended
+BOS how does music influence emotions EOS	O O O O O O open_ended
+BOS could you describe the structure and function of DNA EOS	O O O O O O O O O O open_ended
+BOS how do antibiotics work EOS	O O O O O open_ended
+BOS what are the different types of vaccines EOS	O O O O O O O O open_ended
+BOS could you explain the process of organ transplantation EOS	O O O O O O O O O open_ended
+BOS how does chemotherapy treat cancer EOS	O O O O O O open_ended
+BOS what are the symptoms of diabetes EOS	O O O O O O O open_ended
+BOS how do you perform CPR EOS	O O O O O O open_ended
+BOS what is the significance of blood types EOS	O O O O O O O O open_ended
+BOS can you describe the stages of Alzheimer s disease EOS	O O O O O O O O O O open_ended
+BOS what are the causes of heart disease EOS	O O O O O O O O open_ended
+BOS how do you manage chronic pain EOS	O O O O O O O open_ended
+BOS could you explain the role of genetics in disease EOS	O O O O O O O O O O open_ended
+BOS how does the body heal after surgery EOS	O O O O O O O O open_ended
+BOS what are the benefits of physical therapy EOS	O O O O O O O O open_ended
+BOS how does the digestive system work EOS	O O O O O O O open_ended
+BOS what are the latest advancements in medical technology EOS	O O O O O O O O O open_ended
+BOS how do you treat a broken bone EOS	O O O O O O O O open_ended
+BOS what are the common symptoms of a stroke EOS	O O O O O O O O O open_ended
+BOS can you describe the process of dialysis EOS	O O O O O O O O open_ended
+BOS what are the different types of mental health disorders EOS	O O O O O O O O O O open_ended
+BOS how do vaccines protect against diseases EOS	O O O O O O O open_ended
+BOS could you explain the importance of prenatal care EOS	O O O O O O O O O open_ended
+BOS how do you manage high blood pressure EOS	O O O O O O O O open_ended
+BOS what are the side effects of common medications EOS	O O O O O O O O O open_ended
+BOS how does the respiratory system function EOS	O O O O O O O open_ended
+BOS what are the risk factors for cancer EOS	O O O O O O O O open_ended
+BOS how do you diagnose and treat allergies EOS	O O O O O O O O open_ended
+BOS can you explain the process of in vitro fertilization EOS	O O O O O O O O O O open_ended
+BOS what are the signs and symptoms of depression EOS	O O O O O O O O O open_ended
+BOS how do you maintain a healthy lifestyle EOS	O O O O O O O O open_ended
+BOS what are the different types of surgical procedures EOS	O O O O O O O O O open_ended
+
