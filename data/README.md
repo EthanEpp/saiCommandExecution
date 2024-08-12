@@ -37,7 +37,7 @@ BOS play the top-20 best chicane songs on deezer EOS O O O B-sort I-sort B-artis
 
 ## Current Commands and Labels
 ### Command Labels
-There are 69 command labels, including but not limited to:
+There are 71 command labels, including but not limited to:
 - `open_app`
 - `start_video`
 - `mute_mic`
@@ -107,60 +107,72 @@ There are 69 command labels, including but not limited to:
 - `extend_tourniquet`
 - `youtube_search`
 - `tourniquet_up`
+- `patient_out`
+- `unknown`
+- `open_ended`
+
+Let me know if you need any further adjustments!
 
 ### Tag Labels
-There are 54 tag labels, including but not limited to:
-- `B-spatial_relation`
-- `B-music_item`
-- `I-playlist`
-- `B-artist`
-- `B-city`
-- `I-app_name`
-- `I-album`
-- `I-contact_name`
-- `B-app_name`
-- `B-time_range`
-- `B-country`
-- `I-genre`
-- `I-state`
-- `I-timer_name`
-- `B-contact_name`
-- `B-track`
-- `I-text_content`
-- `B-current_location`
-- `B-service`
-- `B-sort`
-- `O`
-- `B-year`
-- `I-time_range`
-- `B-state`
-- `B-volume_increment`
-- `I-sort`
-- `B-text_content`
-- `I-timer_length`
-- `B-condition_description`
-- `I-service`
-- `B-source_user`
-- `I-artist`
-- `I-search_query`
-- `B-geographic_poi`
-- `I-country`
-- `I-volume_increment`
-- `I-track`
-- `B-timer_length`
-- `I-source_user`
-- `I-multi_command_splitter`
-- `B-search_query`
+There are 56 tag labels, including but not limited to:
+Can you also replace this tag labels list?
 - `B-multi_command_splitter`
-- `B-playlist`
-- `B-timer_name`
-- `I-geographic_poi`
-- `I-city`
-- `B-condition_temperature`
-- `I-spatial_relation`
-- `I-music_item`
+- `B-search_query`
 - `B-album`
+- `B-sort`
+- `B-artist`
+- `B-app_name`
+- `B-country`
+- `B-geographic_poi`
+- `B-source_user`
+- `B-playlist`
+- `B-current_location`
+- `B-state`
+- `B-timer_length`
+- `B-contact_name`
+- `B-city`
+- `B-spatial_relation`
+- `B-time_range`
+- `B-timer_name`
+- `B-service`
+- `B-timeRange`
+- `B-music_item`
+- `B-condition_description`
+- `B-year`
+- `B-text_content`
+- `B-condition_temperature`
 - `B-genre`
+- `B-track`
+- `B-volume_increment`
+- `I-multi_command_splitter`
+- `I-search_query`
+- `I-album`
+- `I-sort`
+- `I-artist`
+- `I-app_name`
+- `I-country`
+- `I-geographic_poi`
+- `I-source_user`
+- `I-playlist`
+- `I-current_location`
+- `I-state`
+- `I-timer_length`
+- `I-contact_name`
+- `I-city`
+- `I-spatial_relation`
+- `I-time_range`
+- `I-timer_name`
+- `I-service`
+- `I-timeRange`
+- `I-music_item`
+- `I-condition_description`
+- `I-year`
+- `I-text_content`
+- `I-condition_temperature`
+- `I-genre`
+- `I-track`
+- `I-volume_increment`
+
 
 ## Creating New Data
 To create a new command:
