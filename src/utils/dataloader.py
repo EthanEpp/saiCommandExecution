@@ -12,11 +12,15 @@ import re
 from torch.utils.data import Dataset, DataLoader
 import os
 
-#this function converts tokens to ids and then to a tensor
+# Define device globally
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Converts tokens to ids and then to a tensor, moved to correct device
 def prepare_sequence(seq, to_ix):
     idxs = list(map(lambda w: to_ix[w] if w in to_ix.keys() else to_ix["<UNK>"], seq))
-    tensor = Variable(torch.LongTensor(idxs)).cuda() if torch.cuda.is_available() else Variable(torch.LongTensor(idxs))
+    tensor = Variable(torch.LongTensor(idxs)).to(device)
     return tensor
+
 # this function turns class text to id
 def prepare_intent(intent, to_ix):
     idxs = to_ix[intent] if intent in to_ix.keys() else to_ix["UNKNOWN"]
@@ -45,26 +49,27 @@ def remove_punc(mlist):
     return temp_train_tokens
 
 
-# this function returns the main tokens so that we can apply tagging on them. see original paper.
-def get_subtoken_mask(current_tokens,bert_tokenizer, length=60):
+
+# Function for subtoken masking, moved to correct device
+def get_subtoken_mask(current_tokens, bert_tokenizer, length=60):
     temp_mask = []
     for i in current_tokens:
         temp_row_mask = []
-        temp_row_mask.append(False) # for cls token
+        temp_row_mask.append(False)  # for cls token
         temp = bert_tokenizer.tokenize(i)
         for j in temp:
-            temp_row_mask.append(j[:2]!="##")
-        while len(temp_row_mask)<length:
+            temp_row_mask.append(j[:2] != "##")
+        while len(temp_row_mask) < length:
             temp_row_mask.append(False)
         temp_mask.append(temp_row_mask)
-        if sum(temp_row_mask)!=len(i.split(" ")):
+        if sum(temp_row_mask) != len(i.split(" ")):
             print(f"inconsistent:{temp}")
             print(i)
             print(sum(temp_row_mask))
             print(len(i.split(" ")))
-    return torch.tensor(temp_mask).cuda()
+    return torch.tensor(temp_mask).to(device)
 
-flatten = lambda l: [number_to_tag(item) for sublist in l for item in sublist]
+# flatten = lambda l: [number_to_tag(item) for sublist in l for item in sublist]
 
 def tokenize_dataset(dataset_address, bert_addr, length=60):
     # added tokenizer and tokens for
@@ -141,20 +146,29 @@ def remove_values_from_list(the_list, val):
     return [value for value in the_list if value != val]
 
 class NLUDataset(Dataset):
-    def __init__(self, sin,sout,intent,input_ids,attention_mask,token_type_ids,subtoken_mask):
-        self.sin = [prepare_sequence(temp,word2index) for temp in sin]
-        self.sout = [prepare_sequence(temp,tag2index) for temp in sout]
-        self.intent = Variable(torch.LongTensor([prepare_intent(temp,intent2index) for temp in intent])).cuda()
-        self.input_ids=input_ids.cuda()
-        self.attention_mask=attention_mask.cuda()
-        self.token_type_ids=token_type_ids.cuda()
-        self.subtoken_mask=subtoken_mask.cuda()
-        self.x_mask = [Variable(torch.BoolTensor(tuple(map(lambda s: s ==0, t )))).cuda() for t in self.sin]
+    def __init__(self, sin, sout, intent, input_ids, attention_mask, token_type_ids, subtoken_mask):
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.sin = [prepare_sequence(temp, word2index).to(self.device) for temp in sin]
+        self.sout = [prepare_sequence(temp, tag2index).to(self.device) for temp in sout]
+        self.intent = Variable(torch.LongTensor([prepare_intent(temp, intent2index) for temp in intent])).to(self.device)
+        self.input_ids = input_ids.to(self.device)
+        self.attention_mask = attention_mask.to(self.device)
+        self.token_type_ids = token_type_ids.to(self.device)
+        self.subtoken_mask = subtoken_mask.to(self.device)
+        self.x_mask = [Variable(torch.BoolTensor(tuple(map(lambda s: s == 0, t)))).to(self.device) for t in self.sin]
+
     def __len__(self):
         return len(self.intent)
+
     def __getitem__(self, idx):
-        sample = self.sin[idx],self.sout[idx],self.intent[idx],self.input_ids[idx],self.attention_mask[idx],self.token_type_ids[idx],self.subtoken_mask[idx],self.x_mask[idx]
+        sample = (
+            self.sin[idx], self.sout[idx], self.intent[idx],
+            self.input_ids[idx], self.attention_mask[idx], 
+            self.token_type_ids[idx], self.subtoken_mask[idx], 
+            self.x_mask[idx]
+        )
         return sample
+
 
 # we put all tags inside of the batch in a flat array for F1 measure.
 # we use masking so that we only non PAD tokens are counted in f1 measurement
@@ -208,21 +222,15 @@ def tag_sentence(sentence):
 
     return f"BOS {formatted_sentence} EOS\t O {formatted_labels} open_app"
 
-
+# Tokenize a sample, moved to correct device
 def tokenize_sample(sample, bert_addr, length=60):
-    # length = length
     sample = tag_sentence(sample)
-    # added tokenizer and tokens for
     bert_tokenizer = torch.hub.load(bert_addr, 'tokenizer', bert_addr, verbose=False, source="local")
     sample = [sample]
-    # print("example input:" + sample[0])
-    # converts string to array of tokens + array of tags + target intent [array with x=3 and y dynamic]
     sample_tokens = remove_punc(sample)
     sample_subtoken_mask = get_subtoken_mask(sample_tokens, bert_tokenizer, length)
-    sample_toks = bert_tokenizer.batch_encode_plus(sample_tokens, max_length=length, add_special_tokens=True, return_tensors='pt',
-                                                   return_attention_mask=True, padding='max_length', truncation=True)
+    sample_toks = bert_tokenizer.batch_encode_plus(sample_tokens, max_length=length, add_special_tokens=True,
+                                                   return_tensors='pt', return_attention_mask=True, padding='max_length', truncation=True)
     sample = [[re.sub(" +", " ", t.split("\t")[0]).split(" "), t.split("\t")[1].split(" ")[:-1], t.split("\t")[1].split(" ")[-1]] for t in sample]
-    # removes BOS, EOS from array of tokens and tags
     sample = [[t[0][1:-1], t[1][1:], t[2]] for t in sample]
     return sample, sample_subtoken_mask, sample_toks
-

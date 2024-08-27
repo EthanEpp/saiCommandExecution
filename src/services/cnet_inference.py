@@ -27,25 +27,21 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, us
     index2tag = model.index2tag
     index2intent = model.index2intent
 
+    device = torch.device("cuda" if use_cuda and torch.cuda.is_available() else "cpu")
+
     with torch.no_grad():
         timings = {}
 
         start_time = time.time()
-        # Move tensors to GPU if CUDA is available
-        if use_cuda and torch.cuda.is_available():
-            bert_tokens = sample_toks['input_ids'][0].unsqueeze(0).cuda()
-            bert_mask = sample_toks['attention_mask'][0].unsqueeze(0).cuda()
-            bert_toktype = sample_toks['token_type_ids'][0].unsqueeze(0).cuda()
-            subtoken_mask = sample_subtoken_mask[0].unsqueeze(0).cuda()
-        else:
-            bert_tokens = sample_toks['input_ids'][0].unsqueeze(0)
-            bert_mask = sample_toks['attention_mask'][0].unsqueeze(0)
-            bert_toktype = sample_toks['token_type_ids'][0].unsqueeze(0)
-            subtoken_mask = sample_subtoken_mask[0].unsqueeze(0)
+        # Move tensors to the appropriate device
+        bert_tokens = sample_toks['input_ids'][0].unsqueeze(0).to(device)
+        bert_mask = sample_toks['attention_mask'][0].unsqueeze(0).to(device)
+        bert_toktype = sample_toks['token_type_ids'][0].unsqueeze(0).to(device)
+        subtoken_mask = sample_subtoken_mask[0].unsqueeze(0).to(device)
         timings['bert_input_prep'] = time.time() - start_time
 
         start_time = time.time()
-        start_decode = Variable(torch.LongTensor([[word2index['<BOS>']]*1])).cuda().transpose(1,0) if use_cuda else Variable(torch.LongTensor([[word2index['<BOS>']]*1])).transpose(1,0)
+        start_decode = Variable(torch.LongTensor([[word2index['<BOS>']] * 1]).to(device)).transpose(1, 0)
         timings['sequence_prep'] = time.time() - start_time
 
         start_time = time.time()
@@ -55,15 +51,7 @@ def predict_intent_and_tags(sample, sample_toks, sample_subtoken_mask, model, us
 
         # Process tag predictions
         tag_predictions = torch.argmax(tag_score, -1).squeeze().cpu().numpy()
-        filtered_tags = {}
-        for i, tag in enumerate(tag_predictions):
-            tag_label = index2tag[tag]
-            if tag_label != 'O' and i < len(sample[0][0]):
-                word = sample[0][0][i]
-                if tag_label in filtered_tags:
-                    filtered_tags[tag_label].append(word)
-                else:
-                    filtered_tags[tag_label] = [word]
+        filtered_tags = [(sample[0][0][i], index2tag[tag]) for i, tag in enumerate(tag_predictions) if index2tag[tag] != 'O' and i < len(sample[0][0])]
 
         # Process intent prediction
         _, predicted_intent_idx = torch.max(intent_score, -1)
