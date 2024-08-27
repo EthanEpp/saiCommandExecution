@@ -13,6 +13,8 @@ ENV_CNN_FILTERS=128
 ENV_CNN_KERNELS=4
 ENV_HIDDEN_SIZE=ENV_CNN_FILTERS*ENV_CNN_KERNELS
 
+# Define device globally
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 # generates transformer mask
@@ -98,33 +100,42 @@ class Encoder(nn.Module):
 
 #Middle
 class Middle(nn.Module):
-    def __init__(self ,p_dropout=0.5, length = 60):
+    def __init__(self, p_dropout=0.5, length=60):
         super(Middle, self).__init__()
         self.activation = nn.ReLU()
         self.p_dropout = p_dropout
         self.softmax = nn.Softmax(dim=1)
-        #Transformer
+        # Set the device to either CUDA or CPU
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+        # Transformer
         nlayers = 2  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
         self.pos_encoder = PositionalEncoding(ENV_HIDDEN_SIZE, dropout=0.1)
-        encoder_layers = nn.TransformerEncoderLayer(ENV_HIDDEN_SIZE, nhead=2,batch_first=True, dim_feedforward=2048 ,activation="relu", dropout=0.1)
-        self.transformer_encoder = nn.TransformerEncoder(encoder_layers, nlayers,enable_nested_tensor=False)
-        self.transformer_mask = generate_square_subsequent_mask(length).cuda()
+        encoder_layers = nn.TransformerEncoderLayer(ENV_HIDDEN_SIZE, nhead=2, batch_first=True, dim_feedforward=2048, activation="relu", dropout=0.1)
+        self.transformer_encoder = nn.TransformerEncoder(encoder_layers, nlayers, enable_nested_tensor=False)
 
-    def forward(self, fromencoder,input_masking,training=True):
+        # Generate the mask and move it to the correct device
+        self.transformer_mask = generate_square_subsequent_mask(length).to(self.device)
+
+    def forward(self, fromencoder, input_masking, training=True):
         src = fromencoder * math.sqrt(ENV_HIDDEN_SIZE)
         src = self.pos_encoder(src)
-        output = (self.transformer_encoder(src,src_key_padding_mask=input_masking)) # outputs probably
+        output = self.transformer_encoder(src, src_key_padding_mask=input_masking)  # outputs probably
         return output
 
 #start of the decoder
-class Decoder(nn.Module):
 
-    def __init__(self,slot_size,intent_size,dropout_p=0.5, LENGTH=60):
+class Decoder(nn.Module):
+    def __init__(self, slot_size, intent_size, dropout_p=0.5, LENGTH=60):
         super(Decoder, self).__init__()
         self.slot_size = slot_size
         self.intent_size = intent_size
         self.dropout_p = dropout_p
-        self.softmax= nn.Softmax(dim=1)
+        self.softmax = nn.Softmax(dim=1)
+        
+        # Set the device to either CUDA or CPU
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
         # Define the layers
         self.embedding = nn.Embedding(self.slot_size, ENV_HIDDEN_SIZE)
         self.activation = nn.ReLU()
@@ -132,73 +143,75 @@ class Decoder(nn.Module):
         self.dropout2 = nn.Dropout(self.dropout_p)
         self.dropout3 = nn.Dropout(self.dropout_p)
         self.slot_trans = nn.Linear(ENV_HIDDEN_SIZE, self.slot_size)
-        self.intent_out = nn.Linear(ENV_HIDDEN_SIZE,self.intent_size)
-        self.intent_out_cls = nn.Linear(ENV_EMBEDDING_SIZE,self.intent_size) # dim of bert
-        self.decoder_layer = nn.TransformerDecoderLayer(d_model=ENV_HIDDEN_SIZE, nhead=2,batch_first=True,dim_feedforward=300 ,activation="relu")
+        self.intent_out = nn.Linear(ENV_HIDDEN_SIZE, self.intent_size)
+        self.intent_out_cls = nn.Linear(ENV_EMBEDDING_SIZE, self.intent_size)  # dim of bert
+        self.decoder_layer = nn.TransformerDecoderLayer(d_model=ENV_HIDDEN_SIZE, nhead=2, batch_first=True, dim_feedforward=300, activation="relu")
         self.transformer_decoder = nn.TransformerDecoder(self.decoder_layer, num_layers=2)
-        self.transformer_mask = generate_square_subsequent_mask(LENGTH).cuda()
-        self.transformer_diagonal_mask = generate_square_diagonal_mask(LENGTH).cuda()
+
+        # Generate the masks and move them to the correct device
+        self.transformer_mask = generate_square_subsequent_mask(LENGTH).to(self.device)
+        self.transformer_diagonal_mask = generate_square_diagonal_mask(LENGTH).to(self.device)
+
         self.pos_encoder = PositionalEncoding(ENV_HIDDEN_SIZE, dropout=0.1)
-        self.self_attention = nn.MultiheadAttention(embed_dim=ENV_HIDDEN_SIZE
-                                                    ,num_heads=8,dropout=0.1
-                                                    ,batch_first=True)
+        self.self_attention = nn.MultiheadAttention(embed_dim=ENV_HIDDEN_SIZE, num_heads=8, dropout=0.1, batch_first=True)
         self.layer_norm = nn.LayerNorm(ENV_HIDDEN_SIZE)
 
-
-    def forward(self, input,encoder_outputs,encoder_maskings,tag2index,bert_subtoken_maskings=None,infer=False):
-        # encoder outputs: BATCH,LENGTH,Dims (16,60,1024)
+    def forward(self, input, encoder_outputs, encoder_maskings, tag2index, bert_subtoken_maskings=None, infer=False):
+        # encoder outputs: BATCH, LENGTH, Dims (16,60,1024)
         batch_size = encoder_outputs.shape[0]
-        length = encoder_outputs.size(1) #for every token in batches
+        length = encoder_outputs.size(1)  # for every token in batches
         embedded = self.embedding(input)
 
-        #print("NOT CLS")
-        encoder_outputs2=encoder_outputs
-        context,attn_weight = self.self_attention(encoder_outputs2,encoder_outputs2,encoder_outputs2
-                                                  ,key_padding_mask=encoder_maskings)
-        encoder_outputs2 = self.layer_norm(self.dropout2(context))+encoder_outputs2
+        # Self-attention
+        encoder_outputs2 = encoder_outputs
+        context, attn_weight = self.self_attention(encoder_outputs2, encoder_outputs2, encoder_outputs2, key_padding_mask=encoder_maskings)
+        encoder_outputs2 = self.layer_norm(self.dropout2(context)) + encoder_outputs2
         sum_mask = (~encoder_maskings).sum(1).unsqueeze(1)
-        sum_encoder = ((((encoder_outputs2)))*((~encoder_maskings).unsqueeze(2))).sum(1)
-        intent_score = self.intent_out(self.dropout1(sum_encoder/sum_mask)) # B,D
+        sum_encoder = ((encoder_outputs2) * ((~encoder_maskings).unsqueeze(2))).sum(1)
+        intent_score = self.intent_out(self.dropout1(sum_encoder / sum_mask))  # B, D
 
-
-        newtensor = torch.cuda.FloatTensor(batch_size, length,ENV_HIDDEN_SIZE).fill_(0.) # size of newtensor same as original
-        for i in range(batch_size): # per batch
-            newtensor_index=0
-            for j in range(length): # for each token
-                if bert_subtoken_maskings[i][j].item()==1:
+        newtensor = torch.zeros(batch_size, length, ENV_HIDDEN_SIZE, device=self.device)
+        for i in range(batch_size):  # per batch
+            newtensor_index = 0
+            for j in range(length):  # for each token
+                if bert_subtoken_maskings[i][j].item() == 1:
                     newtensor[i][newtensor_index] = encoder_outputs[i][j]
-                    newtensor_index+=1
+                    newtensor_index += 1
 
-        if infer==False:
-            embedded=embedded*math.sqrt(ENV_HIDDEN_SIZE)
+        if infer == False:
+            embedded = embedded * math.sqrt(ENV_HIDDEN_SIZE)
             embedded = self.pos_encoder(embedded)
-            zol = self.transformer_decoder(tgt=embedded,memory=newtensor
-                                           ,memory_mask=self.transformer_diagonal_mask
-                                           ,tgt_mask=self.transformer_mask)
+            zol = self.transformer_decoder(
+                tgt=embedded, 
+                memory=newtensor, 
+                memory_mask=self.transformer_diagonal_mask, 
+                tgt_mask=self.transformer_mask
+            )
 
             scores = self.slot_trans(self.dropout3(zol))
-            slot_scores = F.log_softmax(scores,dim=2)
+            slot_scores = F.log_softmax(scores, dim=2)
         else:
-            bos = Variable(torch.LongTensor([[tag2index['<BOS>']]*batch_size])).cuda().transpose(1,0)
+            bos = Variable(torch.LongTensor([[tag2index['<BOS>']] * batch_size])).to(self.device).transpose(1, 0)
             bos = self.embedding(bos)
-            tokens=bos
+            tokens = bos
             for i in range(length):
-                temp_embedded=tokens*math.sqrt(ENV_HIDDEN_SIZE)
+                temp_embedded = tokens * math.sqrt(ENV_HIDDEN_SIZE)
                 temp_embedded = self.pos_encoder(temp_embedded)
-                zol = self.transformer_decoder(tgt=temp_embedded,
-                                               memory=newtensor,
-                                               tgt_mask=self.transformer_mask[:i+1,:i+1],
-                                               memory_mask=self.transformer_diagonal_mask[:i+1,:]
-                                               )
+                zol = self.transformer_decoder(
+                    tgt=temp_embedded,
+                    memory=newtensor,
+                    tgt_mask=self.transformer_mask[:i+1, :i+1],
+                    memory_mask=self.transformer_diagonal_mask[:i+1, :]
+                )
                 scores = self.slot_trans(self.dropout3(zol))
-                softmaxed = F.log_softmax(scores,dim=2)
-                #the last token is apended to vectors
-                _,input = torch.max(softmaxed,2)
+                softmaxed = F.log_softmax(scores, dim=2)
+                # Append the last token to vectors
+                _, input = torch.max(softmaxed, 2)
                 newtok = self.embedding(input)
-                tokens=torch.cat((bos,newtok),dim=1)
+                tokens = torch.cat((bos, newtok), dim=1)
             slot_scores = softmaxed
 
-        return slot_scores.view(input.size(0)*length,-1), intent_score
+        return slot_scores.view(input.size(0) * length, -1), intent_score
 
 # CNet class
 class CNet(nn.Module):
@@ -206,6 +219,8 @@ class CNet(nn.Module):
         super(CNet, self).__init__()
         self.length = padded_length
         self.bert_addr = bert_addr
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
         if model_path:
           self.word2index = load_mapping(f'{model_path}-word2index.pkl')
           self.index2word = load_mapping(f'{model_path}-index2word.pkl')
@@ -214,6 +229,7 @@ class CNet(nn.Module):
           self.intent2index = load_mapping(f'{model_path}-intent2index.pkl')
           self.index2intent = load_mapping(f'{model_path}-index2intent.pkl')
         else:
+          print("No model path provided, this should only occur if you are training")
           self.word2index, self.index2word, self.tag2index, self.index2tag, self.intent2index, self.index2intent = word2index, index2word, tag2index, index2tag, intent2index, index2intent
         # print("loaded words")
 
@@ -223,10 +239,11 @@ class CNet(nn.Module):
         self.decoder = Decoder(len(self.tag2index), len(self.intent2index), LENGTH=padded_length)
 
         if model_path:
-            self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl').state_dict())
-            self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl').state_dict())
-            self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl').state_dict())
-            self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl').state_dict())
+            # Use map_location to ensure models are loaded onto the right device (CPU if CUDA isn't available)
+            self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl', map_location=self.device).state_dict())
+            self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl', map_location=self.device).state_dict())
+            self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl', map_location=self.device).state_dict())
+            self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl', map_location=self.device).state_dict())
 
 
         if torch.cuda.is_available():
