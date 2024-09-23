@@ -238,13 +238,26 @@ class CNet(nn.Module):
         self.middle = Middle(length = padded_length)
         self.decoder = Decoder(len(self.tag2index), len(self.intent2index), LENGTH=padded_length)
 
+        #Only use when training
+        # if model_path:
+        #     # Use map_location to ensure models are loaded onto the right device (CPU if CUDA isn't available)
+        #     self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl', map_location=self.device).state_dict())
+        #     self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl', map_location=self.device).state_dict())
+        #     self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl', map_location=self.device).state_dict())
+        #     self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl', map_location=self.device).state_dict())
+        
         if model_path:
-            # Use map_location to ensure models are loaded onto the right device (CPU if CUDA isn't available)
+            import __main__
+            __main__.BertLayer = BertLayer  # Ensure BertLayer is available in the namespace
+            __main__.Encoder = Encoder  # Ensure Encoder is available in the namespace
+            __main__.Middle = Middle  # Ensure Middle is available in the namespace
+            __main__.Decoder = Decoder  # Ensure Decoder is available in the namespace
+            __main__.PositionalEncoding = PositionalEncoding  # Ensure PositionalEncoding is available in the namespace
+            
             self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl', map_location=self.device).state_dict())
             self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl', map_location=self.device).state_dict())
             self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl', map_location=self.device).state_dict())
             self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl', map_location=self.device).state_dict())
-
 
         if torch.cuda.is_available():
             self.bert_layer = self.bert_layer.cuda()
