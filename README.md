@@ -115,4 +115,4 @@ The project uses GitHub Actions for continuous integration. The configuration fi
 
 ## Contact
 
-For any questions or suggestions, please contact Ethan Epp at [eepp@softacuity.com].
+For any questions or suggestions, please contact Ethan Epp at [eepp@ucsb.edu].
