@@ -20,7 +20,7 @@ This repository contains a speech command system that processes audio inputs, tr
 To get started with the speech command system, clone the repository and install the required dependencies:
 
 ```bash
-git clone https://github.com/EthanEpp/saiCommandExecution/tree/eic-handoff
+git clone https://github.com/EthanEpp/saiCommandExecution/
 git clone https://huggingface.co/ethan3048/saiCommandProcessor
 cd ./saiCommandExecution
 pip install -r requirements.txt
