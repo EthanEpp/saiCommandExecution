@@ -1,0 +1,21 @@
+BOS message user2 say yes EOS	O O B-contact_name O B-text_content send_text
+BOS text boss and say room ready EOS	O O B-contact_name O O B-text_content I-text_content send_text
+BOS message hi to bruce smith EOS	O O B-text_content O B-contact_name I-contact_name send_text
+BOS send message it s starting to user EOS	O O O B-text_content I-text_content I-text_content O B-contact_name send_text
+BOS message mkbhd say wallpaper too expensive EOS	O O B-contact_name O B-text_content I-text_content I-text_content send_text
+BOS send the message hello to mom EOS	O O O O B-text_content O B-contact_name send_text
+BOS text dad say I arrive soon EOS	O O B-contact_name O B-text_content I-text_content I-text_content send_text
+BOS message john with meeting cancel EOS	O O B-contact_name O B-text_content I-text_content send_text
+BOS send please come message to sarah EOS	O O B-text_content I-text_content O O B-contact_name send_text
+BOS message doctor with i m late EOS	O O B-contact_name O B-text_content I-text_content I-text_content send_text
+BOS text boss and say finish the report EOS	O O B-contact_name O O B-text_content I-text_content I-text_content send_text
+BOS send message not feeling well to manager EOS	O O O B-text_content I-text_content I-text_content O B-contact_name send_text
+BOS message alex say i am outside now EOS	O O B-contact_name O B-text_content I-text_content I-text_content I-text_content send_text
+BOS text to teacher say homework finish EOS	O O O B-contact_name O B-text_content I-text_content send_text
+BOS send what time meet? message to jason EOS	O O B-text_content I-text_content I-text_content O O B-contact_name send_text
+BOS message friend2 say let s go EOS	O O B-contact_name O B-text_content I-text_content I-text_content send_text
+BOS text cousin with bring food EOS	O O B-contact_name O B-text_content I-text_content send_text
+BOS message client5 meeting start soon EOS	O O B-contact_name B-text_content I-text_content I-text_content send_text
+BOS send i am ready to supervisor EOS	O O B-text_content I-text_content I-text_content O B-contact_name send_text
+BOS message neighbor2 say loud music EOS	O O B-contact_name O B-text_content I-text_content send_text
+
