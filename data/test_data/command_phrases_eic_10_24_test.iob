@@ -1,0 +1,444 @@
+BOS please let marco bianchi know we need to finalize the project proposal by Monday EOS	O O O B-contact_name I-contact_name O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS log off the zoom meeting EOS	O O O O O O end_call
+BOS tell amy jensen that the project review has been moved to next Monday EOS	O O B-contact_name I-contact_name O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS summon security to the operating room EOS	O O O O O O O unknown
+BOS open the schedule for today EOS	O O O O O O schedule_today
+BOS can you search up road closures in california EOS	O O O O O B-search_query I-search_query I-search_query I-search_query google_search
+BOS please turn up the music and also set a timer for 20 minutes for the oven EOS	O O O O O O B-multi_command_splitter I-multi_command_splitter O O O O O O O O O joint_commands
+BOS please look up who is the president of france online EOS	O O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query O google_search
+BOS set a timer for 25 minutes EOS	O O O O O B-timer_length I-timer_length set_timer
+BOS can you find out when janet s training session is EOS	O O O O O O B-source_user O O O O show_schedule
+BOS please start the song over EOS	O O O O O O restart_song
+BOS boost the music volume EOS	O O O O O increase_music_volume
+BOS please stop the video EOS	O O O O O stop_video
+BOS play modern psychedelia EOS	O O B-playlist I-playlist PlayMusic
+BOS tourniquet down EOS	O O O tourniquet_down
+BOS tell sophie lee that we need her expertise on the new tech release EOS	O O B-contact_name I-contact_name O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS up the music volume by ten EOS	O O O O O O B-volume_increment increase_music_volume
+BOS turn the camera on EOS	O O O O O start_video
+BOS notify shojiro johnson that his consultation time has been changed to 2 pm tomorrow EOS	O O B-contact_name I-contact_name O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS restart all current timers EOS	O O O O O reset_all_timers
+BOS google world s tallest building EOS	O O B-search_query I-search_query I-search_query I-search_query google_search
+BOS stop surgery EOS	O O O surgery_complete
+BOS please play my ecstatic playlist EOS	O O O B-playlist_source B-playlist O PlayMusic
+BOS killers of the flower moon trailer on youtube EOS	O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query O O youtube_search
+BOS what s left on the workout timer EOS	O O O O O O B-timer_name O timer_remaining
+BOS look up age of the universe EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
+BOS please tell me the remaining timers EOS	O O O O O O O timer_running_list
+BOS who is the next patient EOS	O O O O O O next_patient
+BOS create cleaning timer for 35 minutes with pink EOS	O O B-timer_name O O B-timer_length I-timer_length O B-timer_color set_timer
+BOS reveal the active tourniquet EOS	O O O O O show_tourniquet
+BOS hide the music EOS	O O O B-app_name hide_app
+BOS patient has been transferred out EOS	O O O O O O patient_out
+BOS bring down the music by 20 EOS	O O O O O O B-volume_increment decrease_music_volume
+BOS disable the microphone EOS	O O O O mute_mic
+BOS what is the weather going to be like in virginia on st  patrick s day EOS	O O O O O O O O O O B-state O B-time_range I-time_range I-time_range I-time_range GetWeather
+BOS let s hear stuff from andrew hewitt EOS	O O O O O O B-artist I-artist PlayMusic
+BOS initiate tourniquet reset EOS	O O O O tourniquet_reset
+BOS gather system logs EOS	O O O O diagnostic_logs
+BOS please create cooking timer 30 minutes with dark blue color EOS	O O O B-timer_name O B-timer_length I-timer_length O B-timer_color I-color O set_timer
+BOS can you please restart the timer EOS	O O O O O O O reset_timer
+BOS find recipe for biryani and also what is capital of Australia EOS	O O O O O B-multi_command_splitter O O O O O O joint_commands
+BOS can you find how to tie a tie on google EOS	O O O O B-search_query I-search_query I-search_query I-search_query I-search_query O O google_search
+BOS could you please collect system logs EOS	O O O O O O O diagnostic_logs
+BOS sign off the call EOS	O O O O O end_call
+BOS text to teacher say homework finish EOS	O O O B-contact_name O B-text_content I-text_content send_text
+BOS play sound track music from the twenties EOS	O O B-music_item I-music_item O O O B-year PlayMusic
+BOS youtube video on how to make homemade ice cream EOS	O O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query youtube_search
+BOS hide volume EOS	O O B-app_name hide_app
+BOS start over this song EOS	O O O O O restart_song
+BOS show my schedule EOS	O O B-source_user O show_schedule
+BOS get the surgery underway EOS	O O O O O start_surgery
+BOS please add mason edwards to our call EOS	O O O B-contact_name I-contact_name O O O add_to_call
+BOS start cleaning up timer with one hour make it red EOS	O O B-timer_name I-timer_name O O B-timer_length I-timer_length O O B-timer_color set_timer
+BOS can you please open the system settings app EOS	O O O O O O B-app_name I-app_name O open_app
+BOS patient has been taken out EOS	O O O O O O patient_out
+BOS could you find out the temperature in the room EOS	O O O O O O O O O O room_temp
+BOS please make all timers invisible EOS	O O O O O O hide_all_timers
+BOS begin camera app in bigger mode please EOS	O O B-app_name O O O O O enlarge_window
+BOS initiate dinner prep timer 40 minutes and color it blue EOS	O O B-timer_name I-timer_name O B-timer_length I-timer_length O O O B-timer_color set_timer
+BOS i need to be logged out EOS	O O O O O O O log_out
+BOS show dr smith s schedule EOS	O O B-source_user I-source_user O O show_schedule
+BOS restart every timer EOS	O O O O reset_all_timers
+BOS kindly delete the tea break timer EOS	O O O O B-timer_name I-timer_name O clear_timer
+BOS how does the internet work EOS	O O O O O O open_ended
+BOS please turn down the tunes EOS	O O O O O O decrease_music_volume
+BOS tell me the weather forecast for ut on thursday EOS	O O O O O O O B-state O B-time_range GetWeather
+BOS conceal all timers EOS	O O O O hide_all_timers
+BOS search on youtube for easy vegan recipes EOS	O O O O O B-search_query I-search_query I-search_query youtube_search
+BOS can you sign me out of my user account EOS	O O O O O O O O O O log_out
+BOS i d like the music off EOS	O O O O O O O stop_music
+BOS set the tourniquet for one and a half hours EOS	O O O O O B-timer_length I-timer_length I-timer_length I-timer_length I-timer_length tourniquet_up
+BOS restart tourniquet operation EOS	O O O O tourniquet_reset
+BOS i want to stop the music EOS	O O O O O O O stop_music
+BOS send emily bronte a reminder to review the manuscript by this Friday EOS	O O B-contact_name I-contact_name O O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS list the last patient scheduled EOS	O O O O O O last_patient
+BOS navigate to 123 Main Street EOS	O O O O O O unknown
+BOS show me the initial patient scheduled EOS	O O O O O O O first_patient
+BOS start the patient transfer process EOS	O O O O O O unknown
+BOS what is the forecast for west virginia will it be snowy EOS	O O O O O O B-state I-state O O O B-condition_description GetWeather
+BOS retrieve the patient s medical history EOS	O O O O O O O unknown
+BOS go to itunes and play dr  lecter by david hodges EOS	O O O B-service O O B-album I-album O B-artist I-artist PlayMusic
+BOS can you put on like a hurricane by paul landers EOS	O O O O O B-album I-album I-album O B-artist I-artist PlayMusic
+BOS provide the dicom schedule EOS	O O O O O schedule_today
+BOS can you turn on the video EOS	O O O O O O O start_video
+BOS hit play on the music EOS	O O O O O O start_music
+BOS suspend the timer EOS	O O O O stop_timer
+BOS could you please log me out EOS	O O O O O O O log_out
+BOS please reduce the volume by ten EOS	O O O O O O B-volume_increment decrease_volume
+BOS delete all active timers EOS	O O O O O cancel_all_timers
+BOS proceed with hitomi nabatame music from 2003 EOS	O O O B-artist I-artist O O B-year PlayMusic
+BOS let s reset the stopwatch EOS	O O O O O O reset_stopwatch
+BOS ten minute timer named break time1 in color yellow EOS	O B-timer_length I-timer_length O O B-timer_name I-timer_name O O B-timer_color set_timer
+BOS open the dicom viewer EOS	O O O B-app_name I-app_name open_app
+BOS play lorenzo palacios quispe EOS	O O B-artist I-artist I-artist PlayMusic
+BOS follow the patient s progress EOS	O O O O O O unknown
+BOS what are the characteristics of a healthy diet EOS	O O O O O O O O O open_ended
+BOS could you please check the humidity levels then check the temperature and then check the particulate levels EOS	O O O O O O O O B-multi_command_splitter O O O B-multi_command_splitter I-multi_command_splitter O O O O joint_commands
+BOS mute my microphone EOS	O O O O mute_mic
+BOS is the smoke level high in here right now EOS	O O O O O O O O O O room_smoke
+BOS put on the last track again EOS	O O O O O O O previous_song
+BOS include abigail roberts on this call EOS	O O B-contact_name I-contact_name O O O add_to_call
+BOS who is the initial patient scheduled EOS	O O O O O O O first_patient
+BOS check the patient s oxygen levels EOS	O O O O O O O unknown
+BOS can you find the video how to brew your own beer EOS	O O O O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query youtube_search
+BOS conceal tourniquet status EOS	O O O O hide_tourniquet
+BOS can you find the video live street music performances EOS	O O O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS send what time meet? message to jason EOS	O O B-text_content I-text_content I-text_content O O B-contact_name send_text
+BOS could you start the music EOS	O O O O O O start_music
+BOS can you find the video how to start a podcast EOS	O O O O O O B-search_query I-search_query I-search_query I-search_query I-search_query youtube_search
+BOS youtube video of street magic tricks revealed EOS	O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS what are the different types of surgical procedures EOS	O O O O O O O O O open_ended
+BOS list the final patient in today s schedule EOS	O O O O O O O O O last_patient
+BOS how long has the tourniquet been activated EOS	O O O O O O O O duration_tourniquet
+BOS let me hear chris knight music EOS	O O O O B-artist I-artist O PlayMusic
+BOS please turn on the camera EOS	O O O O O O start_video
+BOS halt the meditation timer EOS	O O O B-timer_name O stop_timer
+BOS play something on zvooq EOS	O O O O B-service PlayMusic
+BOS reset stop watch please EOS	O O O O O reset_stopwatch
+BOS play music from 2014 EOS	O O O O B-year PlayMusic
+BOS open the system settings window EOS	O O O B-app_name I-app_name O open_app
+BOS reinitialize tourniquet function EOS	O O O O tourniquet_reset
+BOS can you sign me out EOS	O O O O O O log_out
+BOS make the volume go up EOS	O O O O O O increase_volume
+BOS please tell me the humidity level in the room EOS	O O O O O O O O O O room_humidity
+BOS please show me the humidity EOS	O O O O O B-app_name open_app
+BOS could you please play some music EOS	O O O O O O O start_music
+BOS can you text jackie EOS	O O O O B-contact_name send_text
+BOS deactivate the mic please EOS	O O O O O mute_mic
+BOS i want to hear leroi moore on vimeo  play the song chance of a lifetime EOS	O O O O O B-artist I-artist O B-service O O B-music_item B-track I-track I-track I-track PlayMusic
+BOS please start the stopwatch EOS	O O O O O start_stopwatch
+BOS please clear the meditation timer EOS	O O O O B-timer_name O clear_timer
+BOS move on to the next song EOS	O O O O O O O next_song
+BOS please halt the music EOS	O O O O O stop_music
+BOS let s clear the stop watch EOS	O O O O O O O clear_stopwatch
+BOS please turn up the sound EOS	O O O O O O increase_volume
+BOS can you play me some eighties music by adele EOS	O O O O O O B-year O O B-artist PlayMusic
+BOS can you list all timers EOS	O O O O O O timer_running_list
+BOS notify security about the operating room EOS	O O O O O O O unknown
+BOS organize a meeting with Dr. Smith for tomorrow EOS	O O O O O B-contact_name I-contact_name O O unknown
+BOS lessen the music volume EOS	O O O O O decrease_music_volume
+BOS launch the surgical process EOS	O O O O O start_surgery
+BOS adjust the volume to 45 EOS	O O O O O B-volume_increment set_volume
+BOS how does the human brain process information EOS	O O O O O O O O open_ended
+BOS prolong the use of the tourniquet by 50 minutes EOS	O O O O O O O O B-timer_name I-timer_name extend_tourniquet
+BOS initiate the stopwatch now EOS	O O O O O start_stopwatch
+BOS play something by duke ellington from the seventies EOS	O O O O B-artist I-artist O O B-year PlayMusic
+BOS discover life expectancy in the united states EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
+BOS add today s notes to the patient record EOS	O O O O O O O O O unknown
+BOS can you play music EOS	O O O O O start_music
+BOS how does music influence emotions EOS	O O O O O O open_ended
+BOS sign me in EOS	O O O O log_in
+BOS proceed with the surgery EOS	O O O O O start_surgery
+BOS the patient is here EOS	O O O O O patient_in
+BOS log me in to my user account EOS	O O O O O O O O log_in
+BOS what is the weather here EOS	O O O O O B-current_location GetWeather
+BOS tell me who won the last world cup EOS	O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
+BOS amplify the music sound EOS	O O O O O increase_music_volume
+BOS name timer morning routine EOS	O O O B-timer_name I-timer_name set_timer
+BOS how does the respiratory system function EOS	O O O O O O O open_ended
+BOS when will it be hot here EOS	O O O O O B-condition_temperature B-current_location GetWeather
+BOS please adjust the volume to 95 EOS	O O O O O O B-volume_increment set_volume
+BOS play a song by rahsaan patterson EOS	O O O B-music_item O B-artist I-artist PlayMusic
+BOS tell me if it will be snowy 8 hours from now in mount airy  vi EOS	O O O O O O O B-condition_description B-time_range I-time_range I-time_range I-time_range O B-city I-city B-state GetWeather
+BOS set the volume to one hundred EOS	O O O O O B-volume_increment I-volume_increment set_volume
+BOS stop the video EOS	O O O O stop_video
+BOS the patient is in EOS	O O O O O patient_in
+BOS who is up next on the schedule EOS	O O O O O O O O next_patient
+BOS open the preferences cards app EOS	O O O B-app_name I-app_name O open_app
+BOS end the video call EOS	O O O O O end_call
+BOS tell me the capital of canada EOS	O O O B-search_query I-search_query I-search_query I-search_query google_search
+BOS turn down the music by five and set an alarm for my workout in the morning then activate the stopwatch EOS	O O O O O O O B-multi_command_splitter O O O O O O O O O B-multi_command_splitter O O O joint_commands
+BOS turn off the tourniquet now EOS	O O O O O O tourniquet_down
+BOS look up the sunrise timelapse video EOS	O O O O B-search_query I-search_query O youtube_search
+BOS can you sign me out of my account EOS	O O O O O O O O O log_out
+BOS set a timer for 12 minutes EOS	O O O O O B-timer_length I-timer_length set_timer
+BOS begin the timer name is relax for one hour make it purple EOS	O O O O O O B-timer_name O B-timer_length I-timer_length O O B-timer_color set_timer
+BOS play techno on lastfm EOS	O O B-genre O B-service PlayMusic
+BOS set a timer for twenty minutes and name it cookies EOS	O O O O O B-timer_length I-timer_length O O O B-timer_name set_timer
+BOS please look up the fast and furious three trailer on youtube EOS	O O O O O B-search_query I-search_query I-search_query I-search_query I-search_query O O youtube_search
+BOS go to the next song please EOS	O O O O O O O next_song
+BOS freeze the timer please EOS	O O O O O stop_timer
+BOS tell me who is the final patient today EOS	O O O O O O O O O last_patient
+BOS just reset the stop watch EOS	O O O O O O reset_stopwatch
+BOS can you log me out of my profile EOS	O O O O O O O O O log_out
+BOS patient has been brought in EOS	O O O O O O patient_in
+BOS could you replay the song EOS	O O O O O O restart_song
+BOS how much time has passed since the tourniquet was applied EOS	O O O O O O O O O O O duration_tourniquet
+BOS delete the phrase i hope this helps EOS	O O O O B-text_content I-text_content I-text_content I-text_content delete_text_content
+BOS youtube video of funny dog compilation EOS	O O O O B-search_query I-search_query I-search_query youtube_search
+BOS go back to the start of this song EOS	O O O O O O O O O restart_song
+BOS please bring up a video on meditation for beginners EOS	O O O O O O O B-search_query I-search_query I-search_query youtube_search
+BOS look up the complete guide to knitting video EOS	O O O O B-search_query I-search_query I-search_query I-search_query O youtube_search
+BOS conclude the conversation EOS	O O O O end_call
+BOS switch off the mic EOS	O O O O O mute_mic
+BOS create meeting timer color is purple and set for 1 hour EOS	O O B-timer_name O O O B-timer_color O O O B-timer_length I-timer_length set_timer
+BOS can you sign me in to my profile EOS	O O O O O O O O O log_in
+BOS make the volume louder EOS	O O O O O increase_volume
+BOS decrease the audio volume EOS	O O O O O decrease_volume
+BOS stop speaking EOS	O O O stop_speaking
+BOS show the first patient scheduled EOS	O O O B-source_user I-source_user O show_schedule
+BOS stop all timers and give me steps to solve quadratic equaton EOS	O O O O B-multi_command_splitter O O O O O O O joint_commands
+BOS stop surgery now EOS	O O O O surgery_complete
+BOS what s the time left on practice timer EOS	O O O O O O O B-timer_name O timer_remaining
+BOS increase the volume level EOS	O O O O O increase_volume
+BOS turn down the volume and also remind me to check the laundry in 15 minutes then open the zoom app EOS	O O O O O B-multi_command_splitter I-multi_command_splitter O O O O O O O O O B-multi_command_splitter O O O O joint_commands
+BOS remove the words see you tomorrow EOS	O O O O B-text_content I-text_content I-text_content delete_text_content
+BOS set the volume to zero and text joanna and tell her the movie is about to start EOS	O O O O O O B-multi_command_splitter O O O O O O O O O O O joint_commands
+BOS i need you to text charlotte king EOS	O O O O O O B-contact_name I-contact_name send_text
+BOS youtube video on how to fix a flat tire EOS	O O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query youtube_search
+BOS what medications is the patient on EOS	O O O O O O O unknown
+BOS can you sign me in now EOS	O O O O O O O log_in
+BOS how has technology changed the way we communicate EOS	O O O O O O O O O open_ended
+BOS look up the fast and furious three trailer on youtube EOS	O O O O B-search_query I-search_query I-search_query I-search_query I-search_query O O youtube_search
+BOS please bring up a video on basic first aid techniques EOS	O O O O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS how cold is it in this room at the moment EOS	O O O O O O O O O O O room_temp
+BOS who is the last patient listed EOS	O O O O O O O last_patient
+BOS please activate the camera EOS	O O O O O start_video
+BOS play the top-20 nawang khechog soundtrack EOS	O O O B-sort B-artist I-artist B-music_item PlayMusic
+BOS start playing something from iheart EOS	O O O O O B-service PlayMusic
+BOS can you find the video live street music performances EOS	O O O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS set a timer for fifteen minutes EOS	O O O O O B-timer_length I-timer_length set_timer
+BOS maintain tourniquet for forty five minutes EOS	O O O O B-timer_length I-timer_length I-timer_length tourniquet_up
+BOS please set volume at 75 EOS	O O O O O B-volume_increment set_volume
+BOS set walking timer with red for 30 minute EOS	O O B-timer_name O O B-timer_color O B-timer_length I-timer_length set_timer
+BOS could you let me know the temperature in here EOS	O O O O O O O O O O room_temp
+BOS make the zoom window larger EOS	O O O B-app_name O O enlarge_window
+BOS initiate up timer for a hour called relaxation EOS	O O O O O B-timer_length I-timer_length O B-timer_name set_timer
+BOS play music off netflix EOS	O O O O B-service PlayMusic
+BOS begin final task timer 10 minute in black EOS	O O B-timer_name I-timer_name O B-timer_length I-timer_length O B-timer_color set_timer
+BOS youtube video of urban gardening ideas EOS	O O O O B-search_query I-search_query I-search_query youtube_search
+BOS open the surgical procedure EOS	O O O O O start_surgery
+BOS what s the forecast for alley  canada EOS	O O O O O O B-city B-country GetWeather
+BOS music off EOS	O O O stop_music
+BOS please increase the music by 5 EOS	O O O O O O B-volume_increment increase_music_volume
+BOS let s go back one song EOS	O O O O O O O previous_song
+BOS invite mia young into the call EOS	O O B-contact_name I-contact_name O O O add_to_call
+BOS sign me out right away EOS	O O O O O O log_out
+BOS reset the stopwatch immediately EOS	O O O O O reset_stopwatch
+BOS start the study session timer 2 hours with orange EOS	O O O B-timer_name I-timer_name O B-timer_length I-timer_length O B-timer_color set_timer
+BOS music volume at 85 EOS	O O O O B-volume_increment set_music_volume
+BOS reduce the tunes EOS	O O O O decrease_music_volume
+BOS what is time now in london and how many days until new year EOS	O O O O O O O B-multi_command_splitter O O O O O O joint_commands
+BOS i need the weather in wakarusa EOS	O O O O O O B-city GetWeather
+BOS since how much time has the timer been on and solve 512*22 EOS	O O O O O O O O O O B-multi_command_splitter O O joint_commands
+BOS can you retrieve the video guide to digital photography EOS	O O O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS delete content from a text message love you EOS	O O O O O O O B-text_content I-text_content delete_text_content
+BOS reset the tourniquet device EOS	O O O O O tourniquet_reset
+BOS how long has the tourniquet been used EOS	O O O O O O O O duration_tourniquet
+BOS surgery has concluded EOS	O O O O surgery_complete
+BOS expand the creative studio window EOS	O O O B-app_name I-app_name O enlarge_window
+BOS please gather the diagnostic logs EOS	O O O O O O diagnostic_logs
+BOS kindly clear the stop watch EOS	O O O O O O clear_stopwatch
+BOS can you play top zvooq by fink EOS	O O O O B-sort B-service O B-artist PlayMusic
+BOS play 2011 music EOS	O O B-year O PlayMusic
+BOS display all timers EOS	O O O O show_all_timers
+BOS please switch on the lights EOS	O O O O O O unknown
+BOS scrub the stop watch EOS	O O O O O clear_stopwatch
+BOS take the patient s heart rate EOS	O O O O O O O unknown
+BOS hide the tourniquet interface EOS	O O O O O hide_tourniquet
+BOS increase the audio volume then send a message to alex about the meeting EOS	O O O O O B-multi_command_splitter O O O O O O O O joint_commands
+BOS reset the breakfast timer quickly EOS	O O O B-timer_name O O reset_timer
+BOS can you reset the timer EOS	O O O O O O reset_timer
+BOS delete the line i can t make it tomorrow EOS	O O O O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content delete_text_content
+BOS operation is done EOS	O O O O surgery_complete
+BOS what is the rain forecast for one hour from now in south korea EOS	O O O O B-condition_description O O B-time_range I-time_range I-time_range I-time_range O B-country I-country GetWeather
+BOS make the tourniquet screen disappear EOS	O O O O O O hide_tourniquet
+BOS bring up the third floor conference room s bookings EOS	O O O O B-source_user I-source_user I-source_user I-source_user O O show_schedule
+BOS please restart the timer EOS	O O O O O reset_timer
+BOS open the system settings EOS	O O O B-app_name I-app_name open_app
+BOS reset the tourniquet immediately EOS	O O O O O tourniquet_reset
+BOS start tourniquet EOS	O O O tourniquet_up
+BOS log me in to the system EOS	O O O O O O O log_in
+BOS search how fix laptop and also tell what is result of cricket match today EOS	O O O O O B-multi_command_splitter O O O O O O O O O joint_commands
+BOS open the web browser EOS	O O O B-app_name I-app_name open_app
+BOS restart this track EOS	O O O O restart_song
+BOS please set the tunes to 80 EOS	O O O O O O B-volume_increment set_music_volume
+BOS hide all current timers EOS	O O O O O hide_all_timers
+BOS tell me the last patient for today EOS	O O O O O O O O last_patient
+BOS set quick green timer 5 minutes name it snack break EOS	O O O B-timer_color O B-timer_length I-timer_length O O B-timer_name I-timer_name set_timer
+BOS patient has arrived EOS	O O O O patient_in
+BOS could you describe the process of making a film EOS	O O O O O O O O O O open_ended
+BOS modify the surgery protocols EOS	O O O O O unknown
+BOS how much time has the tourniquet been in use EOS	O O O O O O O O O O duration_tourniquet
+BOS tell me the forecast for 6 am in tatra-nationalpark EOS	O O O O O O B-time_range I-time_range O B-geographic_poi GetWeather
+BOS can you log me in EOS	O O O O O O log_in
+BOS please bring up a video on effective public speaking tips EOS	O O O O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS terminate the stopwatch EOS	O O O O stop_stopwatch
+BOS list all active timers EOS	O O O O O timer_running_list
+BOS youtube video of planet earth from space EOS	O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS message brady lee to say your order will be ready for pickup at 4 pm EOS	O O B-contact_name I-contact_name O O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS turn on patient monitoring EOS	O O O O O unknown
+BOS what is the forecast for ōtone prefectural natural park in 1 hour and within the same area EOS	O O O O O O B-geographic_poi I-geographic_poi I-geographic_poi I-geographic_poi B-time_range I-time_range I-time_range O O I-spatial_relation I-spatial_relation I-spatial_relation GetWeather
+BOS start the previous song again EOS	O O O O O O previous_song
+BOS stop EOS	O O stop_speaking
+BOS start meeting timer 60 min with grey color EOS	O O B-timer_name O B-timer_length I-timer_length O B-timer_color O set_timer
+BOS check how to make homemade pizza for me please EOS	O O B-search_query I-search_query I-search_query I-search_query I-search_query O O O google_search
+BOS show humidity EOS	O O B-app_name open_app
+BOS restart the study timer EOS	O O O B-timer_name O reset_timer
+BOS sign me in to my profile EOS	O O O O O O O log_in
+BOS show the room schedule EOS	O O O B-source_user O show_schedule
+BOS can you open games app in a enlarged screen EOS	O O O O B-app_name O O O O O enlarge_window
+BOS can you get the system settings open EOS	O O O O O B-app_name I-app_name O open_app
+BOS empty the stopwatch EOS	O O O O clear_stopwatch
+BOS is it forecast to be freezing in benedict EOS	O O O O O O B-condition_temperature O B-city GetWeather
+BOS provide the patient s medications EOS	O O O O O O unknown
+BOS let me hear the good songs from james iha EOS	O O O O O B-sort O O B-artist I-artist PlayMusic
+BOS remove the part that says can we reschedule EOS	O O O O O O B-text_content I-text_content I-text_content delete_text_content
+BOS who is the last patient on the docket EOS	O O O O O O O O O last_patient
+BOS can you call amelia johnson EOS	O O O O B-contact_name I-contact_name start_zoom_call
+BOS search up coffee mug recall in google EOS	O O O B-search_query I-search_query I-search_query O O google_search
+BOS can you inform clark graham that the new shipment includes the items he requested EOS	O O O O B-contact_name I-contact_name O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS play the most popular puretone EOS	O O O B-sort I-sort B-artist PlayMusic
+BOS begin a black bedtime timer for ten minutes EOS	O O O B-timer_color B-timer_name O O B-timer_length I-timer_length set_timer
+BOS gather the diagnostic logs EOS	O O O O O diagnostic_logs
+BOS what is the total time for the tourniquet EOS	O O O O O O O O O duration_tourniquet
+BOS increase tourniquet time by 15 minutes EOS	O O O O O B-timer_name I-timer_name extend_tourniquet
+BOS can you stop the stopwatch EOS	O O O O O O stop_stopwatch
+BOS clear stopwatch EOS	O O O clear_stopwatch
+BOS please decrease the volume EOS	O O O O O decrease_volume
+BOS youtube video of seal spinning in circles EOS	O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS transfer the patient EOS	O O O O unknown
+BOS what s the temperature inside the room at the moment EOS	O O O O O O O O O O O room_temp
+BOS previous track please EOS	O O O O previous_song
+BOS play the greatest music from bryan maclean EOS	O O O B-sort O O B-artist I-artist PlayMusic
+BOS prep for the surgery EOS	O O O O O unknown
+BOS i m wondering what the humidity is in the room right now EOS	O O O O O O O O O O O O O room_humidity
+BOS play music right away EOS	O O O O O start_music
+BOS what are the signs and symptoms of depression EOS	O O O O O O O O O open_ended
+BOS search up how long to boil an egg EOS	O O O B-search_query I-search_query I-search_query I-search_query I-search_query I-search_query google_search
+BOS turn the music up by five EOS	O O O O O O B-volume_increment increase_music_volume
+BOS can you stop the stopwatch EOS	O O O O O O stop_stopwatch
+BOS set the volume to 20 then start a 10 minute timer called meeting EOS	O O O O O O B-multi_command_splitter O O O O O O O joint_commands
+BOS clear the nap time timer EOS	O O O B-timer_name I-timer_name O clear_timer
+BOS check remaining time on writing1 timer EOS	O O O O O B-timer_name O timer_remaining
+BOS can you text mia wang EOS	O O O O B-contact_name I-contact_name send_text
+BOS get ready for the surgery EOS	O O O O O O unknown
+BOS how long is left on the cooking timer EOS	O O O O O O O B-timer_name O timer_remaining
+BOS include ava wilson on the call EOS	O O B-contact_name I-contact_name O O O add_to_call
+BOS look up the yoga for back pain video EOS	O O O O B-search_query I-search_query I-search_query I-search_query O youtube_search
+BOS delete the timer EOS	O O O O clear_timer
+BOS please turn down the sound EOS	O O O O O O decrease_volume
+BOS please text amelia chen EOS	O O O B-contact_name I-contact_name send_text
+BOS what will the weather be in ky on oct  16  2036 EOS	O O O O O O O B-state O B-time_range I-time_range I-time_range GetWeather
+BOS will there be a cloud in vi in 14 minutes EOS	O O O O O B-condition_description O B-state B-time_range I-time_range I-time_range GetWeather
+BOS can you please pause the music EOS	O O O O O O O stop_music
+BOS schedule a follow-up appointment EOS	O O O O O unknown
+BOS what are the basic components of a computer EOS	O O O O O O O O O open_ended
+BOS tell me who discovered penicillin EOS	O O O B-search_query I-search_query I-search_query google_search
+BOS please reset the tourniquet EOS	O O O O O tourniquet_reset
+BOS please raise the volume by twenty and also set a timer for 20 minutes for the oven and then open the browser winder EOS	O O O O O O O B-multi_command_splitter I-multi_command_splitter O O O O O O O O O B-multi_command_splitter I-multi_command_splitter O O O O joint_commands
+BOS next song EOS	O O O next_song
+BOS please message olivia parker EOS	O O O B-contact_name I-contact_name send_text
+BOS operation has been stopped EOS	O O O O O surgery_complete
+BOS measure the patient s vital signs EOS	O O O O O O O unknown
+BOS how do you play chess EOS	O O O O O O open_ended
+BOS can you please give me the smoke level reading EOS	O O O O O O O O O O room_smoke
+BOS please open up the system settings EOS	O O O O O B-app_name I-app_name open_app
+BOS tell olivia that i have left the keys under the doormat EOS	O O B-contact_name O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS show first patient scheduled EOS	O O O O O first_patient
+BOS sanitize the operating room EOS	O O O O O unknown
+BOS can you delete all timers EOS	O O O O O O cancel_all_timers
+BOS turn on the operating lights EOS	O O O O O O unknown
+BOS please turn off the video EOS	O O O O O O stop_video
+BOS bring up the web browser EOS	O O O O B-app_name I-app_name open_app
+BOS what timers are currently set EOS	O O O O O O timer_running_list
+BOS silence EOS	O O stop_speaking
+BOS weather next year in dominica EOS	O O B-time_range I-time_range O B-country GetWeather
+BOS commence the surgery EOS	O O O O start_surgery
+BOS look up symptoms of dehydration EOS	O O O B-search_query I-search_query I-search_query google_search
+BOS please log me into my account EOS	O O O O O O O log_in
+BOS set a brief timer for two minutes please name it stretch break EOS	O O O O O O B-timer_length I-timer_length O O O B-timer_name I-timer_name set_timer
+BOS how do different ecosystems function EOS	O O O O O O open_ended
+BOS reinitiate the tourniquet EOS	O O O O tourniquet_reset
+BOS show clock EOS	O O B-app_name open_app
+BOS make a meditation timer with 60 min color it gray EOS	O O O B-timer_name O O B-timer_length I-timer_length O O B-timer_color set_timer
+BOS restart the timer named workout EOS	O O O O O B-timer_name reset_timer
+BOS discard the meeting timer EOS	O O O B-timer_name O clear_timer
+BOS please stop EOS	O O O stop_speaking
+BOS embark on the surgical procedure EOS	O O O O O O start_surgery
+BOS what are the different types of renewable energy sources EOS	O O O O O O O O O O open_ended
+BOS remove all stopwatch data EOS	O O O O O clear_stopwatch
+BOS start the stopwatch now EOS	O O O O O start_stopwatch
+BOS i would like you to call ethan hall EOS	O O O O O O O B-contact_name I-contact_name start_zoom_call
+BOS could you stop the tourniquet EOS	O O O O O O tourniquet_down
+BOS sign me in to my user account EOS	O O O O O O O O log_in
+BOS what s the battery status of the device EOS	O O O O O O O O O unknown
+BOS review the patient s lab results EOS	O O O O O O O unknown
+BOS commence the stopwatch EOS	O O O O start_stopwatch
+BOS reduce the volume EOS	O O O O decrease_volume
+BOS start the stopwatch EOS	O O O O start_stopwatch
+BOS begin the surgery and then notify me when it s complete EOS	O O O O B-multi_command_splitter I-multi_command_splitter O O O O O O joint_commands
+BOS what are the fundamental principles of democracy EOS	O O O O O O O O open_ended
+BOS tell me the battery status EOS	O O O O O O unknown
+BOS could you tell me about some famous works of art and their significance EOS	O O O O O O O O O O O O O O open_ended
+BOS will there be hail on 11/12/2036 in singapore EOS	O O O O B-condition_description O B-time_range O B-country GetWeather
+BOS shut off the music EOS	O O O O O stop_music
+BOS show the timers EOS	O O O O show_all_timers
+BOS call elizabeth wright for me EOS	O O B-contact_name I-contact_name O O start_zoom_call
+BOS give me the countdowns on all timers EOS	O O O O O O O O timer_running_list
+BOS begin preparations for the surgery EOS	O O O O O O unknown
+BOS expand the cloud manager window EOS	O O O B-app_name I-app_name O enlarge_window
+BOS please bring up a video on building a wooden table EOS	O O O O O O O B-search_query I-search_query I-search_query I-search_query youtube_search
+BOS reduce the size of the preferences card app window EOS	O O O O O O B-app_name I-app_name O O minimize_window
+BOS adjust the tunes to 35 EOS	O O O O O B-volume_increment set_music_volume
+BOS assign a nurse to the patient EOS	O O O O O O O unknown
+BOS start a physiotherapy session EOS	O O O O O unknown
+BOS what will the weather be in dane on sep  the fifth  2030 EOS	O O O O O O O B-city O B-time_range I-time_range I-time_range I-time_range GetWeather
+BOS reduce the note keeper window EOS	O O O B-app_name I-app_name O minimize_window
+BOS wipe the stopwatch EOS	O O O O clear_stopwatch
+BOS how do antibiotics work EOS	O O O O O open_ended
+BOS who is the first patient today EOS	O O O O O O O first_patient
+BOS reboot the timer for reading EOS	O O O O O B-timer_name reset_timer
+BOS play a bob burns song EOS	O O O B-artist I-artist B-music_item PlayMusic
+BOS can you fetch diagnostic logs onto usb EOS	O O O O O O O O diagnostic_logs_usb
+BOS configure a 55 minute timer for yoga EOS	O O O B-timer_length I-timer_length O O B-timer_name set_timer
+BOS play my inventive playlist EOS	O O B-playlist_source B-playlist O PlayMusic
+BOS deactivate my video EOS	O O O O stop_video
+BOS put dictionary app in maxmized view now EOS	O O B-app_name O O O O O enlarge_window
+BOS skip back to the previous song EOS	O O O O O O O previous_song
+BOS can you play the previous song EOS	O O O O O O O previous_song
+BOS please set a timer for one and a half hours EOS	O O O O O O B-timer_length I-timer_length I-timer_length I-timer_length I-timer_length set_timer
+BOS hide the volume EOS	O O O B-app_name hide_app
+BOS can you look up public holidays in 2024 on google EOS	O O O O O B-search_query I-search_query I-search_query I-search_query O O google_search
+BOS can you bring up the system settings for me EOS	O O O O O O B-app_name I-app_name O O open_app
+BOS cancel the yoga timer EOS	O O O B-timer_name O stop_timer
+BOS check the smoke levels currently EOS	O O O O O O room_smoke
+BOS could you please sign me out EOS	O O O O O O O log_out
+BOS send vito martinez a reminder to renew his membership at the club before the end of the month EOS	O O B-contact_name I-contact_name O O B-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content I-text_content send_text
+BOS i d like the next song please EOS	O O O O O O O O next_song
+BOS record the surgery procedure EOS	O O O O O unknown
+BOS i d like you to start the stopwatch EOS	O O O O O O O O O start_stopwatch
+BOS display all current timers EOS	O O O O O show_all_timers
+BOS can you put away all timers EOS	O O O O O O O hide_all_timers
+BOS please play something catchy on youtube EOS	O O O O B-playlist O B-service PlayMusic
+BOS surgery is finalized EOS	O O O O surgery_complete
+BOS show timer EOS	O O B-app_name open_app
+BOS set the volume of music to 90 EOS	O O O O O O O B-volume_increment set_music_volume
+BOS reset the timers EOS	O O O O reset_all_timers
+BOS begin this song again EOS	O O O O O restart_song
+BOS patient has been admitted EOS	O O O O O patient_in
+BOS explain steps to change tire on car and show me video on fixing brakes EOS	O O O O O O O O B-multi_command_splitter O O O O O O joint_commands
+BOS how does the immune system protect the body EOS	O O O O O O O O O open_ended
+BOS deactivate tourniquet EOS	O O O tourniquet_down
+BOS cancel the breakfast timer EOS	O O O B-timer_name O clear_timer

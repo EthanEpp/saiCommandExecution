@@ -27,14 +27,14 @@ if __name__ == "__main__":
     # print(run_inference("hide the clock", model))
     # print(run_inference("set volume to twenty two", model))
 
-    print(run_inference("start a 5 minute timer named cooking and then can you look up how to change a lightbulb in a ceiling fan", model))
-    print(run_inference("start a 5 minute timer named cooking then can you look up how to change a lightbulb in a ceiling fan", model))
+    print(run_inference("Start a Cement Cure timer for 5 minutes", model))
+    print(run_inference("Show my last patient schedule", model))
+    # print(run_inference("start a 5 minute timer named cooking then can you look up how to change a lightbulb in a ceiling fan", model))
 
-    print(run_inference("set the system volume to 5 and open the spotify app", model))
-    print(run_inference("turn on the room lights", model))
+    # print(run_inference("set the system volume to 5 and open the spotify app", model))
+    # print(run_inference("turn on the room lights", model))
 
     # print(run_inference("how do i change a lightbulb in a ceiling fan", model))
     # print(run_inference("look up how to change a lightbulb in a ceiling fan", model))
 
     
-
