@@ -4,10 +4,11 @@ import torch.nn.functional as F
 import math
 from torch.autograd import Variable
 import pickle
+from transformers import BertModel
 
 ENV_BERT_ID_CLS=False # use cls token for id classification
 ENV_EMBEDDING_SIZE=1024 # dimention of embbeding, bertbase=768,bertlarge&elmo=1024
-ENV_BERT_ADDR='/content/drive/MyDrive/SoftAcuity Models/speechCommands/CTran-main/bert-large-uncased'
+ENV_BERT_ADDR='/Users/SAI/Documents/Code/wakeWord/wakeWordForked/saiCommandExecution/bert-large-uncased-temp'
 ENV_SEED=1331
 ENV_CNN_FILTERS=128
 ENV_CNN_KERNELS=4
@@ -53,11 +54,11 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 
-#start of the shared encoder
 class BertLayer(nn.Module):
     def __init__(self, bert_addr):
         super(BertLayer, self).__init__()
-        self.bert_model = torch.hub.load(bert_addr, 'model', bert_addr,source="local")
+        # Load the fine-tuned model
+        self.bert_model = BertModel.from_pretrained(bert_addr)
 
     def forward(self, bert_info=None):
         (bert_tokens, bert_mask, bert_tok_typeid) = bert_info
@@ -215,7 +216,7 @@ class Decoder(nn.Module):
 
 # CNet class
 class CNet(nn.Module):
-    def __init__(self, model_path=None, bert_addr = './bert-large-uncased/', padded_length=60):
+    def __init__(self, model_path=None, bert_addr = './bert-large-uncased-temp/', padded_length=60):
         super(CNet, self).__init__()
         self.length = padded_length
         self.bert_addr = bert_addr
@@ -248,13 +249,13 @@ class CNet(nn.Module):
         
         if model_path:
             import __main__
-            __main__.BertLayer = BertLayer  # Ensure BertLayer is available in the namespace
+            # __main__.BertLayer = BertLayer  # Ensure BertLayer is available in the namespace
             __main__.Encoder = Encoder  # Ensure Encoder is available in the namespace
             __main__.Middle = Middle  # Ensure Middle is available in the namespace
             __main__.Decoder = Decoder  # Ensure Decoder is available in the namespace
             __main__.PositionalEncoding = PositionalEncoding  # Ensure PositionalEncoding is available in the namespace
             
-            self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl', map_location=self.device).state_dict())
+            # self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl', map_location=self.device).state_dict())
             self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl', map_location=self.device).state_dict())
             self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl', map_location=self.device).state_dict())
             self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl', map_location=self.device).state_dict())
