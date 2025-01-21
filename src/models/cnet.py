@@ -5,6 +5,8 @@ import math
 from torch.autograd import Variable
 import pickle
 from transformers import BertModel
+import onnxruntime as ort
+import torch
 
 ENV_BERT_ID_CLS=False # use cls token for id classification
 ENV_EMBEDDING_SIZE=1024 # dimention of embbeding, bertbase=768,bertlarge&elmo=1024
@@ -54,17 +56,46 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 
+# class BertLayer(nn.Module):
+#     def __init__(self, bert_addr):
+#         super(BertLayer, self).__init__()
+#         # Load the fine-tuned model
+#         self.bert_model = BertModel.from_pretrained(bert_addr)
+
+#     def forward(self, bert_info=None):
+#         (bert_tokens, bert_mask, bert_tok_typeid) = bert_info
+#         bert_encodings = self.bert_model(bert_tokens, bert_mask, bert_tok_typeid)
+#         bert_last_hidden = bert_encodings['last_hidden_state']
+#         bert_pooler_output = bert_encodings['pooler_output']
+#         return bert_last_hidden, bert_pooler_output
 class BertLayer(nn.Module):
     def __init__(self, bert_addr):
         super(BertLayer, self).__init__()
-        # Load the fine-tuned model
         self.bert_model = BertModel.from_pretrained(bert_addr)
 
-    def forward(self, bert_info=None):
-        (bert_tokens, bert_mask, bert_tok_typeid) = bert_info
-        bert_encodings = self.bert_model(bert_tokens, bert_mask, bert_tok_typeid)
+    def forward(self, bert_tokens, bert_mask, bert_tok_typeid):
+        bert_encodings = self.bert_model(input_ids=bert_tokens, attention_mask=bert_mask, token_type_ids=bert_tok_typeid)
         bert_last_hidden = bert_encodings['last_hidden_state']
         bert_pooler_output = bert_encodings['pooler_output']
+        return bert_last_hidden, bert_pooler_output
+
+class BertLayerONNX:
+    def __init__(self, onnx_model_path):
+        # Load the ONNX model
+        self.session = ort.InferenceSession(onnx_model_path, providers=["CUDAExecutionProvider", "CPUExecutionProvider"])
+
+    def forward(self, bert_tokens, bert_mask, bert_tok_typeid):
+        # Prepare inputs for ONNX Runtime
+        inputs = {
+            "input_ids": bert_tokens.cpu().numpy(),
+            "attention_mask": bert_mask.cpu().numpy(),
+            "token_type_ids": bert_tok_typeid.cpu().numpy(),
+        }
+        # Run inference
+        outputs = self.session.run(["last_hidden_state", "pooler_output"], inputs)
+        # Convert outputs back to PyTorch tensors
+        bert_last_hidden = torch.tensor(outputs[0]).to(bert_tokens.device)
+        bert_pooler_output = torch.tensor(outputs[1]).to(bert_tokens.device)
         return bert_last_hidden, bert_pooler_output
 
 
@@ -214,6 +245,64 @@ class Decoder(nn.Module):
 
         return slot_scores.view(input.size(0) * length, -1), intent_score
 
+class CNetOnnx(nn.Module):
+    def __init__(self, model_path=None, bert_onnx_path=None, bert_addr=None, padded_length=60):
+        super(CNetOnnx, self).__init__()
+        self.length = padded_length
+        self.bert_addr = bert_addr  # Keep for compatibility with tokenization
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+        if model_path:
+            self.word2index = load_mapping(f'{model_path}-word2index.pkl')
+            self.index2word = load_mapping(f'{model_path}-index2word.pkl')
+            self.tag2index = load_mapping(f'{model_path}-tag2index.pkl')
+            self.index2tag = load_mapping(f'{model_path}-index2tag.pkl')
+            self.intent2index = load_mapping(f'{model_path}-intent2index.pkl')
+            self.index2intent = load_mapping(f'{model_path}-index2intent.pkl')
+        else:
+            print("No model path provided, this should only occur if you are training")
+            self.word2index, self.index2word, self.tag2index, self.index2tag, self.intent2index, self.index2intent = word2index, index2word, tag2index, index2tag, intent2index, index2intent
+
+        # Replace PyTorch-based BertLayer with ONNX-based one
+        self.bert_layer = BertLayerONNX(bert_onnx_path)
+        self.encoder = Encoder(len(self.word2index))
+        self.middle = Middle(length=padded_length)
+        self.decoder = Decoder(len(self.tag2index), len(self.intent2index), LENGTH=padded_length)
+
+        if model_path:
+            import __main__
+            # __main__.BertLayer = BertLayer  # Ensure BertLayer is available in the namespace
+            __main__.Encoder = Encoder  # Ensure Encoder is available in the namespace
+            __main__.Middle = Middle  # Ensure Middle is available in the namespace
+            __main__.Decoder = Decoder  # Ensure Decoder is available in the namespace
+            __main__.PositionalEncoding = PositionalEncoding  # Ensure PositionalEncoding is available in the namespace
+            
+            # self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl', map_location=self.device).state_dict())
+            self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl', map_location=self.device).state_dict())
+            self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl', map_location=self.device).state_dict())
+            self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl', map_location=self.device).state_dict())
+
+        if torch.cuda.is_available():
+            self.encoder = self.encoder.cuda()
+            self.middle = self.middle.cuda()
+            self.decoder = self.decoder.cuda()
+
+    def forward(self, bert_info, input, encoder_maskings, bert_subtoken_maskings=None, infer=False):
+        # Process the input through the ONNX-based BERT layer
+        bert_tokens, bert_mask, bert_tok_typeid = bert_info
+        bert_last_hidden, bert_pooler_output = self.bert_layer.forward(bert_tokens, bert_mask, bert_tok_typeid)
+
+        # Pass the BERT last hidden state through the encoder
+        encoder_output = self.encoder(bert_last_hidden)
+
+        # Pass the encoder output through the middle component
+        middle_output = self.middle(encoder_output, encoder_maskings)
+
+        # Pass the middle output and other inputs through the decoder
+        slot_scores, intent_score = self.decoder(input, middle_output, encoder_maskings, self.tag2index, bert_subtoken_maskings, infer)
+
+        return slot_scores, intent_score
+
 # CNet class
 class CNet(nn.Module):
     def __init__(self, model_path=None, bert_addr = './bert-large-uncased-temp/', padded_length=60):
@@ -268,7 +357,9 @@ class CNet(nn.Module):
 
     def forward(self, bert_info, input, encoder_maskings, bert_subtoken_maskings=None, infer=False):
         # Process the input through the BERT layer
-        bert_last_hidden, bert_pooler_output = self.bert_layer(bert_info)
+        # bert_last_hidden, bert_pooler_output = self.bert_layer(bert_info) no onnx support
+        bert_tokens, bert_mask, bert_tok_typeid = bert_info #onnx
+        bert_last_hidden, bert_pooler_output = self.bert_layer(bert_tokens, bert_mask, bert_tok_typeid) #onnx
 
         # Pass the BERT last hidden state through the encoder
         encoder_output = self.encoder(bert_last_hidden)

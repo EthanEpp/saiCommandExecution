@@ -73,3 +73,5 @@ file_paths.txt
 list_files.py
 
 saiCommandProcessor/
+
+*.onnx
