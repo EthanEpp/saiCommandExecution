@@ -2,7 +2,7 @@
 
 # Speech Command System
 
-This repository contains a speech command system that processes audio inputs, transcribes them into text, and executes corresponding commands. The system utilizers whisber and a distilled SBERT paraphrase model.
+This repository contains a speech command system that processes audio inputs, transcribes them into text, and executes corresponding commands. The system utilizers whisber and a distilled SBERT paraphrase model, or BERT large depending on which pipeline you choose to use.
 
 ## Table of Contents
 - [Installation](#installation)
