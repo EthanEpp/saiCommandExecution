@@ -247,6 +247,12 @@ class CNet(nn.Module):
         self.length = padded_length
         self.bert_addr = bert_addr
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # ✅ Load tokenizer only once
+        try:
+            self.tokenizer = BertTokenizer.from_pretrained(bert_addr)
+        except Exception:
+            # fallback if you're using torch.hub
+            self.tokenizer = torch.hub.load(bert_addr, 'tokenizer', bert_addr, verbose=False, source="local")
 
         if model_path:
             self.word2index = load_mapping(f'models/ctran{_fn}-word2index.pkl')
@@ -299,6 +305,12 @@ class CNetOnnx(nn.Module):
         self.length = padded_length
         self.bert_addr = bert_addr  # Keep for compatibility with tokenization
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # ✅ Load tokenizer only once
+        try:
+            self.tokenizer = BertTokenizer.from_pretrained(bert_addr)
+        except Exception:
+            # fallback if you're using torch.hub
+            self.tokenizer = torch.hub.load(bert_addr, 'tokenizer', bert_addr, verbose=False, source="local")
 
         if model_path:
             self.word2index = load_mapping(f'{model_path}-word2index.pkl')
@@ -438,12 +450,103 @@ class BertLayerTRT:
 
 
 
+class DecoderTRT(nn.Module):
+    def __init__(self, trt_engine_path, device="cuda"):
+        super().__init__()
+        self.logger = trt.Logger(trt.Logger.ERROR)
+        self.runtime = trt.Runtime(self.logger)
+
+        # Load the TensorRT engine
+        with open(trt_engine_path, "rb") as f:
+            self.engine = self.runtime.deserialize_cuda_engine(f.read())
+
+        self.context = self.engine.create_execution_context()
+        self.device = torch.device(device if torch.cuda.is_available() else "cpu")
+        self.stream = cuda.Stream()
+
+        # Prepare bindings
+        self.tensor_names = [self.engine.get_tensor_name(i) for i in range(self.engine.num_io_tensors)]
+        self.device_buffers = {}
+        self.shapes = {}
+        self.dtypes = {}
+        self.bindings = []
+
+        for name in self.tensor_names:
+            shape = self.engine.get_tensor_shape(name)
+            dtype = np.dtype(trt.nptype(self.engine.get_tensor_dtype(name)))
+            device_mem = cuda.mem_alloc(trt.volume(shape) * dtype.itemsize)
+
+            self.device_buffers[name] = device_mem
+            self.shapes[name] = shape
+            self.dtypes[name] = dtype
+            self.bindings.append(int(device_mem))
+
+    def forward(self, input_tensor, encoder_outputs, encoder_maskings, bert_subtoken_maskings=None):
+        batch_size, seq_len, hidden = encoder_outputs.shape
+
+        # Set input shapes dynamically
+        self.context.set_input_shape("encoder_outputs", (batch_size, seq_len, hidden))
+        self.context.set_input_shape("encoder_maskings", (batch_size, seq_len))
+
+        # Copy input data
+        cuda.memcpy_htod(self.device_buffers["encoder_outputs"], encoder_outputs.cpu().numpy().astype(self.dtypes["encoder_outputs"]))
+        cuda.memcpy_htod(self.device_buffers["encoder_maskings"], encoder_maskings.cpu().numpy().astype(self.dtypes["encoder_maskings"]))
+
+        # Run inference
+        self.context.execute_v2(self.bindings)
+
+        # Retrieve outputs
+        slot_scores_np = np.empty(self.shapes["slot_scores"], dtype=self.dtypes["slot_scores"])
+        intent_score_np = np.empty(self.shapes["intent_score"], dtype=self.dtypes["intent_score"])
+
+        cuda.memcpy_dtoh(slot_scores_np, self.device_buffers["slot_scores"])
+        cuda.memcpy_dtoh(intent_score_np, self.device_buffers["intent_score"])
+
+        return torch.tensor(slot_scores_np, device=self.device), torch.tensor(intent_score_np, device=self.device)
+
+class DecoderOnnx(nn.Module):
+    def __init__(self, onnx_path, device="cuda"):
+        super().__init__()
+        self.session = ort.InferenceSession(onnx_path, providers=["CUDAExecutionProvider", "CPUExecutionProvider"])
+        self.device = torch.device(device if torch.cuda.is_available() else "cpu")
+
+    def forward(self, input_tensor, encoder_outputs, encoder_maskings, bert_subtoken_maskings=None):
+        # Only use encoder_outputs and encoder_maskings because ONNX expects only those
+        inputs = {
+            "encoder_outputs": encoder_outputs.cpu().numpy(),
+            "encoder_maskings": encoder_maskings.cpu().numpy()
+        }
+
+        # Run inference
+        outputs = self.session.run(["slot_scores", "intent_score"], inputs)
+
+        # Convert outputs back to tensors on the correct device
+        slot_scores = torch.tensor(outputs[0], device=self.device)
+        intent_score = torch.tensor(outputs[1], device=self.device)
+        return slot_scores, intent_score
+
+
+class DecoderInfer(nn.Module):
+    def __init__(self, full_decoder):
+        super().__init__()
+        self.full_decoder = full_decoder
+
+    def forward(self, input, encoder_outputs, encoder_maskings, bert_subtoken_maskings):
+        return self.full_decoder.forward(input, encoder_outputs, encoder_maskings, bert_subtoken_maskings, infer=True)
+
+
 class CNetTRT(nn.Module):
-    def __init__(self, model_path=None, bert_trt_path=None, bert_addr='./bert_models/bert-large-uncased-temp/', padded_length=60):
+    def __init__(self, model_path=None, bert_trt_path=None, decoder_trt_path='/data/EEtest/decoder_infer.trt', bert_addr='./bert_models/bert-large-uncased-temp/', padded_length=60):
         super(CNetTRT, self).__init__()
         self.length = padded_length
         self.bert_addr = bert_addr  # Keep for compatibility with tokenization
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # ✅ Load tokenizer only once
+        try:
+            self.tokenizer = BertTokenizer.from_pretrained(bert_addr)
+        except Exception:
+            # fallback if you're using torch.hub
+            self.tokenizer = torch.hub.load(bert_addr, 'tokenizer', bert_addr, verbose=False, source="local")
 
         if model_path:
             self.word2index = load_mapping(f'{model_path}-word2index.pkl')
@@ -460,30 +563,41 @@ class CNetTRT(nn.Module):
         self.bert_layer = BertLayerTRT(bert_trt_path)
         self.encoder = Encoder(len(self.word2index))
         self.middle = Middle(length=padded_length)
-        self.decoder = Decoder(len(self.tag2index), len(self.intent2index), LENGTH=padded_length)
-
+        # self.decoder = Decoder(len(self.tag2index), len(self.intent2index), LENGTH=padded_length)
+        self.decoder = DecoderTRT(decoder_trt_path)
         if model_path:
+            import __main__
+            # __main__.BertLayer = BertLayer  # Ensure BertLayer is available in the namespace
+            __main__.Encoder = Encoder  # Ensure Encoder is available in the namespace
+            __main__.Middle = Middle  # Ensure Middle is available in the namespace
+            # __main__.Decoder = Decoder  # Ensure Decoder is available in the namespace
+            __main__.PositionalEncoding = PositionalEncoding  # Ensure PositionalEncoding is available in the namespace
+            
+            # self.bert_layer.load_state_dict(torch.load(f'{model_path}-bertlayer.pkl', map_location=self.device).state_dict())
             self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl', map_location=self.device, weights_only=False).state_dict())
             self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl', map_location=self.device, weights_only=False).state_dict())
-            self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl', map_location=self.device, weights_only=False).state_dict())
+            # self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl', map_location=self.device, weights_only=False).state_dict())
 
-        if torch.cuda.is_available():
-            self.encoder = self.encoder.cuda()
-            self.middle = self.middle.cuda()
-            self.decoder = self.decoder.cuda()
+
+        # if model_path:
+        #     self.encoder.load_state_dict(torch.load(f'{model_path}-encoder.pkl', map_location=self.device, weights_only=False).state_dict())
+        #     self.middle.load_state_dict(torch.load(f'{model_path}-middle.pkl', map_location=self.device, weights_only=False).state_dict())
+        #     self.decoder.load_state_dict(torch.load(f'{model_path}-decoder.pkl', map_location=self.device, weights_only=False).state_dict())
+
+        # if torch.cuda.is_available():
+        #     self.encoder = self.encoder.cuda()
+        #     self.middle = self.middle.cuda()
+        #     self.decoder = self.decoder.cuda()
 
     def forward(self, bert_info, input, encoder_maskings, bert_subtoken_maskings=None, infer=False):
         # Process the input through the TensorRT-based BERT layer
         bert_tokens, bert_mask, bert_tok_typeid = bert_info
         bert_last_hidden, bert_pooler_output = self.bert_layer.forward(bert_tokens, bert_mask, bert_tok_typeid)
-
         # Pass the BERT last hidden state through the encoder
         encoder_output = self.encoder(bert_last_hidden)
-
         # Pass the encoder output through the middle component
         middle_output = self.middle(encoder_output, encoder_maskings)
-
         # Pass the middle output and other inputs through the decoder
-        slot_scores, intent_score = self.decoder(input, middle_output, encoder_maskings, self.tag2index, bert_subtoken_maskings, infer)
-
+        # slot_scores, intent_score = self.decoder(input, middle_output, encoder_maskings, self.tag2index, bert_subtoken_maskings, infer)
+        slot_scores, intent_score = self.decoder(input, middle_output, encoder_maskings, bert_subtoken_maskings)
         return slot_scores, intent_score

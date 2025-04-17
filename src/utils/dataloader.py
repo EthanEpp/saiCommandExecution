@@ -234,3 +234,13 @@ def tokenize_sample(sample, bert_addr, length=60):
     sample = [[re.sub(" +", " ", t.split("\t")[0]).split(" "), t.split("\t")[1].split(" ")[:-1], t.split("\t")[1].split(" ")[-1]] for t in sample]
     sample = [[t[0][1:-1], t[1][1:], t[2]] for t in sample]
     return sample, sample_subtoken_mask, sample_toks
+
+def tokenize_sample(sample, tokenizer, length=60):
+    sample = tag_sentence(sample)
+    sample = [sample]
+    sample_tokens = remove_punc(sample)
+    sample_subtoken_mask = get_subtoken_mask(sample_tokens, tokenizer, length)
+    sample_toks = tokenizer.batch_encode_plus(sample_tokens, max_length=length, add_special_tokens=True, return_tensors='pt', return_attention_mask=True, padding='max_length', truncation=True)
+    sample = [[re.sub(" +", " ", t.split("\t")[0]).split(" "), t.split("\t")[1].split(" ")[:-1], t.split("\t")[1].split(" ")[-1]] for t in sample]
+    sample = [[t[0][1:-1], t[1][1:], t[2]] for t in sample]
+    return sample, sample_subtoken_mask, sample_toks

@@ -1,43 +1,56 @@
+
+import psutil
 import torch
 from src.services.cnet_inference import run_inference
 from src.models import cnet
+import torch
 
-def main():
-    model_path = "/root/ai_test_eebs/EEcommandProcessor/saiCommandExecution/saiCommandProcessor/processor_model_08_11/ctranfinal_eic_8_27_V1"
-    bert_addr = '/Users/SAI/Documents/Code/wakeWord/wakeWordForked/saiCommandExecution/bert-large-uncased-temp'
-    model = cnet.CNet(model_path=model_path, bert_addr=bert_addr)
-    if torch.cuda.is_available():
-        model.cuda()
-    else:
-        print('You are NOT using cuda! Some problems may occur.')
-    user_speech = "Start a 5 minute timer and name it grimace"
-    print(run_inference(user_speech, model))
+import torch
+print(f"PyTorch is using {torch.get_num_threads()} threads.")
+torch.set_num_threads(1)  # Or adjust to a reasonable number based on available cores
 
-    
+
+# Function to monitor CPU usage
+def log_cpu_usage():
+    cpu_usage = psutil.cpu_percent(interval=1)  # Measure CPU usage every second
+    print(f"CPU Usage: {cpu_usage}%")
+
 if __name__ == "__main__":
-    # main_text_only()
-    model_path = "/Users/SAI/Documents/Code/wakeWord/wakeWordForked/saiCommandExecution/saiCommandProcessor/processor_model_01_13_25/ctranfinal_revised_01_10_new_datav3"
-    bert_addr = '/Users/SAI/Documents/Code/wakeWord/wakeWordForked/saiCommandExecution/bert-large-uncased-temp'
-    model = cnet.CNet(model_path=model_path, bert_addr=bert_addr)
-    # model = CNetTRT(model_path=f'models/ctran{_fn}', bert_trt_path=bert_trt_path, bert_addr=ENV_BERT_ADDR)
+    model_path = "/home/devel/ai_test_eebs/EEcommandProcessor/saiCommandExecution/saiCommandProcessor/processor_model_01_13_25/ctranfinal_revised_01_10_new_datav3"
+    bert_addr = '/home/devel/ai_test_eebs/EEcommandProcessor/saiCommandExecution/saiCommandProcessor/bert-large-uncased-temp'
+    bert_onnx_path = '/home/devel/ai_test_eebs/EEcommandProcessor/saiCommandExecution/saiCommandProcessor/bert_layer.onnx'
+    model_path = "/home/devel/ai_test_eebs/EEcommandProcessor/saiCommandExecution/saiCommandProcessor/processor_model_01_13_25/ctranfinal_revised_01_10_new_datav3"
+    bert_addr = '/home/devel/ai_test_eebs/EEcommandProcessor/saiCommandExecution/saiCommandProcessor/bert-large-uncased-temp'
+    log_cpu_usage()
+    # model = cnet.CNet(model_path=model_path, bert_addr=bert_addr)
+
+
+    # log_cpu_usage()
+    bert_onnx_path = '/home/devel/ai_test_eebs/EEcommandProcessor/saiCommandExecution/saiCommandProcessor/bert_layer.onnx'
+    model = cnet.CNetOnnx(model_path=model_path, bert_onnx_path=bert_onnx_path, bert_addr=bert_addr)
+    import torch.autograd.profiler as profiler
+
+    with profiler.profile(record_shapes=True) as prof:
+        # Your inference code here
+        run_inference("Start a timer", model)
+
+    print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+    
 
     if torch.cuda.is_available():
         model.cuda()
     else:
         print('You are NOT using cuda! Some problems may occur.')
-    user_speech = "Start a 5 minute timer and name it grimace"
-    # print(run_inference(user_speech, model))
-    # print(run_inference("hide the clock", model))
-    # print(run_inference("set volume to twenty two", model))
 
-    print(run_inference("Start a Cement Cure timer for 5 minutes", model))
-    print(run_inference("Show my last patient schedule", model))
-    # print(run_inference("start a 5 minute timer named cooking then can you look up how to change a lightbulb in a ceiling fan", model))
-
-    # print(run_inference("set the system volume to 5 and open the spotify app", model))
-    # print(run_inference("turn on the room lights", model))
-
-    # print(run_inference("how do i change a lightbulb in a ceiling fan", model))
-    # print(run_inference("look up how to change a lightbulb in a ceiling fan", model))
-
-    
+    # Run inference with monitoring
+    for sentence in [
+        "Start a Cement Cure timer for 5 minutes",
+        "Show my last patient schedule",
+        "start a five minute timer make it the color green and name it avocado",
+        "start a 5 minute timer named cooking and then can you look up how to change a lightbulb in a ceiling fan",
+        "set the system volume to 5",
+        "turn on the room lights",
+        "how do i change a lightbulb in a ceiling fan"
+    ]:
+        print(run_inference(sentence, model))
+        log_cpu_usage()
